@@ -1,0 +1,8 @@
+I've tinkered with "newaxis.c" to allow one to make repeated plots.  My
+source code is called "movieaxis.c"; the binary version is called "axis" in
+the tools directory (and is different from the "axis" in /usr/local/pub/bin,
+for the time being).  I don't know what the difference is between axis.c
+and newaxis.c; I got them from helios's source directory.
+
+				Jim Sethna
+

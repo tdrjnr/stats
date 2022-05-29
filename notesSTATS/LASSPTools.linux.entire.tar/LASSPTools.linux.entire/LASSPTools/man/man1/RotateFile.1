@@ -1,0 +1,51 @@
+.hy 0
+.TH ROTATEFILE 1 "14 September 1992"
+.ad
+
+.SH NAME
+RotateFile - rotates xyz triples 
+
+.SH SYNOPSIS
+
+cat 
+.I rotationmatrix 
+|
+.B RotateFile
+.I datafile numberfile
+
+.SH DESCRIPTION
+RotateFile reads xyz triples from a file, and a number index for the
+triple from a second file. The rotation matrix is a 3x3 matrix that
+specifies how the point in 3D space is to be rotated. If no files
+are specified the file atoms is used for the input file, atoms.no is
+used for the number index file and and standard input is used for the
+rotation matrix. The output is sent to standard output.
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I rotationmatrix
+| 
+.B RotateFile
+.I datafile numberfile
+.sp 1
+This command will pipe the contents of rotation file (containing three lines,
+each line containing three values) to the program RotateFile. Rotatefile
+reads the x,y,z coordinate points from 'datafile', this file is organized
+as one x,y,z coordinate per line. The 'numberfile' is a number that is 
+appended to each line of output (one for each x,y,z coordinate passed).
+
+
+.SH "SEE ALSO"
+RotateStream
+
+.SH BUGS
+None.
+
+.SH AUTHOR
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+RotateFile was developed at Cornell University as part of the Cornell-IBM
+Joint Study on Computing for Scientific Research
+
+

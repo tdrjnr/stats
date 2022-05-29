@@ -1,0 +1,30 @@
+# BEGIN_DEF../../ = Linux X86 Makefile
+DEFINES=
+BINDIR=../../../bin
+LIBDIR=-L../../../lib
+LIBINSD=../../../lib
+LALIBS=-L../../../lib
+INCDIR = -I../../../include -I/usr/include/X11
+INCINSD=../../../include
+SYSLIBS=-L/usr/ucblib -ltermcap -lucb -lm
+XM_LIBS= -L/usr/X11R6/lib/ -lXm -lX11 -lXt -lXext
+# XM_LIBS= /usr/X11R6/lib/libXm.a -lX11 -lXt -lXext
+# XM_LIBS=-lnsl -lXm -lXt -lX11
+FC=g77
+CC=gcc
+FLIB = -lf2c -lc -lm
+FFLAGS = -c -O
+CFLAGS = -c -O6 -DUNDERSCOREFORTRAN -DLINUX
+XLIBS=-lX11
+XAWLIBS= -L/usr/lib/X11 -lXaw -lXmu -lXt -lX11
+SP_SRCC=dpmpar_linux
+
+# CFLAGS = -c -O -I/usr/local/share/src/motif/lib/Xt -I/usr/local/share/src/motif
+#FLIB = -lf2c -lF77 -lI77  -lc -lm
+#FFLAGS = -c -O -I/usr/include/f2c
+
+#XAWLIBS = -lnsl -lXaw -lXmu -lXt -lX11
+
+# XM_LIBS=-L/home/staff/jimfrank/motif/lib/Xm -lXm -L/usr/lib -lXt -lX11
+# SYSLIBS=-ltermcap -lm
+#XAWLIBS = -L/usr/lib -lXaw -lXmu -lXt -lX11

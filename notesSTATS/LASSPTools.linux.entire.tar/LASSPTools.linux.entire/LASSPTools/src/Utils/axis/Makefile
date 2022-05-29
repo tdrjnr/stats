@@ -1,0 +1,71 @@
+BEGIN_DEF = Linux X86 Makefile
+CFLAGS = -c -O6 -DUNDERSCOREFORTRAN -DLINUX
+BINDIR=../../../bin
+DEFINES=
+END_DEF = ****************************
+
+SRCS = \
+	lowlevel.c \
+	g_to_ugs.c \
+	unix_to_ugs.c \
+	ascii.c \
+	digit.c \
+	ugs_strokes.c \
+	axis.c \
+	movieaxis.c \
+	newaxis.c
+
+OBJ1 = \
+	lowlevel.o \
+	g_to_ugs.o \
+	unix_to_ugs.o \
+	ascii.o \
+	digit.o \
+	ugs_strokes.o \
+	axis.o 
+
+OBJ2 = \
+	lowlevel.o \
+	g_to_ugs.o \
+	unix_to_ugs.o \
+	ascii.o \
+	digit.o \
+	ugs_strokes.o \
+	movieaxis.o
+
+OBJ3 = \
+	lowlevel.o \
+	g_to_ugs.o \
+	unix_to_ugs.o \
+	ascii.o \
+	digit.o \
+	ugs_strokes.o \
+	newaxis.o
+
+
+all: axis movieaxis newaxis
+
+.c.o:
+	$(CC) $(CFLAGS) $(DEFINES) $(INCDIR) $*.c $(EXTRA)
+
+axis: $(OBJ1)
+	$(CC) -o axis $(OBJ1) -lm 
+
+movieaxis: $(OBJ2)
+	$(CC) -o movieaxis $(OBJ2) -lm 
+
+newaxis: $(OBJ3)
+	$(CC) -o newaxis $(OBJ3) -lm 
+
+clean::
+	rm -f *.o axis newaxis movieaxis
+
+install::
+	cp -p axis $(BINDIR)
+	cp -p movieaxis $(BINDIR)
+	cp -p newaxis $(BINDIR)
+	chmod 775 $(BINDIR)/axis
+	chmod 775 $(BINDIR)/movieaxis
+	chmod 775 $(BINDIR)/newaxis
+
+

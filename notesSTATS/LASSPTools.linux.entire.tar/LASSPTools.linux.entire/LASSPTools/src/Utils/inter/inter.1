@@ -1,0 +1,309 @@
+.hy 0
+.TH INTER 1 "9 April 1991"
+.ad
+
+.SH NAME
+.nf
+inter  \-  interactive front end for axis
+.fi
+
+.SH SYNOPSIS
+inter [\-x] [\-X commandfile] [datafile ...] | axis |
+.I filter
+.sp1
+or
+.sp1
+inter [\-x] [\-X commandfile] [datafile ...] | newaxis |
+.I filter
+.sp1
+or
+.sp1
+inter0 | axis |
+.I filter
+.sp1
+where
+.I filter
+is a plot5 filter, such as
+.B psun, tek,
+or
+.B laser.
+
+.SH DESCRIPTION
+inter frees the user from the constrained input file format required
+by axis, and replaces axis's cryptic commands with real words. The user
+types commands, or inter reads them from commandfile, if the \-X option
+is used. If you don't want to remember or learn the appropriate
+commands, inter0 asks questions instead of waiting for instructions.
+.sp1
+An initial set of commands will be read from the file .interrc, if
+the file exists in either the current directory or the user's home 
+directory. The \-x and \-X options suppress this feature.
+.sp1
+Any number of data files can be listed after the options. The first
+data file is read _before_ any command file is executed.
+
+.SH DATA FILE FORMAT
+One of the reasons for inter's existence is that it allows more
+flexible data file formats than axis does. Data files consist of one or
+more columns of numbers. All columns must have the same length. Any
+lines in the file beginning with a letter are ignored. Any one of the
+columns can be the x data, although the default is to assume that column
+1 is x. (See the command "option xcolumn" below.) Unlike most plotting
+programs, inter understands fortran's D notation for double precision
+numbers.
+
+.SH COMMAND SYNTAX
+Commands consist of words in a command file, or typed in response to a
+prompt. The legal commands are taken from one of various 'menus'. The
+current menu is indicated by the prompt. The standard prompt is "inter >>".
+Each word you type either calls a function which actually does
+something useful, or calls up a submenu, which expects another
+command. Typing "?" at any stage will print a list of legal commands.
+Typing "help <command>" will print a short message about the specified
+command. Commands may be shortened to any unambiguous abbreviation.
+.sp1
+Once the parser calls a function that actually does something, that
+function may require arguments. Arguments may be separated from the
+command with an =, but don't have to be. Multiple arguments may be
+separated by commas. Integer arguments separated by a minus sign will be
+expanded to all integers in the given range. If you don't want to
+specify the arguments on the command line, you don't have to. Most
+functions will ask for any arguments they need. (See the detailed list
+of commands for the exceptions.) Some examples:
+   plot 2    \- Plot column 2 of the data file.
+   plot = 2  \- The same thing.
+   plot 2,4  \- Plot columns 2 and 4.
+   plot 2\-5  \- Plot columns 2, 3, 4, and 5.
+   plot *    \- Plot all columns (except for x, of course).
+   plot      \- Let inter ask you which column to plot.
+A number shown in square brackets at the end of a request for input
+is a default value. Just hit return to accept the default.
+.P
+A semicolon (;) or carriage return indicates the end of the argument list.
+You can put multiple commands on one line, but it is a good idea to
+separate them with semicolons so that the second command is not mistaken
+for an argument of the first.
+.P
+A percent sign (%) indicates a comment. Everything from the percent sign
+to the end of the line will be ignored.
+.P
+Sometimes you will want to execute a lot of commands from a particular
+submenu. Submenu commands may be grouped, using parentheses. For
+example,
+   histogram (bins 200; plot 2)
+executes two commands from the histogram menu. It is identical to
+   histogram bins 200
+   histogram plot 2.
+Typing "option (" enters the options submenu, and stays there until a
+closing ")" is typed.
+.P
+All submenus include a command "nothing", which does nothing except return
+control to the calling menu. This is useful if you make a mistake.
+.P
+.SH COMMANDS
+.P
+  Commands are listing as they would be typed at the "inter >>" prompt.
+Items in angle brackets "<>" are arguments to be supplied.
+.P
+Fundamentals:
+.P
+.nf
+file <datafile>  Read the specified datafile. Nothing is plotted at this time.
+plot <column> ... Plot the specified column(s) of the data file, using
+                  the current line style. The x coordinates are assumed to be
+                  in column 1, unless "option xcolumn" has been invoked.
+next_file        Read the next file specified on the command line, if
+                 inter was invoked with "inter file1 file2 ... | axis".
+done             Exit inter, and display the plot.
+quit             The same as "done".
+.P
+line solid       Plot subsequent curves with solid lines (the default).
+line dotted      Plot subsequent curves with dotted lines.
+line dashed      Plot subsequent curves with dashed lines.
+line dotdashed   Plot subsequent curves with dot\-dashed lines.
+line none        Plot subsequent curves with no lines, just points.
+line style <arg> Plot subsequent curves in line style <arg>. Type
+                 "help line style" to get a list of styles.
+To mark points with characters, see "label datapoints" below.
+.P
+limit x <xmin> <xmax>  Set both x limits of the plot.
+limit y <ymin> <ymax>  Set both y limits of the plot.
+limit xmin <xmin>      Set only the lower x limit.
+limit xmax <xmax>      Set only the upper x limit.
+limit ymin <ymin>  ....
+limit ymax <ymax>  ....
+.P
+logaxes x       Make the x axis logarithmic.
+logaxes y       Make the y axis logarithmic.
+logaxes xy      Make both axes logarithmic.
+.P
+Labeling the plot:
+.P
+label xaxis <label>  Label the x axis with <label>. The rest of the input
+                     line is taken to be the label, so no other commands
+                     can appear on the line.
+label yaxis <label>  Label the y axis with <label>, with the same warning.
+label title <label>  Label the top of the graph with <label>.
+label arbitrary_point <x> <y> <label>  Write <label> at the point <x> <y>.
+label curve <col> <n> <label> Label the <n>th point in the curve in column
+                              <col> with <label>. A "$" instead of <n>
+                              indicates the last point in the curve.
+label datapoints on <label>  Label points of subsequently plotted curves
+                             with <label>. Lines will not be drawn while
+                             points are being labeled. To get both lines and
+                             labels, you must plot the curve twice.
+label datapoints off         Stop labeling points.
+label datapoints list        List the special characters available for labels.
+.P
+label position xaxis <x> <y> Set position of the x axis label, in units where
+                             the default width of the graph is 1, and the
+                             lower left corner is the origin. The default
+                             position is (.5, \-.1).
+label position yaxis <x> <y> Set position of the y axis label. The default
+                             position is (\-.15, .5).
+label position title <x> <y> Set position of the title. The default is (.5, .9).
+.P
+label size x <size>          Set size of the x label to <size>. The default is
+                             1.5, in some unknown units.
+label size y <size>          Set size of the y label to <size>. default = 1.5
+label size title <size>      Set size of the title to <size>. default = 2.0
+label size points <size>     Set size of labels drawn with "label datapoints"
+                             "label arbitrary_point", and "label curve". These
+                             sizes must be set before the points are drawn.
+                             The default size is 1.5.
+.P
+Interpretation of data:
+.P
+option automatic             Don't read x coordinates from the file, just
+                             use successive integers. This command toggles
+                             between normal and automatic modes.
+option errorbars             Plot errorbars on each point. The size of the
+                             bars is taken from the next column of data. This
+                             command is also a toggle.
+option transpose             Plot x vs. y, instead of y vs. x.
+option xcolumn <col>         Read x data from column <col>. The default is 1.
+option space_lines <n>       Plot only every nth line of data.
+option skip_lines <n>        Skip the first <n> lines of data.
+.P
+Appearance of the plot:
+.P
+option grid frame            Draw axes on all four sides of the plot (default).
+option grid none             Don't draw any axes.
+option grid arrow            Draw axes on the bottom and left sides only.
+option grid full             Draw a full grid.
+option grid box              Draw axes with no tick marks. This is available
+                             only with newaxis.
+option tick x                Set the x tick mark spacing. You must call
+                             "limit x" or this won't take effect.
+option tick y                Set the y tick mark spacing. Same warning.
+option tick style x full     Draw both major and minor tick marks on the x axis.
+option tick style x semi     Draw only major tick marks on the x axis.
+option tick style x none     Draw no tick marks on the x axis.
+   The "option tick style y" commands are identical. All of the "option tick
+   style" commands are available only in newaxis.
+option nonumber x            Don't put numbers on the x axis.
+option nonumber y            Don't put numbers on the y axis.
+   "option nonumber" is available only in newaxis.
+option clip                  Toggle between clipping (keeping curves within
+                             bounds) and not clipping. This may not work well,
+                             or at all, and must be used with newaxis.
+option width <width>         Set the width of the plot. The default is 1.
+option height <height>       Set the height of the plot. The default is 1.
+move up <dist>               Move the plot up the page by the specified amount.
+                             The units are the same as for labels.
+move right <dist>            Move the plot to the right.
+.P
+Modifying the data:
+.P
+option addcurves <col1> <col2> Add the values in column 1 to those in column 2.
+option adjustdata <col> ...    Scale and shift the data in the given column(s).
+option shift <shift>           Set the shift to be used in "option adjustdata".
+option shift_increment <inc>   Set the shift to be used in "option adjustdata".
+                               Each column adjusted will be shifted <inc>
+                               more than the previous column.
+option scale <scale>           Set the scale to be used in "option adjustdata".
+option logdata <col> ...       Take the logarithm (base 10) of the data in
+                               the specified column(s).
+option sine <col> ...          Take the sine of the data in the column(s).
+option cosine <col> ...        Take the cosine of the data in the column(s).
+option moddata <col> ...       Take the modulus of column(s) <arg>.
+option modulus <m> ...         Set the modulus to be used in "option moddata".
+                               The default value is 1.
+.P
+More ways to plot:
+.P
+returnplot <col> ...           Plot y[n+1] vs. y[n] for each column specified.
+option fitline <col>           Fit a line to the data in the specified column.
+                               If error bars are turned on, the fit is weighted.
+                               The fitted line is plotted.
+hiddenplot <cols>              Make a hidden line plot of the given columns.
+                               Line segments will be hidden behind segments
+                               plotted earlier on this call to hiddenplot.
+                               Use this with "option shift_increment" and
+                               "option adjust" to make pseudo 3d plots.
+histogram plot <col>           Make a histogram of the data in column <col>.
+histogram bins <n>             Use <n> bins for the histogram.
+histogram max <max>            Set the upper limit on the histogram x axis.
+histogram min <min>            Set the lower limit on the histogram x axis.
+   The histogram  will consist of <n> bins between <min> and <max>. If
+   these numbers are not specified, <n> will be assumed to be 100, and
+   inter will ask for <min> and <max>. The default values for <min> and <max>
+   are determined by the extent of the data.
+histogram normalize <area>     The area under the histogram will be <area>.
+                               If <area = 0> the y axis will give the number
+                               of counts in each bin.
+histogram log                  Plot the log of the height of each bin (toggle).
+histogram weight <col>         Weight each point by the number in the specified
+                               column.
+.P
+Miscellaneous:
+.P
+option include_file <file>   Copy the given file directly to the output.
+                             The file should contain axis commands.
+option ignore                Usually, axis commands in the data file are
+                             ignored. This command causes them to be sent
+                             along to axis. They are sent when they are read,
+                             before the data is plotted, so be careful.
+                             This is a toggle switch.
+option noclear               Don't clear the page before plotting. This
+                             allows you to put more than one plot on a page.
+                             Instead of sending the output of axis to a filter,
+                             send it to a file. When you have done this for
+                             all the plots, cat all the files to the filter at
+                             once.
+reset                        Reset all internal inter flags and start over.
+                             Curves already plotted cannot be recalled, though.
+.P
+save file <file>             Save all commands typed in the given file.
+                             If <file> is omitted, commands are saved at
+                             the end of the previously named file, if there
+                             was one.
+save off                     Stop saving commands.
+run_file <file>              Read and execute commands from file <file>. This
+                             file could have been written with "save file".
+                             Omitted arguments to commands in the file are
+                             read from the keyboard, not the file.
+if <question>                Print <question>, and if the user answers "y",
+                             execute the following line. Otherwise, discard
+                             the following line. This is useful in conjunction
+                             with "run_file".
+.P
+system cd <dir>              Change directory to <dir>.
+system back                  Change back to the previous directory.
+system pwd                   Print the current directory name.
+system ls                    List the contents of the current directory.
+system ! <sh command>        Interpret the rest of the line as a Unix command,
+                             and execute it.
+.P
+.SH BUGS
+1 - Clipping may not work.
+.P
+2 - Doesn't compile under Linux
+.P
+.P
+.SH AUTHOR
+      Steve Langer
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+

@@ -1,0 +1,86 @@
+#!/usr/local/bin/ksh
+#
+# SCRIPT: ./stats-tcpdump.ksh
+# AUTHOR: Seun Ewulomi
+# DATE:   09/02/2005
+# REV:    1.0.D (Valid are A, B, D, T and P)
+#               (For Alpha, Beta, Dev, Test and Production)
+#
+# PLATFORM: AIX, HP-UX, Linux, and Solaris
+#                      
+#
+# PURPOSE: This shell script takes a given tabular snmp data for a given element(node)
+#	   and collects the data per each day and gives the decriptive
+#	   statistics and percentiles to enable trendline to be determined by using
+#	   the maximum, percentile or average values.
+#
+# REV LIST:
+#        DATE: 03/03/2005
+#        BY:	  Seun Ewulomi   
+#        MODIFICATION: change variables to show date,time,days of statistics
+#
+#
+# set -n   # Uncomment to check your syntax, without execution.
+#          # NOTE: Do not forget to put the comment back in or
+#          #       the shell script will not execute!
+ set -x   # Uncomment to debug this shell script (Korn shell only)
+#          
+##########################################################
+########### DEFINE FILES AND VARIABLES HERE ##############
+##########################################################
+echo '########## CREATING DATA ##########';
+
+#directory="crbsg-colchester-DATA"
+trace_file='trace'
+file='rawdata'
+#graph='gnuplot-data.txt'
+awk="/bin/awk"
+
+src_ip='50.144.16.71'
+dst_ip='10.221.22.52'
+
+sample_period='Mar-2005'
+sample_time='21h49m51s-21h54m06s'
+sample_days='Mon-Fri'
+
+#time='/21:.*:.*/,/21:.*:.*/'
+
+
+##########################################################
+############### DEFINE FUNCTIONS HERE ####################
+##########################################################
+function src_throughput
+{
+echo "######Remove unwanted stuff######";
+sleep 1.5
+$awk '{ print $1,$2,$3,$5,$6 }' $trace_file | grep $src_ip | sed 's/(/ /g'\ | sed 's/)/ /g' | \
+$awk '{ print $1,$2,$6 }' | > $src_ip.$sample_period.$sample_time.$file
+}
+
+function dst_throughput
+{
+echo "######Remove unwanted stuff######";
+sleep 1.5
+$awk '{ print $1,$2,$4,$5,$6 }' $trace_file | grep $dst_ip | sed 's/(/ /g'\ | sed 's/)/ /g' | \
+$awk '{ print $1,$2,$6 }' | > $dst_ip.$sample_period.$sample_time.$file
+}
+
+
+function plot_graph
+{
+echo "######Plotting graph $trace_file between $sample_time######"
+sleep 1.5
+./graph-tcpdump
+
+}
+
+######################################################
+################ BEGINNING OF MAIN #######################
+##########################################################
+
+#src_throughput
+dst_throughput
+
+
+# End of script
+

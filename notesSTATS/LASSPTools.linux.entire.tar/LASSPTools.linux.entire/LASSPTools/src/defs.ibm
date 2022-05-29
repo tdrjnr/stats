@@ -1,0 +1,10 @@
+BEGIN_DEF = IBM RS6000 Makefile
+CFLAGS = -c -O -K -Q 
+BINDIR = $(LASSPDIR)/bin
+F77 = xlf
+# xlf90 for more modern systems
+FLIB = -lxlf90
+# FLIB = -lxlf
+SP_SRC = dpmpar
+ARFLAGS = -rv
+DEFINES = -DAIXV3

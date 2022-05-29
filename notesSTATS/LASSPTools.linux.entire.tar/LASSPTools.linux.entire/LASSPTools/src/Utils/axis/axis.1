@@ -1,0 +1,185 @@
+.hy 0
+.TH  AXIS 1 "8 September 1992"
+.SH NAME
+.PP
+axis - draw a graph
+.SH SYNOPSIS
+.PP
+axis [ option ] ...
+.SH DESCRIPTION
+.PP
+\fBAxis\fR with no options takes pairs of numbers from the standard input 
+as abscissas and ordinates of a graph. Successive points are connected by 
+straight lines. The graph is
+encoded on the standard output for display by the plot(1)
+filters (for example hpgl or tek10). These are accessed on
+the MASSCOMP through the uplot(l) script.
+If the coordinates of a point are followed by a nonnumeric
+string, that string is printed as a label beginning on the
+point. Labels may be surrounded with quotes "...", in which
+case they may be empty or contain blanks and numbers; labels
+never contain newlines.
+.PP
+Typical usage is
+.PP
+axis -lt "title" -lx "x-label" -ly "y-label" < data | uplot -T
+.PP
+(If \fBuplot\fP is not available, \fBpsplot\fP is an alternative
+for converting to postscript output.)
+.PP
+This treats the first column of "data" as the x variable, the
+second column as the y variable, and plots the data on a
+Tektronix 4014 graphics terminal with lines connecting the
+data points.  Other flags available with uplot may be learned
+by typing the command "uplot -T?". Current supported devices
+and their uplot-flags are as follows: 
+.br
+.in +1i
+.nf
+1. hpgl (-Thp), 
+2. postscript (-Tls), 
+3. imagewriter (-Tim) and 
+4. masscomp graphics tube (-Tmg).
+.fi
+.in -1i
+.PP
+\fBGraph\fR is a simpler variant of \fBaxis\fB.  It uses the
+hardware character set of the plotter and does not attempt to
+make fancy labels.  It is a bit faster than \fBaxis\fR.
+.SS Options
+.PP
+The following options are recognized, each as a separate
+argument.
+.TP
+\fB-a\fR Supply abscissas automatically (they are missing from
+the input); spacing is given by the next argument
+(default 1). A second optional argument is the
+starting point for automatic abscissas (default 0 or lower
+limit given by \fB\fB-x\fR\fR).
+.TP
+\fB-b\fR Break (disconnect) the graph after each label in the
+input.
+.TP
+\fB-c\fR "..."
+Character string given by next argument is default label for each point.
+.TP
+\fB-g\fR n
+Next argument is grid style, 0 no grid, 1 frame with
+ticks, 2 full grid (default).
+.TP
+\fB-l\fR "..."
+Next argument is label for graph. (same as \fB-lt\fR)
+.TP
+\fB-m\fR n
+Next argument is mode (style) of connecting lines: 0
+disconnected, 1 connected (default). Some devices give
+distinguishable line styles for other small integers.
+.TP
+\fB-s\fR Save screen, don't erase before plotting.
+.TP
+\fB-x [ l ]\fR [ xlo xhi xinc ]
+If l is present, x axis is logarithmic. Next 1 (or 2)
+arguments are lower (and upper) x limits. Third argu-
+ment, if present, is grid spacing on x axis. Normally
+these quantities are determined automatically.
+.TP
+\fB-y\fR [ l ] [ ylo yhi yinc ]
+Similarly for y.
+.TP
+\fB-h\fR 0.n
+Next argument is fraction of space for height.
+.TP
+\fB-w\fR 0.n
+Similarly for width.
+.TP
+\fB-r\fR 0.n
+Next argument is fraction of space to move right before
+plotting.
+.TP
+\fB-u\fR 0.n
+Similarly to move up before plotting.
+.TP
+\fB-t\fR Transpose horizontal and vertical axes. (Option \fB-x\fR now
+applies to the vertical axis.)
+.TP
+\fB-e\fR Takes data supplied in the following form: x y delta y,
+and marks the delta y error bars on the plot.
+.TP
+\fB-lt\fR "..."
+The string in quotations following this flag will be the title.
+.TP
+\fB-lt2\fR "..."
+This string specifies how the string \fB-lt\fR " " is to be 
+manipulated. The string \fB-lt2\fR manipulates string \fB-lt\fR space 
+by space. A blank will print the letter as it appears,
+an upper case G will take an upper case letter and substitute
+its greek letter substitute as specified in /usr/lib/greek/,
+an upper case case H will substitute an upper case greek,
+and an upper case C will mark the beginning or the end of
+a subscript or a superscript as indicated below.
+.PP
+	0 = enter superscript
+.br
+	1 = end superscript
+.br
+	2 = enter subscript 
+.br
+	3 = end subscript
+.PP
+As an example, if I wished to have my title to be 
+AB superscript alpha end superscript C, I would use
+\fB-lt\fR "AB0A1C" \fB-lt2\fR " CGC " . The first two spaces
+in \fBlt2\fR indicate that AB is to be printed as is, the C
+indicates that the 0 signifies the beginning of the 
+superscript, the G indicates that the A is meant to be 
+alpha, the next C indicates that the 1 is the end of
+the superscript, and the last blank indicates that the C
+is to be printed as C. Trailing blanks are not needed.
+.TP
+\fB-ltx\fR 0.n
+This locates the x location of the title in a fraction 
+of the page.
+.TP
+\fB-lty\fR 0.n
+This locates the y location of the title.
+.TP
+\fB-lts\fR n
+This specifies the size of the title in inches(default = 2).
+.TP
+The structure of the x-label and the y-label options is the
+same as the title.
+.PP
+\fB-lx\fR "x-label"		\fB-ly\fR "y-label"
+.br
+\fB-lx2\fR			\fB-ly2\fR
+.br
+\fB-lxx\fR			\fB-lyx\fR
+.br
+\fB-lxy\fR			\fB-lyy\fR
+.br
+\fB-lxs\fR "default=1.5" 	\fB-lys\fR
+.TP
+\fB-lcs\fR n.n
+Character expansion factor. All character sizes are
+multiplied by this. (default = 1.0)
+.TP
+If a specified lower limit exceeds the upper limit, the axis
+is reversed.
+.SH SEE ALSO
+.PP
+spline(1), plot(1)
+.SH BUGS
+.PP
+Graph stores all points internally and drops those for which
+there isn't room.
+.PP
+Segments that run out of bounds are dropped, not windowed.
+.PP
+Logarithmic axes may not be reversed.
+.PP
+"Inches" are machine dependent and usually far smaller than true inches.
+.SH AUTHOR
+.sp1
+John Richardson, Bob Pearson, Doug Toussaint, Dan Sullivan, Steve Langer
+.sp 1
+Send bug reports to toolkeeper@msc.cornell.edu

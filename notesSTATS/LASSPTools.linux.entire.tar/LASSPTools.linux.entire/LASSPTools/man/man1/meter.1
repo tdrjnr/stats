@@ -1,0 +1,76 @@
+.hy 0
+.TH METER 1  "12 November 1992"
+.ad
+
+.SH NAME
+meter - An input/output dial
+
+.SH SYNOPSIS
+meter [-options]
+
+.SH DESCRIPTION
+meter displays a dial with an arrow indicator. Numerical data may be sent
+to meter, the indicator is adjusted based on the value. The value is
+also displayed below the indicator. For data values greater then the maximum
+the indicator will display the remainder of the value divided by the meter
+maximum, the whole value will be displayed below the indicator. 
+
+The mouse may also be used to grab the indicator and adjust the dial to the
+desired position. The up and down arrow keys may also be used to increment
+or decrement the value displayed on the meter by one. The send button will
+write to standard output the value displayed by the meter. The reset button
+will cause the meter to return to the minimum position. 
+
+
+.SH USAGE
+meter can be used to display data piped between programs so that the
+user can determine when changes occur. The input values can be
+obtained via a pipe, typing in data or redirected from a file. meter may also
+be used to generate values for use by other programs.
+
+.SH OPTIONS
+.LP
+-echo : Copy input values to standard output
+.LP
+-min value : Set the minimum value on the meter.
+.LP
+-max value : Set the maximum value on the meter.
+.LP
+-markers value : Set how may tick marks are present on the meter
+.LP
+-label "label" : Attach a title to the dial.
+.LP
+-eof : Ignore end of file on input. The default is to exit when an
+end of file condition is seen on standard input.  
+
+.SH EXAMPLE
+.sp 1
+cat datafile | meter -min 0 -max 100 -markers 11 -eof
+.sp 1
+Will display a meter face with 11 tick marks for the positions 0 through 100.
+Each value sent to meter will cause the indicator to move to that position. 
+When the file is complete the dial will point to the last value.
+.sp 1
+ProgramB | meter -min 0 -max 100 -markers 5 -echo | ProgramA | meter -min 0
+-max 1000 -markers 11
+.sp 1
+This will adjust the meter hand position based on the values read from 
+ProgramB. The -echo option causes the input to be sent to ProgramA
+unmodified. The output of ProgramA can then be sent to a second meter which
+monitors the transformed data.
+
+.SH BUGS
+.sp 1
+Currently meter only displays integer data (although it will echo both 
+float and integer data). 
+.sp 1
+If the indicator is grabbed and rotated around several times, the minimum
+value should be set to zero so the values can be scaled properly.
+
+.SH AUTHOR
+Based on the program from Douglas A. Young "The X Window System Programming 
+and Applications with Xt - OSF/Motif Edition" pages 344-363. Modifications
+by Jim Frankenberger and Bruce Roberts.
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+

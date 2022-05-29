@@ -1,0 +1,31 @@
+
+               MINPACK Subroutines
+
+ NAME                      DESCRIPTION
+
+CHKDER    Check gradients for consistency with functions
+DOGLEG    Determine combination of Gauss-Newton and gradient directions
+DPMPAR    Provide double precision machine parameters
+ENORM     Calculate Euclidean norm of vector
+FDJAC1    Calculate difference approximation to Jacobian (nonlinear equations)
+FDJAC2    Calculate difference approximation to Jacobian (least squares)
+HYBRD     Solve systems of nonlinear equations (approximate Jacobian)
+HYBRD1    Easy-to-use driver for HYBRD
+HYBRJ     Solve systems of nonlinear equations (analytic Jacobian)
+HYBRJ1    Easy-to-use driver for HYBRJ
+LMDER     Solve nonlinear least squares problem (analytic Jacobian)
+LMDER1    Easy-to-use driver for LMDER
+LMDIF     Solve nonlinear least squares problem (approximate Jacobian)
+LMDIF1    Easy-to-use driver for LMDIF
+LMPAR     Determine Levenberg-Marquardt parameter
+LMSTR     Solve nonlinear least squares problem (storage conserving)
+LMSTR1    Easy-to-use driver for LMSTR
+QFORM     Accumulate orthogonal matrix from QR factorization
+QRFAC     Compute QR factorization of rectangular matrix
+QRSOLV    Complete solution of least squares problem
+RWUPDT    Update QR factorization after row addition
+R1MPYQ    Apply orthogonal transformations from QR factorization
+R1UPDT    Update QR factorization after rank-1 addition
+
+The test programs are in minpack/ex. try:
+send index from minpack/ex

@@ -1,0 +1,73 @@
+.hy 0
+.TH SURFPLOT 1 "15 August 1991"
+.ad
+
+.SH NAME
+.B SurfPlot 
+- a simple surface plotter 
+
+.SH SYNOPSIS
+
+.B SurfPlot [-f
+.I datafile
+] 
+|
+RotateStream | 3D-2D | polydraw
+
+.SH DESCRIPTION
+SurfPlot is a simple program to produce surface plots a la Mathematica.
+
+.SH USAGE
+To use SurfPlot, you can either specify the file containing the data 
+on the command line, or you can pipe it through.  The data is a sampled
+surface.  SurfPlot will extrapolate the x and y coordinates, scale the range
+of the data, and add in color information for polydraw.
+
+
+.SH OPTIONS
+-f[ile_in]
+.I filename
+
+.br
+.in +4
+Specifies the input file.  Default is standard input.
+.LP
+-b[inary_out]
+
+.br
+.in +4
+Specifies binary output mode.  Default is ascii mode.
+.LP
+-h[elp]
+
+.br
+.in +4
+Prints help information.
+.RE
+.sp1
+.sp1
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile
+| SurfPlot | RotateStream | 3D-2D | polydraw
+.sp 1
+will send data from the file
+.I datafile
+through SurfPlot to RotateStream to 3D-2D to polydraw.
+.sp1
+For another example of usage, look in /usr/local/pub/demos.
+.SH "SEE ALSO"
+RotateStream, 3D-2D, polydraw
+
+.SH BUGS
+None.
+
+.SH AUTHOR
+David Chin
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+SurfPlot was developed at Cornell University as part of the Cornell-IBM
+Joint Study on Computing for Scientific Research

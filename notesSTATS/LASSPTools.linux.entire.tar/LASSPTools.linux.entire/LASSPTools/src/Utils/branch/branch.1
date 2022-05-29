@@ -1,0 +1,65 @@
+
+.hy 0
+.TH BRANCH 1 "17 April 1991"
+.ad
+
+.SH NAME
+branch - a simple data stream splitter
+
+.SH SYNOPSIS
+
+cat 
+.I datafile 
+|
+.B branch 
+"
+.I "command1" 
+"
+| 
+.I command2
+
+.SH DESCRIPTION
+Branch is a simple datastream splitter.  It takes input from stdin and
+splits it into two output streams.  One output stream is sent to 
+.I command1
+and the other to 
+.I command2.
+Note that both commands my have pipes in them.
+
+.SH USAGE
+To use branch, you simply pipe your data through it, specifying what commands
+you want the data to be passed to.
+
+.SH OPTIONS
+There aren't any.
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile 
+| 
+.B branch 
+"sort -n | head" | wc
+.sp 1
+will send data from 
+.I datafile 
+into 
+.B branch,
+and then the data is passed to wc which counts the number of lines in the
+file and to sort -n | head which will give the largest 10 values of the
+first column in the file.
+
+.SH "SEE ALSO"
+psh, eet
+
+.SH BUGS
+1. Nested branches don't work.
+
+.SH AUTHOR
+Jeff Osterman
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+branch was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

@@ -1,0 +1,109 @@
+########$csv_file $sample_period between $sample_time for $sample_days########
+-------------------------IN-Bound Statistics------------------------
+  Total of 199 values 
+    Minimum  = 147.062109 (position IN = 98)  = 2.451035 %
+    Maximum  = 2773.662109 (position IN = 1)  = 46.227702 %
+    Range    = 2626.600000 
+    Total = 296377.759379 
+    Mean IN   = 1489.335474  = 24.822258 %
+    Variance = 326415.698744 
+    Std Dev IN  = 571.328013 
+    CoV      = 0.383613 
+---------------------------------------------------------------
+-------------------------OUT-Bound Statistics------------------------
+  Total of 199 values 
+    Minimum  = 172.267090 (position OUT= 97)  = 2.871118 %
+    Maximum  = 5372.011719 (position OUT = 161)  = 89.533529 %
+    Range    = 5199.744629 
+    Total = 565486.316907 
+    Mean OUT = 2841.639783  = 47.360663 %
+    Variance = 1277591.504546 
+    Std Dev OUT = 1130.305934 
+    CoV      = 0.397765 
+---------------------------------------------------------------
+########southampton-pair-6mbps.csv 4-weeks-duration between 0800-1800 for Mon-Fri########
+-------------------------IN-Bound Statistics PERCENTILES------------------------
+  Total of 199 values 
+    Median    = 1632.703125  = 27.211719 %
+    1% value = 194.717383  = 3.245290 %
+    2% value = 261.406250  = 4.356771 %
+    5% value = 305.463867  = 5.091064 %
+    95% value IN = 2250.354492  = 37.505908 %
+    98% value = 2452.490234  = 40.874837 %
+    99% value = 2600.166016  = 43.336100 %
+---------------------------------------------------------------
+-------------------------OUT-Bound Statistics PERCENTILE------------------------
+  Total of 199 values 
+    Median    = 3052.998047  = 50.883301 %
+    1% value = 203.572266  = 3.392871 %
+    2% value = 281.313477  = 4.688558 %
+    5% value = 682.952148  = 11.382536 %
+    95% value OUT = 4468.759766  = 74.479329 %
+    98% value = 5001.757813  = 83.362630 %
+    99% value = 5245.585938  = 87.426432 %
+---------------------------------------------------------------
+########southampton-pair-6mbps.csv 4-weeks-duration between 0800-1800 for Mon-Fri########
+  Filter out INBOUND Traffic for THRESHOLD = 70 perc and MAX_VALUE_THRESHOLD = 70 perc 
+  Filter out OUTBOUND Traffic for THRESHOLD = 70 perc and MAX_VALUE_THRESHOLD = 70 perc 
+  MAX-Above-THRESHOLD -->     1 -- 4468.759766 Kbits/sec 
+  MAX-Above-THRESHOLD -->     3 -- 4480.419922 Kbits/sec 
+  MAX-Above-THRESHOLD -->    20 -- 4411.503906 Kbits/sec 
+  MAX-Above-THRESHOLD -->    75 -- 5245.585938 Kbits/sec 
+  MAX-Above-THRESHOLD -->   103 -- 4929.199219 Kbits/sec 
+  MAX-Above-THRESHOLD -->   112 -- 4345.878906 Kbits/sec 
+  MAX-Above-THRESHOLD -->   113 -- 4290.205078 Kbits/sec 
+  MAX-Above-THRESHOLD -->   114 -- 5001.757813 Kbits/sec 
+  MAX-Above-THRESHOLD -->   124 -- 4355.927734 Kbits/sec 
+  MAX-Above-THRESHOLD -->   134 -- 4517.294922 Kbits/sec 
+  MAX-Above-THRESHOLD -->   139 -- 4209.892578 Kbits/sec 
+  MAX-Above-THRESHOLD -->   140 -- 4790.712891 Kbits/sec 
+  MAX-Above-THRESHOLD -->   152 -- 4465.781250 Kbits/sec 
+  MAX-Above-THRESHOLD -->   160 -- 4657.597656 Kbits/sec 
+  MAX-Above-THRESHOLD -->   161 -- 5372.011719 Kbits/sec 
+  MAX-Above-THRESHOLD -->   163 -- 4201.083984 Kbits/sec 
+  MAX-Above-THRESHOLD -->   171 -- 4402.597656 Kbits/sec 
+  MAX-Above-THRESHOLD -->   174 -- 4227.558594 Kbits/sec 
+  MAX-Above-THRESHOLD -->   190 -- 4259.902344 Kbits/sec 
+  MAX-Above-THRESHOLD -->   191 -- 5085.488281 Kbits/sec 
+########southampton-pair-6mbps.csv 4-weeks-duration between 0800-1800 for Mon-Fri########
+------------------------------------------------ INBOUND Traffic ---------------------------
+  For 4 buckets Percentage of INBOUND data ABOVE or BELOW THRESHOLD 4200.000000 Kbits (for 199 samples) 
+      0.000 Kbits TO 4200.000 Kbits = 199 -- 100.000000 % of INBOUND Traffic 
+   4200.000 Kbits TO 8400.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+   8400.000 Kbits TO 12600.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+  12600.000 Kbits TO 16800.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+------------------------------------------------------------------------------------------
+------------------------------------------------ OUTBOUND Traffic ---------------------------
+  For 4 buckets Percentage of OUTBOUND data ABOVE or BELOW THRESHOLD 4200.000000 Kbits (for 199 samples) 
+      0.000 Kbits TO 4200.000 Kbits = 179 -- 89.949749 % of OUTBOUND Traffic 
+   4200.000 Kbits TO 8400.000 Kbits = 20 -- 10.050251 % of OUTBOUND Traffic 
+   8400.000 Kbits TO 12600.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+  12600.000 Kbits TO 16800.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+--------------------------------------------------------------------------------------------
+########southampton-pair-6mbps.csv 4-weeks-duration between 0800-1800 for Mon-Fri########
+-----------------------------------------------INBOUND Traffic Distribution----------------------------
+  Percentage of INBOUND data distribution (for 10 samples) 
+      0.000 Kbits TO  600.000 Kbits = 21 -- 10.552764 % of INBOUND Traffic 
+    600.000 Kbits TO 1200.000 Kbits = 30 -- 15.075377 % of INBOUND Traffic 
+   1200.000 Kbits TO 1800.000 Kbits = 85 -- 42.713568 % of INBOUND Traffic 
+   1800.000 Kbits TO 2400.000 Kbits = 59 -- 29.648241 % of INBOUND Traffic 
+   2400.000 Kbits TO 3000.000 Kbits =  4 -- 2.010050 % of INBOUND Traffic 
+   3000.000 Kbits TO 3600.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+   3600.000 Kbits TO 4200.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+   4200.000 Kbits TO 4800.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+   4800.000 Kbits TO 5400.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+   5400.000 Kbits TO 6000.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+--------------------------------------------------------------------------------------
+-----------------------------------------------OUTBOUND Traffic Distribution----------------------------
+  Percentage of OUTBOUND data distribution (for 10 samples) 
+      0.000 Kbits TO  600.000 Kbits =  9 -- 4.522613 % of OUTBOUND Traffic 
+    600.000 Kbits TO 1200.000 Kbits = 13 -- 6.532663 % of OUTBOUND Traffic 
+   1200.000 Kbits TO 1800.000 Kbits = 16 -- 8.040201 % of OUTBOUND Traffic 
+   1800.000 Kbits TO 2400.000 Kbits = 17 -- 8.542714 % of OUTBOUND Traffic 
+   2400.000 Kbits TO 3000.000 Kbits = 41 -- 20.603015 % of OUTBOUND Traffic 
+   3000.000 Kbits TO 3600.000 Kbits = 56 -- 28.140704 % of OUTBOUND Traffic 
+   3600.000 Kbits TO 4200.000 Kbits = 27 -- 13.567839 % of OUTBOUND Traffic 
+   4200.000 Kbits TO 4800.000 Kbits = 15 -- 7.537688 % of OUTBOUND Traffic 
+   4800.000 Kbits TO 5400.000 Kbits =  5 -- 2.512563 % of OUTBOUND Traffic 
+   5400.000 Kbits TO 6000.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+-------------------------------------------------------------------------------------------

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo '########## CREATING DATA ##########';
+
+AWK='/usr/bin/awk'
+AWK_OPT='{ print $1,$2,$3,$4,$7 }'
+EGREP='/bin/egrep -e'
+DATE_1='2[7-9]/09/2004'
+
+CSV_FILE='RHIBGP1-to-MGIBGP1-60Mbps.csv'
+FILE='data.txt'
+DATA=$(sed 's/,/ /g' < $CSV_FILE |  $AWK '$AWK_OPT' | $EGREP -e '2[7-9]/09/2004' -e '30/09/2004' -e '01/10/2004' -e '0[4-8]/10/2004' > $FILE)
+
+
+echo '########## FINISHED ##########'
+
+<< END_SCRIPT
+
+END_SCRIPT
+exit 0

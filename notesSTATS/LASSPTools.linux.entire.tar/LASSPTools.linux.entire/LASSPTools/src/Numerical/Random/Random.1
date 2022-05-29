@@ -1,0 +1,263 @@
+.hy 0
+.TH RANDOM 1 "December 9 1992"
+.ad
+
+.SH NAME
+Random - generate various random distributions
+
+.SH SYNOPSIS
+
+.B Random -objects n [-help]
+   [-vector n] [-matrix m n]
+   [-flat min max] [-gaussian sd av] [-exp av] [-poisson [av]] [-binomial prob trials]
+   [-drand48] [-aixrand] [-ranf] [-griff] [-nbs] [-acm] [-marin] [-rcarry] [-seed seed1 [seed2] [seed3]]
+   [-accumulate rows | cols] [-accumulate objects] [-average] [-square] [-index] [-complex]
+  [-binary] [-Mathematica_out] [-HTML_out] [-fileout File]
+
+
+.SH DESCRIPTION
+The random program will generate random numbers from various distributions.
+The output may be formated as single values, vectors or matrices and can
+contain real or complex numbers. Several single values, vectors or matrices
+can be output with blank lines between each objects.
+The output of random is typically
+sent to graphing programs or simulation programs. The core distribution routines
+use the functions from the ranlib package available via FTP from lib.stat.cmu. The
+core random number generators are from various sources.
+ 
+The distributions that are supported include:
+.TP
+.B flat min max 
+Every value between min and max has an equal probability
+of being selected. 
+.TP
+.B exp av 
+The values selected form an exponential distribution with 
+average av.
+.TP
+.B gaussian sd [av] 
+The values selected form a gaussian (normal) 
+distribution with standard deviation sd and average av. The default 
+average is 0.0.
+.TP
+.B binomial p n 
+A binomial distribution with the probability of an event
+being p and the number of trials being n. Each value produced is the
+number of successes reported in n trials given probability p.
+.TP
+.B poission av 
+Produce a poisson distribution with average av.
+
+In addition the to specifying the distribution the random number generator
+may also be specified. The core random number generators use various
+alogorithms that produce numbers in the range 0.0 to 1.0, the numbers are
+used to form distributions or scaled in the case of flat distributions to
+other ranges. 
+.TP
+.B aixrand 
+The AIX random() function. See the AIX manual page for more 
+information. 
+This subroutine uses a non-linear additive feedback random
+number  generator employing a default state array size of 31 long
+integers to return successive pseudo-random number in  the  range
+from 0 to 2**31-1 this number is scaled to be between 0 and 1 before
+being output. The period of this random number generator is
+very large, approximately 16 * (2**31-1).  
+.TP
+.B ranf 
+Part of the ranlib package. Available from the Internet statistic's
+repository lib.stat.cmu.edu This is the same algoritm as the -acm
+option, however the routine is implemented in C. Ref. Communications
+of the ACM, vol 31 742-749 June 1988. This is the algorithm by L'Ecuyer.
+.TP
+.B griff 
+Based on Applied Statistics by Griffith and Hill (1984) vol. 33.
+This is algoritm AS 183 vol. 31 no. 2. The period of this generator
+is 9.95*(10**12). 
+Available from lib.stat.cmu.edu
+.TP
+.B acm 
+Based on Commumications of the ACM vol. 31, 742-749,774 June 1988.
+Available with AS 183 (see above). Based on the algorithm of
+L'Ecuyer. The period for this generator is about 2*(10**18)
+.TP
+.B nbs 
+Developed at the National Bureau of Standards. Also available from
+lib.stat.cmu.edu contained in the ranlib package.
+Ref. Marsaglia, G. "Comments on the Perfect Uniform
+Random Number generator", Unpublished notes Washington State University.
+.TP
+.B marin
+The alogorithm of Marsaglia, Zaman and Tsang. As it appeared in
+Computer Physics Communications 60 (1990) 329-344 by F. James.
+This generator has a very long period of 2*(10**43).
+.TP
+.B rcarry
+Another algorithm by G. Marsaglia and A Zaman. As it appeared in
+Computer Physics Communications 60 (1990) 329-344 by F. James.
+This generator has a very long period, 10**171
+.TP
+.B drand48 
+Part of many unix systems, uses the linear congruential algorithm and
+48-bit integer arithmetic.
+The subroutines work by generating a sequence of 48-bit in-
+teger values, x[i], according to the linear congruential formula:
+  x[n+1] = (ax[n] + c)mod m,  n is > =  0
+The parameter m = 248; hence 48-bit integer arithmetic is per-
+formed. The multiplier value a and the addend value c are:
+a = 5DEECE66D base 16 = 273673163155 base 8
+c = B base 16 = 13 base 8
+See the drand48 manual page for more information.
+
+The output from random can be either sent to the display or written to
+a file.
+
+.SH OPTIONS
+.TP
+.B \-objects n 
+Specifiy the number of objects to generate. The default is one
+object. The objects that can be generated are scalers, vectors, and matrices.
+.TP
+.B \-flat min max 
+Use a flat distribution where the random numbers are evenly
+distributed between min and max. The default is a flat distribution between
+0.0 and 1.0
+.TP
+.B \-square
+Square the accumulated value.
+.TP
+.B \-accumulate rows \| cols 
+Accumulate elements in a matrix that have the
+same row or column. The accumulated value is what is output. Either row or
+column may be specified but not both. When a new object is begun the 
+accumulation is restarted beginning on the first row. The default is to
+not accumulate.
+.TP
+.B \-accumulate objects
+This causes the accumulation to continue when a new
+object is started. This option is designed to be used in addition to the
+accumulate rows or cols option. The default is to not do accumulation.
+.TP
+.B \-vector n 
+Specify that each object is to be a vector with n elements.
+.TP
+.B \-matrix m n 
+Specify that each object is to be a matrix with m rows and
+n columns.
+.TP
+.B \-gaussian sd [av]
+Generate random numbers from a gaussian (normal)
+distribution with standard deviation sd and mean av.
+.TP
+.B \-exp av 
+Generate an exponential distribution with average av. 
+.TP
+.B \-help 
+Display a list of all the command line options.
+.TP
+.B \-seed n 
+Specify a seed to the random number generator. 
+.TP
+.B \-binary
+Produce binary output.
+.TP
+.B \-Mathematica_out 
+Produce curly braces around vectors and matrices so that
+vectors and matrices can be used with Mathematica. The default is to not
+produce braces.
+.TP
+.B \-HTML_out 
+Produce HTML Table output (PROPOSED HTML3.0 SPEC)
+.TP
+.B \-complex 
+Generate elements in the form A+BI. The default is to produce real
+floating point values.
+.TP
+.B \-fileout File
+Direct output to a file. The default is for the output to be
+written to standard out.
+.TP
+.B \-average
+Output only one object where each element is the average of 
+all the intermediate objects.
+.TP
+.B \-ranf
+Use the random number generator from the ranlib package.
+.TP
+.B \-random
+Use the AIX function random(), this is only available on the RS6000.
+.TP
+.B \-index
+Use the first column of a matrix to contain the row number. 
+When used with a vector object causes the first column to be set to 1.
+When used with a scaler object increments for each value output.
+
+
+.SH DEFAULTS
+The only parameter that is required is the number of objects to create. The
+defaults if 'random -objects n' is specified:
+   The default distribution is -flat : 0.0 1.0
+   The default random number generator is -drand48
+   The default object is a single number.
+
+This will generate a series of numbers between 0.0 and 1.0 that are uniformly
+distributed. Each number appears on a separate line.
+   
+.SH EXAMPLE
+.TP
+1. random -objects 100 -acm -flat -0.5 0.5
+Will use the acm random number generator to produce 10 numbers uniformly
+distributed between -0.5 and 0.5
+.TP
+2. random -objects 10 -random -flat 10 20 -matrix 3 2
+Will use the AIX random function to generate 10 matrices each having 3 rows
+and 2 columns. Each matrix will have random numbers uniformly distributed
+between 10 and 20 for the elements.
+.TP
+3. random -objects 10 -ranf -matrix 100 2 -accumulate cols 
+Will use the ranf random number generator to produce 10 matrices each
+with 100 rows and 2 columns. Within each matrix the column elements
+are summed so that element (i,j) is the sum of the previous elements
+in column j for rows 0 to i-1.
+.TP
+4. random -objects 2 -matrix 1000 1 -index -Mathematica_out
+Will use the drand48 random number generator (the default) to produce 2
+matrices. The -index option causes the elements of column 1 to be the
+current row number. The output becomes a matrix with 1000 rows and 2
+columns with the second column being the random number and the first
+column the row number. Braces are added around the matrices.
+.TP
+5. random -objects 10 -complex -matrix 3 3 
+Will produce 10 matrices where each element of a matrix is a complex
+number in the form A+BI. The A and B were each generated from the
+drand48 random number generator.
+.TP
+6. random -objects 1  -gaussian 2 10 -matrix 1000 1 -index
+Will produce a gaussian distribution of random numbers with standard 
+deviation 2 and mean 10. The random numbers are used to fill the second
+column of a 1000 row matrix, the first column contains the row index.
+.TP
+7. random -objects 100 -matrix 100 2 -accumulate objects
+                                     -accumulate rows
+Will produce 100 matrices each having 100 rows and 2 columns the elements
+in each column will be summed. The accumulation will each matrix so 
+that the 100'th matrix is a sum of the previous 99.
+
+.SH "SEE ALSO"
+histogram,drand48,aixrand
+
+.SH BUGS
+1 - Does not support the Mathematica arrow notation to denote an exponent.
+.PP
+2 - Does not support the Fortran 'd' notation.
+
+.SH AUTHOR
+Jim Frankenberger
+.sp1
+Distribution functions are from statlib at FTP site lib.stat.cmu.edu
+Core random number generators are also from statlib.
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Random was developed at Cornell University as part of the 
+Cornell-IBM Joint Study on Computing for Scientific Research
+

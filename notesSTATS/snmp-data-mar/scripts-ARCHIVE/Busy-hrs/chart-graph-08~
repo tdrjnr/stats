@@ -1,0 +1,41 @@
+#!/usr/bin/perl -w
+use Chart::Graph::Gnuplot qw(gnuplot);
+
+    my %cols = (
+                3 => "Bandwidth Utilization IN", ####CHECK
+                4 => "Bandwidth Utilization OUT", ####CHECK
+		5 => "Threshold" ####CHECK
+		#4 => "2MB Capacity"
+		#Use below with latency data included
+		#4 => "Bandwidth Utilization IN", 
+                #5 => "Bandwidth Utilization OUT",
+		#6 => "Threshold"
+                );
+    gnuplot({
+             #"title" => "Site Traffic Combined 2MB LINK In/Out traffic", ####CHECK
+	     "title" => "0800am-0855am", ####CHECK
+             "x-axis label" => "0800am-0855am traffic", ####CHECK
+             #"x-axis label" => "about 3 days duration", ####CHECK
+             "y-axis label" => "Kbits/sec Utilization",
+             #"y-axis label" => "Kbytes/sec Utilization",
+             "output type" => "png",
+             "output file" => "0800am-0855am.png", ####CHECK
+             #"output file" => "fettesrow-mosley-wkend.png", ####CHECK
+	     #"xtics" => [ ["combined-traffic for Lord and Mosley street", 1000] ],
+	     "xtics" => [ ["Traffic 0800am-0855am", 1000] ], 
+             # Setting date/time specific options.
+             #"xdata" => "%m/%y",
+             #"timefmt" => "%m",	
+             #"format" => ["x", "%m"],
+             # Set output range - note quoting of date string
+             #"xrange" => "[\"18/06/2004\":\"02/07/2004\"]",
+	     #"extra_opts" => join("\n", "set grid"),
+            },
+
+            map {  
+                [{"title" => $cols{$_},
+                  "style" => "linespoints",
+                  "type" => "file",
+                  using => "$_" },
+                 "hour-stats-data"] } (sort keys %cols));
+

@@ -1,0 +1,191 @@
+.TH XYMOVIEPLOT 1 "14 September 1992"
+.SH NAME
+.PP
+xyMoviePlot - Plot points and figures
+.SH SYNOPSIS
+.PP
+xyMoviePlot [ option ] ...
+.SH DESCRIPTION
+.PP
+xyMoviePlot takes drawing commands contained in a file, or from 
+standard input and processes them. The program also accepts command line
+arguments as well as values specified in the .Xdefaults file.
+The drawing commands are the following:
+.LP
+.I X,Y {color}
+: Draw a Point, a color may be specified.
+.LP
+.I X,Y R {color}
+: Draw a circle with center at X,Y and radius R, a color may be specified.
+.LP
+.I X1,Y1 X2,Y2 {color} 
+: Draw a line segment from point X1,Y1 to point X2,Y2, a color may be 
+specified.
+.LP
+.I X1,Y1 X2,Y2 R {color}
+: Draw an ellipse with two foci at X1,Y1 and X2,Y2 and constant distance R.
+A color may be specified.
+.LP
+.I X1,Y1 X2,Y2, ... Xn,Yn {color}
+: Draw a polygon where each X,Y pair specifies the vertices of the polygon,
+the vertices. A color may be specified.
+.LP
+.I f <color> 
+: Foreground color switch.
+.LP
+.I b <color>
+: Background color switch.
+.LP
+.I s hmin,hmax,vmin,vmax 
+: Change the scale (can only be done at the beginning of a frame).
+.RS 5
+hmin - Minimum value for horizontal
+.sp 1
+hmax - maximum value for horizontal
+.sp 1
+vmin - minimum value foe vertical
+.sp 1
+vmax - maximum value for vertical
+.RE
+.LP
+.I a 
+: Turn on automatic calculation of scales (can only be done at beginning of
+scales).
+.LP
+.I t <string>
+: Change title
+.LP
+.I h <string>
+: Change horizontal annotation
+.LP
+.I v <string>
+: change vertical annotation
+.LP
+.I d <string>
+: Dump current screen to file ('-' is standard out)
+.LP
+.I r <string>
+: Start record of data to file ('-' is standard out'
+.LP
+.I blank
+: A blank line (really nothing on it) will signal the end of a frame, the 
+next frame will cause the window to be cleared before drawing.
+ 
+.SH OPTIONS
+The following command line options may be specified.
+.LP
+.I -foreground | -fg <color>
+: Foreground color (color to draw with)
+.LP
+.I -background | -bg <color>
+: Background color (color to paint screen with).
+.LP
+.I -backgroundscreen | -bs 
+: Background pixmap for display
+.LP
+.I -hminimum value | -hmin value 
+: Minimum value for horizontal scale
+.LP
+.I -hmaximum value | -hmax value 
+: Maximum value for horizontal scale
+.LP
+.I -vminimum value | -vmin value
+: Minimum value for vertical scale
+.LP
+.I -vmaximum value | -vmax value
+: Maximum value for vertical scale
+.LP
+.I -hscale value | -hs value 
+: Scale system to be used for horizontal axis, valid options are 'linear' and
+'logx'. The 'x' in logx may be any integer or 'e' to specify the natural log.
+.LP
+.I -vscale value | -vs value 
+: Scale system to be used for vertical axis, valid options are 'linear' and
+'logx'. The 'x' in logx may be any integer or 'e' to specify the natural log.
+.LP
+.I -automatic | -auto
+: Automatically recalculate the scales based on new data
+.LP
+.I -title <string> | -t <string>
+: Window title
+.LP
+.I -horizontal <string> | -hor <string> 
+: Horizontal annotation
+.LP
+.I -vertical <string> | -ver <string>
+: Vertical annotation
+.LP
+.I -binary | -bin | -b
+: Accept all data as binary values
+.LP
+.I -record | -rec
+: Record all data to a file
+.LP
+.I -geometry | -geom | -g
+: Window geometry. See Xwindows Users Guide for a description of how 
+window geometry is specified.
+
+.SH EXAMPLE
+If the following input is piped in to xyMoviePlot a square will be drawn and
+then erased and then a circle drawn.
+.sp 1
+ 0,0 0,5
+ 0,5 5,5
+ 5,5 5,0
+ 5,0 0,0
+
+ 5,5 5
+.sp 
+xyMoviePlot -hmin -10 -hmax 10 -vmin -10 -vmax 10
+.sp 1
+This will cause the drawing area to measure ten units by ten ten units, with
+0,0 as the center.
+
+.SH RESOURCES
+The following resources may be specified in the .Xdefaults file.
+
+Top Level
+        .geometry       <geometry>
+        .background     <color>
+        .screen         <string>
+        .binary         <boolean>
+        .record         <string>
+        .autocalc       <boolean>
+        .Grid           .
+
+.Grid
+        .Horizontal     .
+        .Vertical	.
+        .Title          .
+
+.Horizontal/.Vertical/.Title
+        .foreground     <color>
+        .background     <color>
+        .fontlist       <font>
+        .text           <string>
+        .position       <left|center|right>
+        .min            <value>
+        .max            <value>
+        .scale          <linear|logx>
+        .LineType       .
+
+.LineType
+        .foreground     <color>
+        .lines          <boolean>
+        .type           <solid|dashed>
+
+        .Vertical       .
+
+.SH BUGS
+.PP
+Mike Reed, Robert Pless
+
+.SH AUTHOR
+.sp 1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp 1
+xyMoviePlot was developed by Cornell University as part of the IBM-Cornell
+joint study on computing for scientific research.
+
+
+

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+SurfPlot -file_in zdat -b | RotateStream -b -p -s -title SurfPlot | \
+	polydraw -b -title SurfPlot -geometry 800x800+10+10

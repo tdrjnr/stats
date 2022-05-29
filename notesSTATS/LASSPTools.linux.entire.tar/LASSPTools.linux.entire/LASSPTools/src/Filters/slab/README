@@ -1,0 +1,2 @@
+Linux doesn't have poll.h, and slab isn't so useful, so we're not supporting
+it under Linux.

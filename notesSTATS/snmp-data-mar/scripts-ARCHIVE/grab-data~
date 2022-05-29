@@ -1,0 +1,10 @@
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $1,$2,$3,$4 }' > Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $5,$6,$7,$8 }' >> Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $9,$10,$11,$12 }' >> Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $13,$14,$15,$16 }' >> Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $17,$18,$19,$20 }' >> Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $21,$22,$23,$24 }' >> Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $25,$26,$27,$28 }' >> Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $29,$30,$32,$32 }' >> Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $33,$34,$35,$36 }' >> Leeds-rbscs;
+sed 's/,/ /g' Leeds-RBSCS-Observer-Stats.csv | awk '{ print $37,$38,$39,$40 }' >> Leeds-rbscs;

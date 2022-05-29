@@ -1,0 +1,248 @@
+.hy 0
+.TH PLOTATOMS 1 "9 April 1991"
+.ad
+
+.SH NAME
+PlotAtoms - a graphical plotting program
+
+.SH SYNOPSIS
+
+.B PlotAtoms 
+< 
+.I datafile
+
+.SH DESCRIPTION
+PlotAtoms is an X-Windows plotting package which accepts x-y pairs from
+standard input and plots these pairs in the form of spheres or 
+ellipsoids.  It can also 
+produce multiple pictures in the form of a movie.
+.LP
+PlotAtoms will function on any X11R4 or X11R3 Window server. 
+
+.SH USAGE
+To use PlotAtoms, you need a data file with x-y pairs on separate lines.  
+Each frame of the "movie" should be separated by a blank line.  Multiple atom
+types can be specified by adding a third number after the x-y pair to 
+specify which atom number the coordinate corresponds to.  Type 
+.B 'q' 
+in the
+graphics window to exit the program.
+.sp1
+Included with PlotAtoms are various filters which allow pseudo-3D-graphics.
+These will be listed in the "SEE ALSO" section below.  
+See the individual man pages for each one for
+further information.
+
+.SH OPTIONS
+-natoms 
+.I number 
+: specifies the 
+.I number 
+of atom types to use
+.LP
+-help : print brief help information
+.LP
+-version : print version information
+.LP
+-entire : plot entire movie without erasing between frames
+.LP
+-shade : Use shading for the atom images
+.LP
+-noshade : Don't use shading for the atom images
+.LP
+-scale : Scale the x and y directions separately (default is 
+         to use identical scale factors for both x and y)
+.LP
+-xmin 
+.I number 
+: Set absolute x-coordinate minimum to 
+.I number 
+.LP
+-xmax 
+.I number 
+: Set absolute x-coordinate maximum to 
+.I number 
+.LP
+-ymin 
+.I number 
+: Set absolute y-coordinate minimum to 
+.I number 
+.LP
+-ymax 
+.I number 
+: Set absolute y-coordinate maximum to 
+.I number 
+.LP
+-geometry 
+.IR width x height + 
+.IR xpos + ypos
+: Set window geometry
+.LP
+-foreground 
+.I color 
+: Set foreground color
+.LP
+-background 
+.I color 
+: Set background color
+.LP
+-radius 
+.I number 
+: Set default atom radius to 
+.I number
+.LP
+-color 
+.I color 
+: Set default atom color to 
+.I color
+.LP 
+-rN 
+.I radius 
+: Set radius of atom N to 
+.I radius
+.LP
+-cN 
+.I color 
+: Set color of atom N to 
+.I color
+.LP
+-angN 
+.I angle 
+: Set orientation angle (in degrees) of atom N to 
+.I angle
+.LP
+-arN 
+.I ratio 
+: Set aspect ratio of atom N to 
+.I ratio
+.LP
+-border 
+.I number 
+: Set border width as a fraction of window 
+.RS
+size 
+(0<
+.I number
+<1/2) 
+.RE
+.sp1
+.sp1
+
+.SH DEFAULTS
+There are hard-coded defaults that PlotAtoms uses if no options are specified
+on the command line.  These reflect my opinion of a reasonable setup.
+These hard coded defaults can be overwritten in two ways: command line
+arguments or an options file.  The command line arguments take precedence
+over the options file.  The command line arguments are listed in the 
+previous section. The defaults file should be called
+.B plotatoms.db . 
+The syntax for lines in the options file is the same as the syntax 
+used by X clients, 
+.I e.g.
+the 
+.B .Xdefaults 
+file.  
+For example, if you want atom number 3 to be green, you should add 
+a line to 
+.B plotatoms.db
+that reads:
+.sp1
+	PlotAtoms*atom3.color:green
+.sp1
+The ordering of the lines in the options file is not important.
+The following is a summary of the standard lines that can go 
+into the options file with sample options 
+(for explanations, see the options above):
+.sp1
+.nf
+	PlotAtoms*entire:False
+	PlotAtoms*scale:False
+	PlotAtoms*shade:True
+	PlotAtoms*natoms:1
+	PlotAtoms*radius:16
+	PlotAtoms*color:white
+	PlotAtoms*geometry:600x600+400+5
+	PlotAtoms*xmin:-10
+	PlotAtoms*xmax:10
+	PlotAtoms*ymin:-10
+	PlotAtoms*ymax:10
+.fi 
+.I		use 
+.B nil
+.I on the last four if you want PlotAtoms
+.I want PlotAtoms 			to figure out min's 
+.I and max's.
+.nf
+	PlotAtoms*border:.25
+	PlotAtoms*foreground:white
+	PlotAtoms*background:black
+	PlotAtoms*atom1.radius:16
+	PlotAtoms*atom1.color:red
+	PlotAtoms*atom1.aspect: 1.3
+	PlotAtoms*atom1.angle: 30
+	PlotAtoms*atom2.radius:30
+	PlotAtoms*atom2.color:yellow
+.fi
+.sp1
+PlotAtoms looks in the directory from which it is called for the 
+options file.  If it doesn't find that, it looks in the directory
+specified by the environment variable
+.B TOOLDIR
+for an options file.
+
+.SH EVENTS
+PlotAtoms handles two events that take place when the mouse cursor is
+in the drawing window.  If a 
+.B 'q' 
+is typed, PlotAtoms will exit.  If any mouse button is clicked, the program
+will freeze frame.  The next mouse click will unfreeze the movie.  Note that
+there might be  some delay due to the way X handles graphics requests. 
+
+.SH EXAMPLE
+.sp 1
+   PlotAtoms -natoms 2 -radius1 12 -radius2 14 -color1 red -color2 pink < data
+.sp 1
+will read in x-y pairs from the file data, using the third number of each
+line to specify the atom type.  Atom type 1 will be drawn in red, and atom 2
+in pink.  Note that if there is no third number, PlotAtoms will use the
+default atom for those coordinates.
+
+.SH FILES
+binary executable:	PlotAtoms 	
+.nf
+source code: 		main.c		image.c
+				set_up.c		parser.c
+				help.c		whitespace.c
+				plotatoms.h	macros.h
+				parse.h
+
+options file:		plotatoms.db
+
+sample data files:	melange		mel2
+.fi
+
+.SH "SEE ALSO"
+sortit, 3D-2D, rotate, Euler, thin, translate, slab, plotatoms.db
+
+.SH BUGS
+.nf
+Resize the window while the program is running at your own risk.
+.fi
+
+.SH AUTHOR
+Bruce W. Roberts
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+PlotAtoms was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+
+
+
+
+
+
+
+
+
+

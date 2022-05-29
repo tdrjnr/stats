@@ -1,0 +1,165 @@
+.hy 0
+.TH POLYDRAW 1 "23 April 1991"
+.ad
+
+.SH NAME
+polydraw - a polygon drawing program
+
+
+.SH SYNOPSIS
+
+.B polydraw
+< 
+.I datafile
+
+.SH DESCRIPTION
+Polydraw is an X Window System plotting package which reads a series of
+polygon specifications from standard input and draws them in color in a window.
+Polygons can be drawn continuously into the window with optional clearing of
+window when specified, or the polygons can be plotted off-screen and sent to
+the screen one-frame-at-a-time as in an animation.
+.LP
+Polydraw will function on any X11R4 or X11R3 Window server. 
+
+.SH USAGE
+To use polydraw, you need a data file with multiple x-y pairs on each line followed
+by a color specifications which begins with an arbitrary string and is followed
+by three integers representing the red, green and blue components of the color.  
+For example a line in the file might read-
+
+0.5 0.5 -0.5 0.5 -0.5 -0.5 0.5 -0.5 rgb 65535 0 0
+
+This line produces a completely red square.
+
+Each "frame" should be separated by a blank line.  This will cause the window
+to be cleared in the default mode and will cause the current frame to be
+copied to the window (and a new one begun) when polydraw is in the buffering mode.
+.LP
+If colors are specified they will be used to fill the polygon or draw the frame in
+nofill mode.  In line mode they are used to color the lines.  If colors are not
+specified ("-nocolors" option) the lines and frames appear in black and the
+polygons are filled in white.
+
+Note that when not in binary mode "-nocolors" can be used to produce a black
+and white image even when colors are in the input.  But the program will fail
+strangely in binary mode if colors are present and "-nocolors" is specified
+or vice-versa.
+.sp1
+Included with polydraw are various filters which allow pseudo-3D-graphics.
+These are listed in the "SEE ALSO" section below, and are the same filters
+used in conjunction with PlotAtoms.  
+See the individual man pages for further information.
+
+.SH OPTIONS
+-lines		:	draws lines instead of closed polygons
+.LP
+-thickness 
+.I number 
+: Set thickness of lines to 
+.I number 
+pixels (useful for videotaping)
+.LP
+-nocolors	:	do not read in colors (gives black&white)
+.LP
+-nofill		:	do not fill polygons (wireframe: faster)
+.LP
+-noframe	:	do not draw frames around each polygon
+.LP
+-i :  'interactive' - see each polygon as it is read
+.LP
+-buffer : accumulate polygons - draw as 'frames'
+.LP
+-b : binary mode input
+.LP
+-noheal : skip steps taken to preserve window image (for speed)
+.LP
+-xmin 
+.I number 
+: Set x-coordinate of right edge of window to
+.I number 
+.LP
+-xmax 
+.I number 
+: Set x-coordinate of left edge of window to 
+.I number 
+.LP
+-ymin 
+.I number 
+: Set y-coordinate of bottom edge of window to
+
+.I number 
+.LP
+-ymax 
+.I number 
+: Set y-coordinate of top edge of window to
+.I number 
+.LP
+-interval 
+.I number 
+: Set # of polygons between checks for expose events while drawing to
+.I number 
+.LP
+-geometry : request window geometry in standard X format
+.LP
+-title 
+.I string 
+: Set window title to 
+.I string
+.LP
+-help or -h : print brief help information
+.LP
+.sp1
+.sp1
+
+.SH DEFAULTS
+There are hard-coded defaults that polydraw uses if no options are specified
+on the command line.  The defaults for xmin and ymin are -1.0, while xmax and ymax
+default to 1.0  The window is titled "polydraw" by default and the code
+draws the polygons as they come in and keeps an offscreen buffer for healing the
+window if it is covered and later exposed.
+
+.SH EVENTS
+Polydraw handles two types of events.  The first is an expose event, which can
+occur and be handled both while drawing and after the end-of-file has been
+reached.  Expose events are not handled in the "noheal" mode which is provided
+for users that require slightly faster operation.  The second event is a key
+press in the window after end-of-file has been reached, where a "q" or "Q"
+causes the program to terminate.
+
+.SH EXAMPLES
+.sp 1
+   polydraw -title "Some Squares" -buffer <primary_squares
+   
+   cat primary_squares | polydraw -noframe
+
+   cat empty_squares | polydraw -nofill
+.sp 1
+
+.SH FILES
+binary executable:	polydraw 	
+.nf
+source code:	polydraw.c		polydraw.h
+
+sample data files:	primary_squares		empty_squares
+.fi
+
+.SH "SEE ALSO"
+3D-2D, RotateStream, plotatoms
+
+.SH BUGS
+.nf
+Some examples-
+1. In buffer mode with no backing store, an expose event causes the
+   the window to heal with the current contents of the buffer which
+   is being prepared to become the next frame.
+2. Polydraw does not handle resizing of its window.
+3. Background and frame colors should be user-specifiable.
+.fi
+
+.SH AUTHOR
+Steve Townsend
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Polydraw was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research

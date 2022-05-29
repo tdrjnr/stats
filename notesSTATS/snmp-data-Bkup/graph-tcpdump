@@ -1,0 +1,38 @@
+#!/usr/bin/perl -w
+use Chart::Graph::Gnuplot qw(gnuplot);
+
+    my %cols = (
+                2 => "Data",
+                3 => "ackData",
+		4 => "synData"
+		#Use below with latency data included
+		#4 => "Bandwidth Utilization IN", 
+                #5 => "Bandwidth Utilization OUT",
+		#6 => "Threshold"
+                );
+    gnuplot({
+             #"title" => "Melville Gate to Lord Street on 22MB PVC LINK  In/Out Weekend traffic",
+	     "title" => "191.200.202.18.1278 > 191.200.41.240.http",
+             #"x-axis label" => "2 week duration",
+             "x-axis label" => "time",
+             #"y-axis label" => "Kbits/sec Utilization",
+             "y-axis label" => "bytes/sec",
+             "output type" => "png",
+             "output file" => "tcpdump-graph.png",
+	     #"xtics" => [ ["Login trace", 5] ],
+             # Setting date/time specific options.
+             #"xdata" => "time",
+	     #"timefmt" => "%S",
+             #"format" => ["x", "%S"],
+             # Set output range - note quoting of date string
+             "xrange" => "[0.000000:10.500000]",
+             "extra_opts" => join("\n", "set grid"),
+            },
+
+            map {  
+                [{"title" => $cols{$_},
+                  "style" => "linespoints",
+                  "type" => "file",
+                  using => "1:$_" },
+                 "graph"] } (sort keys %cols));
+

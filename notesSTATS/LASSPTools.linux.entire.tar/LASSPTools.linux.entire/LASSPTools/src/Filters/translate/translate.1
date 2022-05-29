@@ -1,0 +1,66 @@
+.hy 0
+.TH TRANSLATE 1 "17 April 1991"
+.ad
+
+.SH NAME
+translate - a simple data filter
+
+.SH SYNOPSIS
+
+cat 
+.I datafile 
+|
+.B translate
+.I x y z
+
+.SH DESCRIPTION
+translate is a simple filter for translating data sets.  It take triples
+on lines and adds x to the first number, y to the second, and z to the
+third. It also allows extra material which occurs
+at the end of line to be passed unmodified.
+
+.SH USAGE
+To use translate, you simply pipe your data with triples (and perhaps extra
+material) on lines through it, and the filter will add the numbers to the
+data. The output is sent to stdout, 
+so that it may be piped to
+other programs.  
+
+.SH OPTIONS
+There aren't any.
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile 
+| translate |
+.I plotting_package
+.sp 1
+will send data from the file
+.I datafile
+through translate to 
+.I plotting_package
+, where plotting_package is some program that you specify.
+
+.SH "SEE ALSO"
+sortit, rotate, Euler, thin, 3D-2D, slab, PlotAtoms
+
+.SH BUGS
+.nf
+1. I know awk does this, but it is large and doesn't fflush well.
+.fi
+2. This should be hooked into a graphical device so that you can translate
+on the fly.
+
+
+.SH AUTHOR
+Bruce W. Roberts
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+translate was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+
+
+
+

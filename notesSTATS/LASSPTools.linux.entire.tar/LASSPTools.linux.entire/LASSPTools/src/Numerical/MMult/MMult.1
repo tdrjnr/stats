@@ -1,0 +1,102 @@
+.hy 0
+.TH MMULT 1 "24 July 1991"
+.ad
+
+.SH NAME
+MMult - a program for multiplying matrices
+
+.SH SYNOPSIS
+
+.B MMult 
+[ 
+.I -options 
+]
+
+.SH DESCRIPTION
+MMult is a program for multiplying two matrices A and B in the order AB.
+MMult accepts matrices from standard input and writes the product to
+standard output. The matrix A must number of columns as the matrix B has rows.
+MMult uses the BLAS routines to perform its calculations.
+
+.SH USAGE
+To use MMult you need a file containing matrices or you can also
+type matrices into MMult directly. MMult will continue to process
+matrices until it reads and EOF, end of file, character. Each row of the
+matrix can be punctuated with newlines, braces, { }, or brackets, [ ] but the
+punctuation must be consistent throughout the matrix. The beginning and ending
+punctuation of each matrix must be consistent with that of its rows. The rows
+and matrices that end with a newline do not have any beginning punctuation.
+MMult can also read matrices in binary form, which is much faster. For
+more information about the binary mode, see the math_io documentation.
+MMult accepts complex numbers in several formats: (a,b), a+bi, or a+bI,
+where 'a' is the real part and 'b' is the imaginary part. 
+
+.SH OPTIONS
+-real : The matrix elements of A nad B are real numbers; the default mode. 
+.LP
+-complex : The matrix elements of A and B are complex numbers. 
+.LP
+-binary_Ain : Inputs the A matrices in binary form.
+.LP
+-binary_Bin : Inputs the B matrices in binary form.
+.LP
+-binary_out : Outputs the result matrices in binary form.
+.LP
+-file_Ain 
+.I file 
+: Specifies the 
+.I file 
+the A matrices are read from.
+.LP
+-file_Bin 
+.I file 
+: Specifies the 
+.I file 
+the B matrices are read from.
+.LP
+-file_out 
+.I file 
+: Specifies 
+the output 
+.I file.
+.LP
+The output file can also be 'stderr' to output to standard error.
+.LP
+? , -? , -h , -help : Print help information to standard error.
+
+.SH DEFAULTS
+The default mode for MatrixSolve is to read two real matrices A and B from
+standard input and write the solution x of Ax = B to standard output.
+
+.SH EXAMPLE
+.sp 1
+   MatrixSolve -file_Ain Adata -file_Bin Bdata -file_out results
+.sp 1
+will read the A matrices from the file Adata, and the B matrices from the
+file Bdata and write the product to the file results.
+
+.SH "SEE ALSO"
+DI, MSolve
+
+.SH BUGS
+1 - Does not support the Mathematica arrow notation to denote an exponent.
+.br
+2 - Does not support the Fortran 'd' notation.
+
+.SH AUTHOR
+Eric Lochstet
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+MMult was developed at Cornell University as part of the
+Cornell-IBM Joint Study on Computing for Scientific Research
+
+
+
+
+
+
+
+
+
+

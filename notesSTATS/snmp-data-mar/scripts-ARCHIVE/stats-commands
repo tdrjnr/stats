@@ -1,0 +1,15 @@
+Strings can be repeated using the {echo} command.  The following will repeat
+the string {hello} 100 times.
+
+echo hello | repeat -n 100
+
+-------------------
+show process tree
+pstree -p
+-----------------
+Time commands
+/usr/bin/time -f "%M Kbytes of Memory used\n %F page faults\n Command/process swapped %W times out of main memory\n"
+OR
+/usr/bin/time -v man cat(for all outputs
+
+

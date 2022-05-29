@@ -1,0 +1,436 @@
+.hy 0
+.TH TIPS-TOOLS 1 "23 September 1992"
+.ad
+
+.SH NAME
+tips-tools - Tips for running LASSP Software Tools
+
+.SH SYNOPSIS
+
+For a synopsis of each tool consult the individual man page.
+
+.SH OVERVIEW
+The LASSP Software toolkit is a set of about 35+ programs for assisting
+researchers in solid state physics. The tools are available on Sun Sparc
+and IBM RS6000 platforms.
+The tools perform various functions
+and roughly can be grouped into the following categories:
+.LP
+Data Filtering Programs - Select various numbers from input streams,
+perform rotations.
+.LP 
+Numerical Processing - Matrix manipulation routines, Fourier transforms, 
+linear algebra.
+.LP
+Data Display Programs - Graphing, polygon drawing and coloring, circle and
+sphere drawing.
+.LP
+Input Processing Programs - Slider bars, graph point selection.
+.LP
+Miscellaneous Utilities - Printing. 
+
+
+The programs typically are used together in pipelines to generate, 
+manipulate and display data. For example, raw data may be run through
+a numerical transformation, a section selected via a filtering program
+and the results sent to a program to display the results graphically.
+
+For a complete 
+description see the man pages for each individual program.
+
+.SH SETUP 
+
+To run the programs, you must have 'LASSPDIR/bin' in your 'path'
+environment variable, where LASSPDIR is the top level directory where the
+tools are installed. For example, on the Cornell msc network the 'path'
+would be '/usr/local/pub/tools/bin'. For an example of this see 
+ '/usr/local/skel/.cshrc'.
+.sp 1
+
+To access the documentation, you must have 'LASSPDIR/man' in
+your MANPATH environment variable, where LASSPDIR is the top level
+directory where the tools are installed. For example, on the Cornell msc 
+network the MANPATH would be '/usr/local/pub/tools/man'.
+For an example of this see '/usr/local/skel/.login'.
+
+
+.sp 1
+This will set the search path for the tools programs and also set the
+search path for the tools documentation.
+
+.sp 1
+
+.SH DEMOS
+Demo programs are available that show how some major programs work and how
+they can be used with other helper programs. The demo programs may be found
+in the directory: '/usr/local/pub/tools/demos'
+
+.SH SOURCE AND BINARIES
+The source and binaries are available via anonymous FTP from
+ept.msc.cornell.edu. See the README file in the 'pub' directory
+for information on how to setup the programs. 
+The 'pub' directory contains the compressed tar files.
+.RS
+.LP
+LASSPTools.demos.tar.Z - Demo programs and data files.
+.LP
+LASSPTools.rs6000.tar.Z - Binaries for the RS6000.
+.LP
+LASSPTools.sparc.tar.Z - Binaries for the Sun Sparc.
+.LP
+LASSPTools.doc.tar.Z - Manual pages for programs.
+.ES
+.sp 1
+The LASSPTools/src directory contains the source code for each
+of the programs.
+
+.SH DESCRIPTIONS
+The following is a list of the LASSP Toolkit programs and a brief
+description of each program.
+
+.sp 1
+Input Processing Programs -
+.LP
+.B rotate -
+Rotate is an interactive data entry device which puts up a rotation
+ball with axes, and allows the user to pick a rotation matrix.
+
+.LP
+.B slider -
+Slider is an interactive data entry device which puts up a number of slider
+widgets, and allows the user to set values within user specified ranges.
+
+.LP
+.B XYinput -
+XYinput is an interactive data entry device which opens a coordinates plane
+with an accompanying options menu.  It allows the user to specify coordinate
+positions by clicking on the 2D plane and pipe them to stdout.
+
+.LP
+
+.sp 1
+
+Data Filtering Programs:
+.LP
+.B 3D-2D -
+3D-2D is a simple filter for converting lines with triples on them to
+lines with pairs on them.  It also allows extra material which occurs
+at the end of line to be passed unmodified.
+
+.LP
+.B ConvertFrames -
+ConvertFrames uses the various line_io routines to convert frames of ascii
+triples to and from binary.
+
+.LP
+.B "ComplexDoubleMatrices" -
+Converts ASCII matrices to and from binary.
+Double version.
+
+.LP
+.B "ComplexFloatMatrices" -
+Convert ASCII matrices to and from binary.
+Floating point version.
+
+.LP
+.B ConvertMatrices -
+ConvertMatrices uses the various get_matrix and put_matrix routines to
+convert ascii to and from binary, and files to and from pipes.
+
+.LP
+.B ComplexDoubleVectors - 
+Convert ASCII vectors to and from binary. Double version.
+
+.LP
+.B ComplexFloatVectors -
+Convert ASCII vectors to and from binary. Floating
+point version.
+
+.LP
+.B ConvertVectors -
+ConvertVectors uses the various get_vector and put_vector routines to
+convert ascii to and from binary, and files to and from pipes. Integer
+version.
+
+.LP
+.B RotateFile -
+RotateFile is a simple filter for rotating triples of data.  It can input the
+triples only from a file.
+
+.LP
+.B RotateStream -
+RotateStream is a simple filter for rotating triples of data.  It can input
+the triples from a file, pipe or terminal session.
+
+.LP
+.B blend -
+Inserts a smooth curve through data points.
+
+.LP
+.B histogram -
+Histogram reads a list of numbers from the standard input and produces on the
+standard output a file suitable for input to axis or graph to make a histogram.
+
+.LP 
+.B rotate_echo -
+A simple program that helps RotateStream do non-blocking
+I/O.
+
+.LP
+.B rotate_aid -
+A simple program that helps RotateStream do non-blocking 
+I/O.
+
+.LP
+.B slab -
+slab is a simple filter for passing slices of data.  It allows one to use
+a slider to change the size of the slab being looked at.
+
+.LP 
+.B arbslab -
+arbslab is an enhanced version of slab that allows points to be output
+with 2D or 3D coordinates. In addition the points may be rotated before
+they are selected.
+
+.LP
+.B sortit -
+Sortit is a simple filter which takes blocks of input separated by blank lines
+and sorts each block in terms of the value of the third column of the
+input, in increasing order.
+
+.LP
+.B thin -
+Thin is a simple filter that reduces the amount of data going
+down a pipeline.
+
+.LP 
+.B translate -
+Translate is a simple filter for translating data sets.  It take triples
+on lines and adds specified amounts to each coordinate.  It also allows extra
+material which occurs at the end of line to be passed unmodified.
+
+
+Numerical Processing Programs:
+.LP
+.B DI -
+DI is a linear algebra program for calculating determinants and inverses, or
+both.  DI accepts matrices from standard input and writes the determinants and
+inverses to standard output.  DI uses the double precision Linpack routines
+to perform its calculations.
+
+.LP
+.B Det -
+Det is a linear algebra program for calculating determinants.  Det accepts
+matrices from standard input and writes the determinants and inverses to
+standard output.  Det uses the double precision Linpack routines to perform
+its calculations.
+
+.LP
+.B Eigen -
+Eigen is a program for calculating eigenvalues, eigenvectors, or both.  Eigen
+accepts matrices from standard input and writes the eigenvalues and
+eigenvectors to standard output.  Eigen uses the double precision Eispack
+routines to perform its calculations.
+
+.LP
+.B Fourier -
+Fourier is a program for calculating fourier transforms or inverse fourier
+transforms.  Fourier accepts data from standard input and writes the results
+to standard output.  Fourier uses the double precision fftpack routines to
+perform its calculations.  Fourier does not need any form of zero padding.
+
+.LP
+.B Invert -
+Invert is a linear algebra program for calculating inverses.  Invert accepts
+matrices from standard input and writes the inverses to standard output.
+Invert uses the double precision Linpack routines to perform its calculations.
+
+.LP
+.B MMult -
+MMult is a program for multiplying two matrices A and B in the order AB.
+MMult accepts matrices from standard input and writes the product to
+standard output.  The matrix A must number of columns as the matrix B has rows.
+MMult uses the BLAS routines to perform its calculations.
+
+.LP
+.B MSolve -
+MSolve is a program for solving linear equations of the form Ax = B,
+where A and B are known and x is unknown.  MSolve accepts matrices from
+standard input and writes the solution to standard output.  The matrix A must
+be invertable but B can be any matrix that has the same number of rows as the
+matrix A has columns.  MSolve uses the double precision Linpack routines
+to perform its calculations.
+
+.LP
+.B fit_it -
+Fit_it does non-linear least squares parameter fitting on a data file specified
+on the command line.  See also the README in the fit_it src dir.
+
+.LP
+.B Random - 
+Random generates various random distributions where the core random number
+generator can be selected when running the program. In addition, the output
+can be formatted as vectors or matrices.
+
+.LP
+
+.sp 1
+
+Data Display Programs:
+.LP
+.B DynamicLattice -
+DynamicLattice is an X-windows graphics program to represent sites
+on a two-dimensional square (or rectangular) lattice based on their value.
+This program is "dynamic" in that sites are typically read individually from
+the standard input stream (stdin) and plotted one at a time.  There are
+three modes of representation:  shading, arrows and bonds.  The default
+mode is shading, whereby sites are filled with a colored cell whose color
+represents the value of the plotted field at that site.  In the arrow mode,
+an arrow is plotted at the specified site where its angle represents the
+value of the field at that site.  In the bond mode, a specified bond is
+drawn from a site to a neighboring site.  In both the arrow and bond modes,
+the symbol can also be colored to represent another quantity.  If such
+information is not given, all arrows/bonds are colored the same.
+
+
+.LP
+.B PlotAtoms -
+PlotAtoms is an X-Windows plotting package which accepts x-y pairs from
+standard input and plots these pairs in the form of spheres.  It can also
+produce multiple pictures in the form of a movie.
+
+.LP
+.B PlotM -
+PlotM is an X/Motif program that plots spheres and lines to produce 
+molecular ball and stick diagrams. In addition, the structure may be 
+interactively scaled and rotated.
+
+.LP
+.B SurfPlot -
+SurfPlot3d is a simple program to produce surface plots a la Mathematica.
+
+.LP
+.B circledraw -
+Circledraw is an X Window System plotting package which reads a series of
+circle specifications from standard input and draws them in color in a window.
+Circles can be drawn continuously into the window with optional clearing of
+window when specified, or the circles can be plotted off- screen and sent to
+the screen one-frame-at-a-time as in an animation.
+
+.LP
+.B matrix2X -
+Matrix2X reads a set of matrices from the standard input and produces a
+density plot in an X window.  The matrices are rows of numbers separated by
+newlines and matrices separated by blank lines (double newlines).  The plot
+consists of a series of rectangles mimicking the shape of the input matrix
+which are colored according to the list of colors specified in various
+possible ways.
+
+.LP
+.B meter -
+Meter is a simple analog style output device.  Its level is controlled by the
+numbers it reads from stdin and its default range is from 0 to 100.
+
+.LP
+.B polydraw -
+Polydraw is an X Window System plotting package which reads a series of
+polygon specifications from standard input and draws them in color in a window.
+Polygons can be drawn continuously into the window with optional clearing of
+window when specified, or the polygons can be plotted off-screen and sent to
+the screen one frame at a time as in an animation.
+
+.LP
+.B polydraw3D -
+Polydraw3D is an X Window System like polydraw but reads in one frame polygons
+in 3D coordinates and can rotate and do a simulated perspective of that frame.
+
+.LP
+.B xplot -
+The xplot program brings up a window for viewing plot(5) output, for example
+from the axis program.  The program works interactively, continuing to
+accept input from stdin and plotting as it goes, until it reaches
+an end of file, at which point it waits around for a mouse button
+press to kill the window. xplot was not developed under the Cornell-IBM
+joint study.
+
+.sp 1
+
+Utility Programs:
+.LP
+.B lattice2ps -
+Lattice2ps is a filter to produce a PostScript file which shades elements on a
+two-dimensional square lattice based on their value.  The default  produces
+gray-scale shading from white to black based on the range of values input,
+although a restricted range can be specified.  Color PostScript output can
+also be generated.
+
+.LP
+.B poly2ps -
+Poly2ps is filter to produce a PostScript file which draws and shades polygons.
+It is designed to read the same input file (ASCII format only) that polydraw
+reads.  The default is to convert the specified RGB colors to grayscales.
+This conversion is hard to make general.  It will probably need modification
+unless your color scheme is quite simple (e.g., you draw only red, green,
+and blue polygons).  Alternatively, color postscript output can be created.
+
+.LP
+.B axis -
+Axis with no options takes pairs of numbers from the standard input as
+abscissas and ordinates of a graph.  Successive points are connected by
+straight lines.  The graph is encoded on the standard output for display by
+the plot(1) filters (for example hpgl or tek10).  If the coordinates of a
+point are followed by a nonnumeric string, that string is printed as a label
+beginning on the point. axis was not developed under the Cornell-IBM joint
+study.
+
+.LP
+.B movieaxis -
+See axis.  This variant allows multiple, movie style, plots to be generated.
+
+.LP
+.B branch -
+Branch is a simple datastream splitter.  It takes input from stdin and
+splits it into two output streams.  One output stream is sent to the first
+command and the other to the second command.  Note that both commands my
+have pipes in them.
+
+.LP
+.B bonds -
+Bonds is a program that connects points in 3D space that are less then 
+a specified distance apart. 
+
+.LP
+.B pre_gr -
+pre_gr is a program that simplifies the task of doing animations with
+raw data being sent to the xmgr program by inserting drawing commands 
+in between frames of data. 
+
+.LP
+.B inter -
+Inter frees the user from the constrained input file format required by axis,
+and replaces axis's cryptic commands with real words.  The user types commands,
+or inter reads them from commandfile.  If you don't want to remember or learn
+the appropriate commands, inter0 asks questions instead of waiting for
+instructions. inter was not developed under the Cornell-IBM joint study.
+
+.SH "SEE ALSO"
+Individual manual pages.
+
+.SH BUGS
+The individual program man pages note any bugs.
+
+.SH AUTHOR
+.sp 1
+The LASSP Toolkit was developed at Cornell University as part of the 
+Cornell-IBM Joint Study on Computing for Scientific Research.
+.sp 1
+Send bug reports to toolkeeper@msc.cornell.edu
+
+
+
+
+
+
+
+
+

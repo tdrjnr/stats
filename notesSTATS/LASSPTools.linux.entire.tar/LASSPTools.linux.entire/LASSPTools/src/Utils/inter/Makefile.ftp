@@ -1,0 +1,36 @@
+BEGIN_DEF = ***************************
+CFLAGS = -c -O -K -Q 
+CFLAGS_SUN = -c -O -DSUN -D_NO_PROTO -DSTRINGS_ALIGNED -DNO_REGEX -DNO_ISDIR -DUSE_RECOMP -DUSE_GETWD -DUNDERSCOREFORTRAN
+SYSLIBS = -ltermcap -lm 
+DEFINES = -DHELPDIR='"$(PWD)"'
+BINDIR = ../bin
+END_DEF = ****************************
+
+
+SRCS = main.c options.c labels.c moddata.c menu.c help.c \
+       messages.c linefit.c runfile.c system.c myfgets.c  \
+       hiddenplot.c filter.c getcol.c intermenus.c Get.c
+
+OBJS = main.o options.o labels.o moddata.o menu.o help.o \
+       messages.o linefit.o runfile.o system.o myfgets.o  \
+       hiddenplot.o filter.o getcol.o intermenus.o Get.o
+
+all: inter
+
+.c.o:
+	$(CC) $(CFLAGS) $(DEFINES) $(INCDIR) $(SRCS) $(EXTRA)
+
+inter: $(OBJS)
+	$(CC) -o inter $(OBJS) $(SYSLIBS)
+
+clean::
+	rm -f *.o inter
+
+install::
+	cp -p inter $(BINDIR)
+	cp -p inter.help $(BINDIR)
+	chmod 775 $(BINDIR)/inter
+	chmod 664 $(BINDIR)/inter.help
+
+
+	

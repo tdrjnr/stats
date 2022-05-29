@@ -1,0 +1,40 @@
+#!/usr/bin/perl -w
+use Chart::Graph::Gnuplot qw(gnuplot);
+
+    my %cols = (
+                3 => "Bandwidth Utilization IN",
+                4 => "Bandwidth Utilization OUT",
+		5 => "Threshold"
+		#Use below with latency data included
+		#4 => "Bandwidth Utilization IN", 
+                #5 => "Bandwidth Utilization OUT",
+		#6 => "Threshold"
+                );
+    gnuplot({
+             "title" => "St-Albans VPN-Router 256KB LINK  In/Out mon-fri 8am-17pm",
+	     #"title" => "St-Albans Router 256KB LINK  In/Out mon-fri 8am-17pm",
+             "x-axis label" => "2 week duration",
+             #"x-axis label" => "4 week duration",
+             "y-axis label" => "Kbits/sec Utilization St-Albans-vpn-mon-fri-8am-17pm",
+             #"y-axis label" => "Kbits/sec Utilization St-Albans-mon-fri-8am-17pm",
+             "output type" => "png",
+             "output file" => "St-Albans-vpn-mon-fri-9am-17pm.png",
+             #"output file" => "St-Albans-mon-fri-9am-17pm.png",
+	     #"xtics" => [ ["23/01/2004 to 19/02/2004", 800] ],
+	     "xtics" => [ ["03/02/2004 to 16/02/2004", 100] ],
+             # Setting date/time specific options.
+             #"xdata" => "%m/%y",
+             #"timefmt" => "%m",	
+             #"format" => ["x", "%m"],
+             # Set output range - note quoting of date string
+             #"xrange" => "[\"26/12/2003\":\"09/01/2004\"]",
+	     #"extra_opts" => join("\n", "set grid"),
+            },
+
+            map {  
+                [{"title" => $cols{$_},
+                  "style" => "linespoints",
+                  "type" => "file",
+                  using => "$_" },
+                 "graph-data"] } (sort keys %cols));
+

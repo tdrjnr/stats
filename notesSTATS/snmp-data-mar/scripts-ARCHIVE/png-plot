@@ -1,0 +1,1 @@
+awk '{ print $1, $3, $4 }' dates | awk '{ print $1, $3 }' dates > data-in; awk '{ print $1, $4 }' dates > data-out; ./graph

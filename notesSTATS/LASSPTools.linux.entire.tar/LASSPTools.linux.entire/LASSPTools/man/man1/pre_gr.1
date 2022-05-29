@@ -1,0 +1,104 @@
+.hy 0
+.TH PRE_GR 1 "December 23 1992"
+.ad
+
+.SH NAME
+pre_gr - A preprocessor for inserting xmgr (or other) commands into data streams
+
+.SH SYNOPSIS
+
+.B cat data | pre_gr [config-file] [-help] | xmgr -pipe
+
+
+.SH DESCRIPTION
+The pre_gr command reads data from standard input and inserts commands from
+the config-file at the beginning of the data, every time a blank line is
+seen and at the end of the data. The primary use for pre_gr is to get 
+raw data, for example X,Y values into a format where the data can be 
+displayed as frames in the graphing program xmgr.
+
+The config-file is divided into groups of xmgr commands, where each group is
+seperated by a blank line. The 'first' group of commands is written out 
+preceding any data, the 'last' group of commands is written out following the 
+data. Between the first and last groups there can be any number of 'middle' 
+groups,
+every time a blank line is seen in the input stream the next group of commands
+is written out in place of the blank line. If the number of blank lines in
+the input stream is more then the number of 'middle' groups then the last
+middle group is repeated for every blank line seen in the input stream.
+
+.SH OPTIONS
+
+.B config-file
+: The file that holds the xmgr commands to output.
+
+.B -help
+: Gives information about the program.
+
+.SH DEFAULTS
+The following sequence is placed before the data:
+  @with g0
+  @redraw
+
+Each blank line is replaced by the following:
+  &
+  @with g0
+  @autoscale
+  @redraw
+  @sleep 2
+  @kill s0
+  @with s0
+
+The following is output following the data:
+  &
+  @redraw
+
+The above defaults will produce a slide show type demo of the input data.
+Every time a blank line appears in the input data the current graph will
+be displayed for two seconds then cleared and the next graph displayed.
+  
+   
+.SH EXAMPLE
+The following config-file and input data will produce a sequence of 3 graphs
+where the first is drawn, displayed for 3 seconds and the other 2 are overlayed
+so the end result is 3 lines where you see each drawn seperatly. The end 
+result is displyed for 5 seconds and then quits.
+ config-file:         data-file:
+  @with g0           1 1
+  @redraw            2 2
+                     3 3
+  &                  4 4
+  @with g0      
+  @autoscale         .5 1
+  @redraw           .5 2
+  @sleep 3  
+                     3 2.5
+  &                 3.5 3.7
+  @with g0          
+  @redraw
+  @sleep 5
+  @exit           
+
+The grpahs can be drawn using the following command:
+   cat data-file | pre_gr config-file | xmgr -pipe
+
+The -pipe option must be used with xmgr because this allows the control 
+sequences to be inserted correctly.
+  
+.SH "SEE ALSO"
+xmgr, especially appendix A which lists the xmgr commands that can be used.
+
+.SH BUGS
+1 - When running xmgr v2.09 under Motif, updating the display does not
+work correctly when using the @sleep command. Be sure that a version of
+xmgr greater then 2.09 is being used. Version 2.09 has been 
+modified locally to correct this. 
+
+.SH AUTHOR
+Jim Frankenberger
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+pre_gr was developed at Cornell University as part of the 
+Cornell-IBM Joint Study on Computing for Scientific Research
+

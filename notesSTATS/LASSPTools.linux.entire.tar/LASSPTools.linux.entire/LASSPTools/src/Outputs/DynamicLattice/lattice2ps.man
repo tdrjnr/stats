@@ -1,0 +1,112 @@
+.TH lattice2ps local
+.SH NAME
+lattice2ps - convert a field living on a 2-D square lattice to a postscript
+file
+.SH SYNOPSIS
+.B lattice2ps
+[ option ] ...
+.SH DESCRIPTION
+.I lattice2ps
+is a filter to produce a postscript file which shades elements on a
+two-dimensional square lattice based on their value. The default  produces
+gray-scale
+shading from black to white based on the range of values input, although a
+restricted range can be specified, or color postscript output can be
+generated via the -color option.
+
+The size of the lattice must be specified with the -nx and -ny options.
+The lattice can be input either as a site at a time or in the LASSPTools
+matrix format.  See "man DynamicLattice" or "DynamicLattice -h"
+for further information on formats.
+
+The following options are recognized,
+each as a separate argument.
+.TP
+.B  \-nx ncols
+specifies the number of sites in the x direction (columns)
+.TP
+.B  \-ny nrows
+specifies the number of sites in the y direction (rows)
+.TP
+.B  \-bg graylevel
+specifies a background shade of gray 
+.TP
+.B \-grid graylevel
+draws a grid (mesh) of specified graylevel between sites
+.TP
+.B \-tr trx try
+translates postscript origin to (trx,try) in inches
+.TP
+.B \-size size
+scales largest axis to size inches (default = 4)
+.TP
+.B \-g gmin gmax
+sets range of grayscales from gmin to gmax (default = 0.->1. (black->white))
+.TP
+.B \-matrix
+sets input mode to LASSPTools matrix format
+.TP
+.B  \-z zmin zmax
+sets the range a z values from zmin to zmax (default: full range of data)
+.TP
+.B  \-color
+shades sites with colors according to colormap (default blue->red, override
+in .colormaprc)
+.TP
+.B  \-r
+rotates image on page by 90 degrees (still buggy)
+.TP
+.B \-h, -help
+Gives the help message.
+
+
+.SH "USAGE"
+Typical usage is of the form:
+
+lattice2ps < input > output.ps
+
+or
+
+lattice2ps < input | lpr
+
+.SH "COMMENTS"
+
+-nx and -ny must be specified
+
+-g gmin gmax need not proceed from dark to light (i.e., gmin > gmax is
+acceptable).  This is often useful if a few sites are to be shaded
+with the majority left white; in such a case, -g 1. 0. would leave
+white all those sites which were equal to the minimum value
+
+-color writes out color postscript, which as such needs a color postscript
+printer to print.  If color postscript is sent to a black/white
+(grayscale) printer, the printer will attempt to interpolate the
+colors as graylevels, but usually not successfully.  If one has
+access to a color printer that works in a format other than
+postscript, and one has an onscreen postscript previewer (such as
+Ghostscript) which can be window-dumped to the color printer, then
+one can preview the postscript file and dump the previewer window
+to the color printer to get color hardcopy.  DynamicLattice produces
+color X-windows plots of the lattice information, with compatible formats.
+
+graylevels are written out assuming an 8 bit-plane screen, that is,
+assuming 2^8 = 255 different levels.  Most postscript printers cannot
+resolve that many levels; the Apple Laserwriter, for example,
+appears to be capable of printing 32 distinct graylevels.
+
+.SH BUGS
+
+The author, Chris Myers, encourages users to report bugs.  
+He can be reached via email (through 8/1/93) at myers@sbitp.ucsb.edu 
+or (after 8/1/93) at myers@tc.cornell.edu.
+Suggestions for added features and/or protocols
+are also encouraged. Known bugs include:
+
+(1) Colormap override format incompatible with that of DynamicLattice.
+
+(2) Gray scale images of sufficiently large size (approx 200x200) 
+may not print.  This may be a problem with the Postscript Image operator.
+
+.SH "SEE ALSO"
+DynamicLattice(), matrix2X()
+

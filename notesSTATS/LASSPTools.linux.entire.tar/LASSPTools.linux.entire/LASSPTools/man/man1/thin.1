@@ -1,0 +1,60 @@
+.hy 0
+.TH THIN 1 "17 April 1991"
+.ad
+  
+.SH NAME
+thin - a simple data filter
+
+.SH SYNOPSIS
+
+cat 
+.I datafile 
+|
+.B thin
+.I number
+
+.SH DESCRIPTION
+thin is a simple filter that reduces the amount of data traveling 
+down a pipeline.
+
+.SH USAGE
+To use thin, you simply pipe your data in the form of blocks separated
+by blank lines.  Thin then takes one out of every 
+.I number 
+of blocks and passes it through.  This is useful when you have plotting 
+or visualization packages that don't need or can't handle the full load
+of data.
+
+.SH OPTIONS
+The only option to specify is a number after the command:
+.sp1
+.B thin
+.I number
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile 
+| thin 3 |
+.I plotting_package
+.sp 1
+will send data from the file
+.I datafile
+through thin to 
+.I plotting_package
+, where plotting_package is some program that you specify.
+Every third block of data will be passed to the plotting package.
+
+.SH "SEE ALSO"
+sortit, rotate, Euler, 3D-2D, translate, slab, PlotAtoms
+
+.SH BUGS
+1. thin should have an option to thin lines rather than blocks.
+
+.SH AUTHOR
+Bruce W. Roberts
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+thin was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research

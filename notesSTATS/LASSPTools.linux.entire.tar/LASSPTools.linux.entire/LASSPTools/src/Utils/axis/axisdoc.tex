@@ -1,0 +1,379 @@
+\magnification=\magstep1
+\parskip=3pt
+
+\centerline{\bf Axis --- A program for making two dimensional graphs}
+\bigskip
+\beginsection 1. General information
+
+Axis is a program for making two dimensional graphs.  It features
+automatic scaling, logarithmic axes, error bars, and labels with Greek
+letters, superscripts and subscripts, and special characters. The output
+of axis is a file using a subset of the UNIX device independent graphics
+commands, which can then be plotted on any device for which a plot
+filter is available.  Axis supports most of the options of the UNIX
+graph program, but also contains many additional features.
+
+Axis was intended to be easy to use for simple plots.  It should be
+possible to produce a simple plot using no options or only a few
+options.  For a finished plot, with nice labels etc., many options may
+be necessary.
+
+In the simplest case, the input to axis is a series of lines, each line
+containing a pair of values. For example:
+$$\eqalign{
+&1.0\quad   1.0\cr
+&2.0\quad   2.1\cr
+&3.0\quad   2.9\cr
+}$$
+With this input, axis will produce a graph with a line connecting all
+the points.  The ranges of the x and y coordinates will be chosen
+automatically to include all of the data.
+
+There are a large number of options which modify the behavior of axis.
+These options may be specified either in the command line of axis, or in
+lines in the input beginning with the `\#' character. For example, to
+set the x range to be 0 to 1.5, you can use
+$$\hbox{ axis  -x  0  1.5  $<$  data  $>$  output}$$
+The minus sign on the x is optional, but it is a convention for UNIX
+arguments. You can also include a line in the data file:
+$$\eqalign{
+&\# x\quad 0\quad 1.5\cr
+&0.0\quad  1.0\cr
+&1.0\quad  2.0\cr
+&2.0\quad  3.0\cr
+}$$
+(the points outside the range are ignored.) There may be any number of
+option lines within the data file, and they may appear at any point.
+For most options, such as the x or y ranges, it only makes sense to
+specify the option once.  If you specify it more than once the last
+specification wins.  Specifications inside the file win over
+specifications in the command line. There are a number of options such
+as line style, plotting symbol, or whether the data has error bars,
+which can be changed in mid plot. Simply put an options line in the data
+file at the appropriate point.
+
+Axis can place a title on the graph, labels on the x and y axes, labels
+at arbitrary points, or any character as a plotting symbol.  The
+character set used in all of these labels is from the SLAC Unified
+Graphics System.  It contains all the usual ASCII characters, Greek
+Letters, Math symbols, and some special plotting characters.  The non
+ASCII characters are specified by troff-like escape sequences. See
+below.
+
+Axis is a descendant of the UNIX graph command.  Many of the options are
+compatible with graph, although axis does require that successive data
+points be on separate lines.  The output of axis is in UNIX device
+independent graphics format (see plot(5)). To display the results use
+the plot filters (plot(1)).
+
+The remainder of this document contains information on the various
+options to axis.  They are divided into options affecting the data and
+how it is plotted and options affecting the labeling.  The distinction
+is not clear.  Appendix A displays the UGS character set, appendix B
+summarizes the escape sequences for special characters, and appendix C
+summarizes the options.
+
+\beginsection 2.  Options affecting the data plotting
+
+\beginsection 2.1 x and y ranges, logarithmic scales
+
+An ``x" or a ``y" in the options string, followed by two numbers, forces the
+x or y range to that given by the two numbers.  An ``x l" or a ``y l"
+makes the corresponding axis logarithmic, and if it is followed
+by two numbers they are the range.
+An optional third number following the x or y is the distance
+between major tick marks along the axis.
+For example
+$$\eqalign{
+&x\quad 0\quad 2\cr
+&x\ \ l\cr
+&x\ \ l\quad 1\quad 1000\cr
+}$$
+are all legal options.
+
+\beginsection 2.2 Automatic abscissas
+
+If the ``-a" option is specified the x coordinate is missing from
+the data.  Axis will then plot points evenly spaced in x.  If a single
+number is after the ``-a", this number will be the spacing between
+points, and if two numbers are present they will be the spacing
+and the initial value of x.
+
+\beginsection 2.3 Size and location of the graph.
+
+Axis by default makes a square graph almost filling the page.
+To change the size of the graph use ``-h number", where the number is
+the fraction of the default height, and ``-w number" where the number
+is the fraction of the default width.
+To move the graph, use ``-u number" where the number is the fraction
+of the graph size to move up, or ``-r number" to move right.
+(It is usually necessary to move right a little if you want to
+label the y axis. ``-r 0.1" usually works.)
+
+\beginsection 2.4 Error bars
+
+A ``e" (or a ``-e") in an options string means that subsequent lines of
+input should contain three numbers: an x value, a y value, and an error
+on the y value.  Axis will then plot error bars.  The ``e" option may
+be changed in mid plot.  To turn off the
+error bars and return to normal plotting, use an ``e0" in an options
+line.
+
+\beginsection 2.5 Linestyles
+
+
+A ``m number" in the options changes the linestyle.  The recognized
+values of the number are 0 for no lines (i.e. a point plot), 1 for
+solid lines (this is the default), 2 for dotted lines, 3 for short
+dashes, 4 for long dashes, and 5 for dot-dashed lines.  Not all output
+devices will make all of these line styles.  This option may be 
+changed in mid plot.
+
+\beginsection 2.6 Labeling points and breaking lines
+
+If the data in an input line is followed by a string in double quotes,
+that string is used as a label for the point.  As noted before, the
+character set contains a selection of plotting symbols which can be
+used to plot the points.  To set a default label for each point
+use the option `c ``label"', and to turn a default label off
+use `c0'.  The label size can be adjusted by the option
+``cs number".  The default size is 1.5, in units of a terminal's
+standard character size.  See the section below on labels for a
+instructions on the use of the special characters.
+
+Any options line causes a break in the data.  That is, the point preceding
+the options line will not be connected to the following point.
+Thus an options line consisting only of a ``\#" will cause a break.
+The default action of axis is also to break the graph after each labeled
+point or error bar, that is, not to connect it to the next point.  To force
+connections, use the option ``-lb0".
+The option ``-lb1" restores the default action of breaking after labels
+or error bars.  (``-b" is an archaic form of ``-lb0".)
+Another way to introduce a break is to use a label consisting of a blank
+(still in double quotation marks!).
+
+\beginsection 2.7 Transposing x and y
+
+The ``t" option transposes the x and y axes.  It doesn't work on
+data with error bars.
+
+\beginsection 2.8 Superimposing graphs
+
+The ``-s" option prevents axis from putting a screen clear at the
+beginning.
+This allows superimposing graphs, or whencombined with the h,u,w, and
+d options, allows more than one graph on the screen.
+
+\beginsection 2.9 Grid options
+
+Use the ``-g number" option to set the grid style. 0 means no grid,
+1 means a frame with tick marks, 2 means a full grid, and 3 means
+the bottom and left sides of the frame only.  The default
+is 1.
+
+Use ``-tsx number" and ``-tsy number" to set the tick mark style for the
+x and y axes. 0 is no tick marks, 1 is big marks at the numbers and
+little marks in between, and 2 is big marks at the numbers only.
+The default is 1.
+
+Use ``-nx" and/or ``-ny" to get no numbers on the x and/or y axes.
+
+Use the ``-box" option to get a frame with no numbers or tick marks.
+
+\beginsection 3. Labels
+
+\def\bs{$\backslash$}
+Axis will put titles on a graph, labels on the x and y axes, and labels
+at arbitrary points.  There are a host of options to control this.  All
+of the labels use the same character set.  Like all UNIX strings, they
+must be enclosed in double quotes if they are more than one word.  To
+get a real double quote into a label, use `\bs"'. Special characters are
+given by troff like escape sequences, which are a backslash (``\bs")
+followed by two characters.  For example, to get a Greek letter use
+``\bs gX", which will produce the Greek equivalent of the Roman letter
+X.  The case of the Greek letter will be the case of X.  (The g may be
+either case, or you can use \bs*X for compatibility with troff.)
+
+Labels may have superscripts and subscripts.  To start a superscript use
+``\bs sp", and to end a superscript use ``\bs ep".  Use ``\bs sb" and
+``\bs eb" to start and end a subscript.
+
+To overstrike characters, underline characters, or fill a square root
+sign, use ``\bs mk" (mark) and ``\bs rt" (return).  A ``mark"
+remembers the current point, and a ``return" returns to it.  Thus to make
+a square root sign with an ``a" in it use the square root symbol, the
+overbar, and the a: ``\bs sq\bs mk\bs rn\bs
+rta"
+
+To get a real backslash into the label, use two backslashes (``\bs\bs
+"). The escape sequences are tabulated in appendix B.
+
+\beginsection 3.1 Specifying a title
+
+Use the `lt ``title"' option to specify a title, where ``title" is
+a character string enclosed in double quotes.  If a title is given,
+there are other optional options (sorry about that) to modify it.
+``lts number" modifies the title size, and the default size is 2.
+``ltx number" and ``lty number" modify the placement of the title.
+The default is top center of the graph, and the coordinate system used
+is one in which the graph area runs from 0.0 to 1.0 in both the x and
+y directions.
+
+\beginsection 3.2 Labeling axes
+
+The `lx ``string"' and `ly ``string"' options to put a label on the
+x or y axis respectively.  The ``lxs number" and ``lys number" options
+change the sizes of these labels.  The default axis label size is 1.5.
+``lxx number",``lxy number",``lyx number", and ``lyy number" change the
+x and y coordinates of the x and y axis labels.
+
+\beginsection 3.3 Labels in the graph
+
+As noted above, a line of the form
+$$\hbox{ x\_value    y\_value    ``label" }$$
+puts a label at the indicated coordinates (in the data's coordinate
+system), and the ``-c label" option may be used to set a default label,
+or plotting symbol, for each point.  The ``cs number" option changes
+the label size.
+
+\bigskip\bigskip
+\line{\bf Appendix A: The UGS character set\hfil}
+\bigskip
+?
+\bigskip\bigskip
+\line{\bf Appendix B: escape sequences for special characters\hfil}
+\bigskip
+\halign{ #\hfil\quad&#\hfil\cr
+Escape sequence& Result\cr
+(backslash omitted!)&\cr
+\noalign{\medskip}
+\noalign{Plotting symbols}
+pl&  plus sign\cr
+cr&  cross\cr
+di&  diamond\cr
+sq&  square\cr
+oc&  octagon\cr
+fd&  fancy diamond\cr
+fs&  fancy square\cr
+fx&  fancy cross\cr
+fp&  fancy plus\cr
+bu&  burst\cr
+\noalign{\medskip}
+\noalign{Greek letters (both cases)}
+ga,gA&  alpha\cr
+gb,gB&  beta\cr
+gg,gG&  gamma\cr
+gd,gD&  delta\cr
+ge,gE&  epsilon\cr
+gz,gZ&  zeta\cr
+gy,gY&  eta\cr
+gh,gT&  theta\cr
+gi,gI&  iota\cr
+gk,gK&  kappa\cr
+gl,gL&  lambda\cr
+gm,gM&  mu\cr
+gn,gN&  nu\cr
+gc,gC&  xi\cr
+go,gO&  omicron\cr
+gp,gP&  pi\cr
+gr,gR&  rho\cr
+gs,gS&  sigma\cr
+gt,gT&  tau\cr
+gu,gU&  upsilon\cr
+gf,gF&  phi\cr
+gx,gX&  chi\cr
+gq,gQ&  psi\cr
+gw,gW&  omega\cr
+\noalign{\medskip}
+\noalign{Special symbols}
+tm&  times\cr
+di&  divide\cr
++-&  plus or minus\cr
+$<$=&  less than or equal\cr
+$>$=&  greater than or equal\cr
+~=&  approximately equal\cr
+n=&  not equal\cr
+pt&  proportional to\cr
+is&  integral sign\cr
+li&  line integral\cr
+pd&  partial derivative\cr
+dl&  del (gradient)\cr
+sr&  square root\cr
+ul&  underline\cr
+rn&  overbar (``run")\cr
+hb&  h bar\cr
+lb&  lambda bar\cr
+de&  degree\cr
+in&  infinity\cr
+dg&  dagger\cr
+dd&  double dagger\cr
+$<$-&  left arrow\cr
+-$>$&  right arrow\cr
+da&  down arrow\cr
+ua&  up arrow\cr
+la&  left angle\cr
+ra&  right angle\cr
+ib&  interabang\cr
+sc&  section\cr
+ca&  cap (intersection)\cr
+cu&  cup (union)\cr
+mo&  member of\cr
+nm&  not a member of\cr
+ex&  exists\cr
+al&  for all\cr
+sb&  subset\cr
+ds&  direct sum (xor)\cr
+dp&  direct product\cr
+sp&  superset\cr
+\noalign{\medskip}
+\noalign{Control characters}
+sp&  start superscript\cr
+ep&  end superscript\cr
+sb&  start subscript\cr
+eb&  end subscript\cr
+mk&  mark location\cr
+rt&  return to mark\cr
+}
+\break
+\line{\bf Appendix C: summary of options\hfil}
+\bigskip
+Square brackets indicate optional modifiers.  The minus sign is
+unnecessary, just conventional.
+\medskip
+\halign{ #\hfil\quad&#\hfil\cr
+-x [l] [xmin xmax] [xquant]&  range of x, and logarithmic flag\cr
+-y [l] [xmin xmax] [yquant]&  range of y, and logarithmic flag\cr
+-a [spacing] [initial]&  automatic abscissas\cr
+-m style&  linestyle\cr
+-g style&  grid style\cr
+-tsx style& x tick mark style\cr
+-tsy style& y tick mark style\cr
+-nx& don't number x axis\cr
+-ny& don't number y axis\cr
+-box& don't number or tick axes\cr
+-s&  don't erase\cr
+-e&  data with errors\cr
+-e0&  end data with errors\cr
+-c ``string"&  default plot symbol\cr
+-c0&  turn off default symbol\cr
+-cs number&  plot symbol size\cr
+-lb1&  break after labels\cr
+-lb0&  don't break at labels\cr
+-h number&  fraction of height to use\cr
+-w number&  fraction of width to use\cr
+-u number&  move up\cr
+-r number&  move right\cr
+-lt ``string"&  title\cr
+-lx ``string"&  x axis label\cr
+-ly ``string"&  y axis label\cr
+-lts number&  title size\cr
+-lxs number&  x label size\cr
+-lys number&  y label size\cr
+-ltx number&  title x coordinate\cr
+-lty number&  title y coordinate\cr
+-lxx number&  x label x coordinate\cr
+-lxy number&  x label y coordinate\cr
+-lyx number&  y label x coordinate\cr
+-lyy number&  y label y coordinate\cr
+}
+\bye

@@ -1,0 +1,54 @@
+.hy 0
+.TH ITEMS l "22 January 1991"
+.ad
+.SH NAME
+items - an interactive data entry program
+.SH SYNOPSIS
+.nf
+items num_items [-labels text] [-help] [-initial strings]
+.fi
+.SH DESCRIPTION
+Items is an interactive data entry device which puts up a number of boxes
+for numerical or text input.
+.LP
+Items will function on any X11R4 or X11R3 Window server.  It must, however,
+be compiled and run on a system which has the Motif widget sets.  When you
+start up items, it takes the first argument on its command line to be the
+number of sliders to be displayed.  It then scans the rest of the command
+line for labels.
+.SH USAGE
+To use items, first run the program.  Then set the output value
+by typing text in the input windows.  Then, click the
+"send" button.  This will output the values to stdout.
+.sp1
+.SH OPTIONS
+-labels sets text labels for the items.
+.LP
+.sp1
+-help displays a short message describing the use of items.
+.sp1
+-initial sets the initial values for the items
+.sp1
+NOTE:  -labels, and -initial must take the same number of 
+arguments as there are sliders.
+.SH DEFAULTS
+If num_items is not specified, items assumes num_items is 1.
+If no -initial, or -labels,
+slider defaults to: 1 item, initial value of 0, and no labels.
+.SH EXAMPLE
+.sp 1
+    items 3 -labels theta phi r
+.sp 1
+will put up three text boxes in a window, with initial values of 0.
+Then, it will label these three sliders "theta," "phi," and "r," respectively.
+.SH FILES
+items  -  the items binary
+.SH BUGS
+1. Doesn't allow text as initial values.
+2. Clumsy adaptation of much more sophisticated program.
+.SH AUTHOR
+Jeff Osterman wrote "slider"; James Sethna removed the sliders.
+.sp1
+Items was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

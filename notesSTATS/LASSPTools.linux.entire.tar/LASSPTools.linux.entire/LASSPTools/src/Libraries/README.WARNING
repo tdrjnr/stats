@@ -1,0 +1,9 @@
+
+
+
+WARNING:  These are not necessarily the whole libraries for
+blas, eispack, fftpack, linpack, or minpack.  They are not necessarily the
+most recent releases.  And several of these are now subsumed under
+LAPACK, which we haven't rewritten our code to use.  Finally, each CPU
+should have a fine-tuned version of the BLAS libraries: compiling the Fortran
+code won't provide optimal performance.

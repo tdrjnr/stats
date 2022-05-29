@@ -1,0 +1,16 @@
+inter is an interactive front end for the 2d graphing program, axis.
+
+To compile inter, follow the instructions at the beginning of the Makefile.
+
+Sample aliases that can make your life easier are in the file "aliases".
+
+inter is copyright by me, Stephen A. Langer, 1988-1993. You may freely
+redistribute it, as long as this copyright notice is preserved. If you
+make major modifications, please send them to me at langer@sfu.ca. 
+
+
+
+HELPDIR in the Makefile, unfortunately, has to be set by hand to the
+path leading to this directory.
+
+Doesn't compile under Linux.

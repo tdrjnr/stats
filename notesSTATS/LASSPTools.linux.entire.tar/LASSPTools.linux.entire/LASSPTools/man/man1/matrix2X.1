@@ -1,0 +1,123 @@
+.hy
+.TH MATRIX2X 1 "23 September 1992"
+.SH NAME
+matrix2X - make a density plot of a matrix in an X window
+.SH SYNOPSIS
+.B matrix2X
+[ option ] ...
+.SH DESCRIPTION
+.I Matrix2X
+reads a set of matrices from the standard input and produces a density plot
+in an X window.  The matrices are in the FAUCET form - rows of numbers
+separated by newlines and matrices separated by blank lines (double newlines).
+The plot consists of a series of rectangles mimicking the shape of the input
+matrix which are colored according to the list of colors specified in the
+following manner.  The values in the matrix are put into as many evenly
+spaced bins as there are colors specified. The color of each rectangle
+corresponds to the bin number of the value at that matrix location.
+So, for example, the rectangles corresponding to the smallest group of values
+(those in the first bin) are colored by the first color specified on the
+command line and the rectangles corresponding to the highest group of values
+are colored by the last color specified. 
+
+The following options are recognized,
+each as a separate argument.
+.TP
+.B  \-c
+Sets a single color via a  color name.  Ex. "-c red"
+.TP
+.B  \-rgb
+Sets a single color via the next 3 integers which are red, green, and blue levels.  Ex. "-rgb 65535 0 0".
+.TP
+.B  \-sc
+Next argument is either a color name or a color in hex and sets a seed color.
+Colors from black to this color are added to the palette.  The number is
+determined by the next -scc option.
+.TP
+.B  \-srgb
+Sets a seed color via the next three integers.
+.TP
+.B \-scmin
+Sets the minimum for a color range via the following color name.  Should be
+followed by -scmax or -srgbmax and -scc.
+.TP
+.B \-scmax
+Sets the maximum for a color range via a color name or hex.
+.TP
+.B \-srgbmin
+Sets the minimum for a color range via the next three integers.  Should be
+followed by -scmax or -srgbmax and -scc.
+.TP
+.B \-srgbmax
+Sets the maximum for a color range via the next three integers.
+.TP
+.B \-palette
+Sets a palette of colors via a list of hex numbers.  Ex. "-palette #000000
+#FF0000 #FFFFFF" for black, red, and white.
+.TP
+.B \-scc
+Sets the number of colors in the previous range.  Ex. "-scc 5".
+.TP
+.B \-srgbc
+Identical to "-scc".
+.TP
+.B \-noclear
+Turns off the window clearing between matrices.
+.TP
+.B \-noclick
+Turns of waiting for a mouse click between matrices.
+.TP
+.B \-b
+Inputs matrix in binary mode for speed.
+.TP
+.B \-replicate
+Does not do interpolation when fitting a matrix to a window. This will leave
+black edges if the matrix size is not a multiple of the window size. The 
+default is to interpolate by taking the density of the previous cell in order
+to fill any size window with any size matrix.
+.TP
+.B \-h, -help, -?, and ?
+Gives the help message.
+
+
+.SH "USAGE TIPS"
+Astounding effects can be obtained by using a complicated palette.  Such
+palettes may be built up by using a series of color options (which has the
+effect of simply appending the new colors to the palette).  Another way
+is to engineer a palette and use the -palette option.  In a matrix
+representing a finely sampled continuous function the contours corresponding
+to contour values where the color changes abruptly will be visible.
+
+Hardcopy of graphics can generally be obtained by using
+.I xwd
+and 
+.I xpr
+in conjunction
+with
+.I lpr.
+For example, to print on a postscript print one might use the line
+"xwd | xpr -device ps -gray 2 | lpr"
+For some printers the proper technique may by using
+.I xwd
+in conjunction with a filter which converts xwd format into an appropriate
+format for the local printer.  Consult local documentation for details.
+
+.SH "SEE ALSO"
+xwd(1), xpr(1), lpr(1)
+
+.SH BUGS
+1 - Does not support the Mathematica arrow notation to denote an exponent.
+.br
+2 - Does not support the Fortran 'd' notation.
+.br
+3 - Resizing while reading from a pipe takes two views of the matrix before
+the matrix is the correct size.
+
+.SH AUTHOR
+
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+matrix2X was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

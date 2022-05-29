@@ -1,0 +1,31 @@
+#!/usr/bin/perl -w
+use Chart::Graph::Gnuplot qw(gnuplot);
+
+    my %cols = (
+                3 => "Throughput"
+                #4 => "Bandwidth Utilization OUT",
+		#5 => "Threshold"
+                );
+    gnuplot({
+             "title" => "Glasgow Router 8MB In/Out mon-fri 08am-20pm",
+             "x-axis label" => "src client",
+             "y-axis label" => "Kbytes/sec",
+             "output type" => "png",
+             "output file" => "thruput.png",
+	     #"xtics" => [ ["05/01/2004 to 19/01/2004", 100] ],
+             # Setting date/time specific options.
+             #"xdata" => "%m/%y",
+             #"timefmt" => "%m",	
+             #"format" => ["x", "%m"],
+             # Set output range - note quoting of date string
+             #"xrange" => "[\"26/12/2003\":\"09/01/2004\"]",
+	     #"extra_opts" => join("\n", "set grid"),
+            },
+
+            map {  
+                [{"title" => $cols{$_},
+                  "style" => "linespoints",
+                  "type" => "file",
+                  using => "$_" },
+                 "graph"] } (sort keys %cols));
+

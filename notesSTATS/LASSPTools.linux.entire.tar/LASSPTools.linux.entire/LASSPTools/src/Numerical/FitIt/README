@@ -1,0 +1,45 @@
+fit_it does non-linear least squares parameter fitting on a data file
+specified on the command line.  It uses the MINPACK routine lmdif1 which is 
+an implementation of a variant of the Levenberg-Marquadt algorithm.  The user 
+is required to write a function which returns the prediction of the theory 
+(which must be called "theory"),  and link it to the rest of the code.  Besides
+that, the user must also change some lines of code in fit_it.c to deal with 
+the number of parameters in a particular case.
+
+fit_it weighs all points equally.  Unless there is demand for weighting points
+differently, it will not be implemented.  It could probably be done 
+without too much trouble.
+
+fit_it takes parameter values from stdin, usually with the help of slider,
+and spits out the predictions for those parameter values.  This is meant to
+be piped to movieaxis, and then to xplot for a graph, e.g.:
+
+	slider 5 -min -100 -100 -100 -100 -1\
+	-max 100 100 100 100 1 -initial 10 -10 10 -10 0.075\
+	-labels A B A_prime B_prime alpha | fit_it -f processed_data \
+	| movieaxis -x .88 1.04 -y 1.5 12.25 -lt Fecht -lx "Temperature"\
+        -ly "Specific heat" | xplot.
+
+When fit_it gets an end-of-file (by hitting "Quit" on slider, say), it does
+the fitting, plots the fitted curve and leaves it there.  (The line and point
+styles of the data plot and the theory plot can be specified on the command
+line.)  The values of the fitted parameters, the norm of the difference
+vector between data and fit, and an info number are printed to stderr.
+	
+Type fit_it -h for long help, with descriptions of the various options.
+There are default values, too.  The one necessary thing is to specify the
+file containing the data.  The data does not have to be sorted, except if
+you want to plot lines and not points.
+
+To make fit_it, copy everything in this directory and the ones below it
+into a directory of your own.  Look in the comments in fit_it.c,
+fcn_fit_it.c, and the Makefile to see what to change.  Change the 
+preprocessor #define's to ANSI if you are doing it on the IBMs, 
+or SUN if not, or #define both if you have ANSI C on the Sun.  Then, just
+type "make" and you should be on your way.
+
+Type "make clean" to remove all .o files in this directory and the minpack
+directory, and libminpack.a.
+
+==============================================================================
+Bug reports and comments to Dave Chin, dchin@helios.tn.cornell.edu

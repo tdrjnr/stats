@@ -1,0 +1,8 @@
+The package xplot was written by Arthur Smith while he was at LASSP.
+We included it in the LASSPTools distribution (started after he finished)
+because it was so useful.  The current version is supported by GNU, but
+didn't work on our system.
+
+You can get the other version from GNU: ftp://prep.ai.mit.edu/pub/gnu.  
+
+JPS 7-8-96

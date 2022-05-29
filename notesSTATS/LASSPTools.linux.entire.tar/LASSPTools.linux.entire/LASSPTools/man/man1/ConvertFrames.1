@@ -1,0 +1,43 @@
+.hy 0
+.TH CONVERTFRAMES 1 "May 4 1992"
+.ad
+
+.SH NAME
+ConvertFrames - a routine for converting frames of polygons to and from binary 
+format
+
+.SH SYNOPSIS
+
+.B ConvertFrames
+<
+.I polygon_file
+
+.SH DESCRIPTION
+ConvertFrames uses the line_io library routines to read and write frames of
+polygons, changing ascii to binary (or binary to ascii).
+
+.SH OPTIONS
+-binary converts frames in binary format to ascii format. 
+  The default is to convert ascii frames to binary format.
+
+-project removes the z coordinate of each numerical triple.
+  (See 3D-2D)
+
+.SH DEFAULTS
+The default is ascii data in and binary data out.
+
+.SH EXAMPLE
+cat
+datafile 
+| ConvertFrames -b | polydraw
+
+.SH "SEE ALSO"
+polydraw, RotateStream
+
+.SH AUTHOR
+Eric Lochstet
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+ConvertFrames was developed at Cornell University as part of the 
+Cornell-IBM Joint Study on Computing for Scientific Research

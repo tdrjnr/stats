@@ -1,0 +1,142 @@
+.hy 0
+.TH FOURIER 1 "20 January 1993"
+.ad
+
+.SH NAME
+Fourier - a program for calculating fast fourier transforms
+
+.SH SYNOPSIS
+
+.B Fourier 
+[ 
+.I -options 
+]
+
+.SH DESCRIPTION
+Fourier is a program for calculating fourier transforms or inverse fourier
+transforms. Fourier accepts data from standard input and writes the results
+to standard output. Fourier uses the double precision fftpack routines to
+perform its calculations.  Fourier does not need any form of zero padding.
+
+.SH USAGE
+To use Fourier you need a file containing 1xN , Nx1 or Nx2 matrices, you can also
+type data into Fourier directly. Fourier will continue to process data until
+it reads and EOF, end of file, character. Each row of the matrix can be
+punctuated with newlines, braces, { }, or brackets, [ ] but the punctuation
+must be consistent throughout the matrix. The begining and ending punctuation
+of each matrix must be consistent with that of its rows. The rows and matrices
+that end with a newline do not have any begining punctuation. Fourier can also
+read in binary form, which is much faster. The data read in binary form is
+read as a vector of length N. For more information about the binary mode,
+see the math_io documentation. Fourier accepts complex numbers in 
+several formats: (a,b), a+bi, or a+bI, where 'a' is the real part and 'b'
+is the imaginary part. If the data consists of only real numbers seperated by
+a newline then either the real and the complex input modes can be used, but
+the real mode is more accurate.
+
+.SH OPTIONS
+-complex_input : input is the form a+bi
+.LP
+-real_input : input values are real numbers
+.LP
+Only one of the following 7 output options can be used at a time.
+.LP
+-absolute_output : output the absolute value of the results
+.LP
+-complex_output : output both the real and imaginary parts of the results
+.LP
+-imaginary_output : output the imaginary part of the results
+.LP
+-packed_output : output the packed results from -real_input
+.LP
+-power_output : output the power spectrum, the absolute value squared
+.LP
+-real_output : output the real part of the results
+.LP
+-binary_output : Outputs the results in binary form.
+.LP
+-binary_in : Inputs the data in binary form.
+.LP
+-file_in 
+.I file 
+: Specifies the
+.I file 
+the data is read from.
+.LP
+-file_out 
+.I file 
+: Specifies 
+the output 
+.I file.
+.LP
+The output files can also be 'stderr' to output to standard error.
+.LP
+-normalize : normalize the results by dividing them by the square root of N.
+This is the default mode.
+.LP
+-unnormalize : do not normalize the results
+.LP
+-nozero : do not output the data at the zero k point. The default is to 
+output all the points.
+.LP 
+The following flags have no effect when used with the -binary_output or the
+-packed_out flags.
+.LP
+-center : center the output around the 0 wave vector. The default is to start
+at the zero wave vector and end at the 2 PI wave vector.
+.LP
+-fft : calculate the fft and not the inverse fft. This is the default mode.
+.LP
+-inverse : calculate the inverse fft.
+.LP
+-ordinate_in : Along with the function points the first column represents
+the position. The input is then a Nx2 matrix. 
+.LP 
+-ordinate_out : print out the wave vector before each result data point. 
+For all uncentered real outputs, the mth wave vector is (2*PI*m)/L, where
+L is total length of the input data points given by N(x1 -x0) if 
+-ordinate_in is specified, N is the number of data points and x0 and x1 are
+the first two positions. If -ordinate_in is not specified then L is just the
+number of data points read. Real centered output has the latter half of
+the transform output first, with k = (2*PI*m)/L - PI*(N-1)/L. Complex
+output (presumed input into other programs) uncentered has the wave
+vectors negative for the latter half of the output: we presume you aren't
+plotting the output, and this format is more natural for other applications.
+.LP
+? , -? , -h , -help : Print help infomation to standard error.
+
+.SH DEFAULTS
+The default mode for Fourier is to read complex data from standard input
+and write its results to standard output.
+
+.SH EXAMPLE
+.sp 1
+   Fourier -file_in data -file_out results
+.sp 1
+will read complex Nx1 or 1xN matrices from the file data, and write thier
+fourier transforms to the file results.
+
+.SH "SEE ALSO"
+MSolve, MMult, fftpack documentation
+
+.SH BUGS
+1. Normalization has errors when two transforms are done with the output of one
+used as input to the next.
+
+.SH AUTHOR
+Jim Frankenberger
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Fourier was developed at Cornell University as part of the
+Cornell-IBM Joint Study on Computing for Scientific Research
+
+
+
+
+
+
+
+
+
+

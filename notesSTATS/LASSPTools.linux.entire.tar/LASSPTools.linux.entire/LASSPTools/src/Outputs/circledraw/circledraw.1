@@ -1,0 +1,140 @@
+.hy 0
+.TH CIRCLEDRAW 1 "23 Oct 1991"
+.ad
+
+.SH NAME
+circledraw - a circle drawing program for X
+
+
+.SH SYNOPSIS
+
+.B circledraw
+< 
+.I datafile
+
+.SH DESCRIPTION
+Circledraw is an X Window System plotting package which reads a series of
+circle specifications from standard input and draws them in color in a window.
+Circles can be drawn continuously into the window with optional clearing of
+window when specified, or the circles can be plotted off-screen and sent to
+the screen one-frame-at-a-time as in an animation.
+.LP
+Circledraw will function on any X11R4 or X11R3 Window server. 
+
+.SH USAGE
+To use circledraw, you need a data file with lines with an x, y, and radius followed
+by a color specifications which begins with an arbitrary string and is followed
+by three integers representing the red, green and blue components of the color.  
+For example a file to specify two circles might read-
+
+0.4 0.5 0.2 rgb 65535 0 0
+0.6 0.5 0.2 rgb 0 65535 0
+
+These lines specify a red circle and a blue overlapping circle of the same radius.
+
+Each "frame" should be separated by a blank line.  This will cause the window
+to be cleared in the default mode and will cause the current frame to be
+copied to the window (and a new one begun) when circledraw is in the buffering mode.
+.sp1
+
+.SH OPTIONS
+-noframe	:	do not draw frames around each circle
+.LP
+-i :  'interactive' - see each circle as it is read
+.LP
+-buffer : accumulate circles - draw as frames of an animation
+.LP
+-b : binary mode input
+.LP
+-noheal : skip steps taken to preserve window image (for speed)
+.LP
+-xmin 
+.I number 
+: Set x-coordinate of right edge of window to
+.I number 
+.LP
+-xmax 
+.I number 
+: Set x-coordinate of left edge of window to 
+.I number 
+.LP
+-ymin 
+.I number 
+: Set y-coordinate of bottom edge of window to
+
+.I number 
+.LP
+-ymax 
+.I number 
+: Set y-coordinate of top edge of window to
+.I number 
+.LP
+-interval 
+.I number 
+: Set # of circles between checks for expose events while drawing to
+.I number 
+.LP
+-geometry : request window geometry in standard X format
+.LP
+-title 
+.I string 
+: Set window title to 
+.I string
+.LP
+-help or -h : print brief help information
+.LP
+.sp1
+.sp1
+
+.SH DEFAULTS
+There are hard-coded defaults that circledraw uses if no options are specified
+on the command line.  The defaults for xmin and ymin are -1.0, while xmax and ymax
+default to 1.0  The window is titled "circledraw" by default and the code
+draws the circles as they come in and keeps an offscreen buffer for healing the
+window if it is covered and later exposed.
+
+.SH EVENTS
+Circledraw handles two types of events.  The first is an expose event, which can
+occur and be handled both while drawing and after the end-of-file has been
+reached.  Expose events are not handled in the "noheal" mode which is provided
+for users that require slightly faster operation.  The second event is a key
+press in the window after end-of-file has been reached, where a "q" or "Q"
+causes the program to terminate.
+
+.SH EXAMPLES
+.sp 1
+   circledraw -title "Some Circles"  <primary_circles
+   
+   cat animation | circledraw -buffer
+.sp 1
+
+.SH FILES
+binary executable:	circledraw
+.nf
+source code:	circledraw.c		circledraw.h
+
+sample data files:	primary_circles      animation
+.fi
+
+.SH "SEE ALSO"
+polydraw
+
+.SH BUGS
+.nf
+Some examples-
+1. In buffer mode with no backing store, an expose event causes the
+   the window to heal with the current contents of the buffer which
+   is being prepared to become the next frame.
+2. Circledraw does not handle resizing of its window.
+3. Background and frame colors should be user-specifiable.
+4. Missing some of the niceties and improvements in the latest polydraw
+5. Really should be called "discdraw"
+.fi
+
+.SH AUTHOR
+Steve Townsend
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Circledraw was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research

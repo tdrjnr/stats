@@ -1,0 +1,294 @@
+.hy 0
+.TH PlotM 1 "8 April 1993"
+.ad
+
+.SH NAME
+PlotM - An X/Motif program that draws ball and stick type structures 
+which can be scaled and rotated.
+
+.SH SYNOPSIS
+
+.B cat input | PlotM [-options]
+
+.SH DESCRIPTION
+PlotM is a program which takes input consisting of x-y-z coordinates
+for spheres and x-y-z pairs as coordinates for lines and draws the resulting
+figure in an X window. Blank lines in the input can be used to designate
+frames producing animations.
+The color and radius of the spheres or lines may
+also be included in the input. The structure may be interactively rotated,
+and scaled. In addition, the sphere size and shading can be controlled.    
+
+.SH USAGE
+To use PlotM you need a data file with x-y-z triples on separate lines to indicate spheres
+and pairs of x-y-z triples to indicate lines.
+When a blank line is seen in the input stream the lines and spheres are drawn
+in a window. Once the figure is drawn it can interactively be scaled and rotated.
+
+The down arrow marked "Size" will make the whole structure smaller by 50% when the 
+left mouse button is clicked over the down arrow. The up arrow marked size will enlarge
+the structure by 33% when the left mouse button is clicked over the up arrow. When the
+structure becomes too large to fit in the X window the scrollbars on the sides
+of the window can be used to change which section of the structure is being
+viewed. The arrows marked "Radius" control the size of the spheres, clicking on the
+down arrow can be used to reduce the size of the spheres. The arrows marked "Shade"
+control how may different colors are used to produce the shading effect for a sphere,
+hitting the up arrow will give more shading and a better looking picture but one that
+will take longer to produce. The 'center' button forces the image to be centered in the
+window. 
+
+The X,Y and Z position fields in the top part of the window display the X,Y,Z coordinates
+of a sphere when the left mouse button is clicked and the cursor is over a sphere.
+The values in parentheses indicate the original values before any rotations were 
+preformed. In addition, a separate popup menu is displayed which allows various 
+attributes of the sphere to be changed. The menu has entries for position, size, color, 
+label and radius. The 'save' button on the popup applies the changes to the selected atom,
+the 'cancel' button returns the attributes to their original values and the 'exit' button
+takes down the popup. The arrows next to the position fields move to the next sphere in
+the X,Y or Z direction. Using the arrow buttons allows any sphere to be selected for a
+change even if it is not visible in the current image. 
+
+The rotations are preformed using a separate program called 'rotate' which is started
+automatically by PlotM. In order to rotate the molecule, move to the rotate window
+and drag the axis while keeping the left mouse button held down. When the button is released
+the figure is updated to reflect the new view. When the -update option is used the figure
+is moved continously while the left mouse is held down while dragging in the rotate window.
+The "Reset" button in the rotate window sends the original rotatation coordinates to PlotM,
+this is useful for restoring an image to its original perspective after it has been rotated. 
+
+.SH OPTIONS
+.LP
+-xmax number - Set the maximum x coordinate for the window
+.LP
+-ymax number - Set the maximum y coordinate for the window
+.LP
+-zmax number - Set the maximum z coordinate for the window
+.LP
+-xmin number - Set the minimum x coordinate for the window
+.LP
+-ymin number - Set the minumum y coordinate for the window
+.LP
+-zmin number - Set the minumum z coordinate for the window
+.LP
+-update - Redraw molecule while mouse is moved in rotation window, this produces continous
+motion of the structure.
+.LP
+-cshade number - Set how many colors are to be used in shading spheres.
+.LP
+-lshade number - Set how many colors are to be used in shading lines.
+.LP
+-radius number - Set the default radius
+.LP
+-2D - All input coordinates are defined by x,y pairs.
+.LP
+-cn color - Change a default color n to a new color.
+.LP
+-type - Input is in the form "X Y number" OR "X Y Z number", where number denotes the
+index used in accessing radius information and also the index in the color table.
+This allows input to be compatible with PlotAtoms format and other programs.
+.LP
+-rn number - Set radius n to be number. The -type option must be specified for this
+option to be relavent.
+.LP
+
+.SH SPHERES
+A line in the input file describing a sphere has the following format
+(where curly brackets {} indicate an optional item).
+
+  x1 y1 {z1} {r=number} {c=number} {t="text"} {number}
+
+This specifies the x,y,z coordinate of the sphere, if no z cordinate
+is given the default is 0. The parameter r=number specifies the radius
+of the sphere. The radius is given in whatever units are specified for
+giving the x,y,z points. The c=number parameter indicates the basic color index
+of the sphere. The default colors are defined below.
+The default colors can be overridden either from the command
+line by using the -cn parameter or from the input stream by using '@color' line.
+The t="text" parameter attaches a text string to the sphere so that when the
+sphere is clicked on in the viewing window the name can also be displayed.
+If the command line option -type is specified then the parameter {number}
+indicates what color to use and also the radius to use.
+
+For example, an input line '1 2 3 1' that is encountered when the
+command line arguments were '-type -c1 violet -r1 0.45' would draw a violet shaded circle
+of radius 0.45 at X=1,Y=2,Z=3. The radius and position are scaled to account for
+the current size of the window.
+
+
+.SH LINES
+A line in the input file describing a sphere has the following format
+(where curly brackets {} indicate an optional item).
+
+  x1 y1 {z1} x2 y2 {z2} {r=number} {c=number} {number}
+
+This specifies the two endpoints of a line segment to be drawn. If the -2D 
+option was specified on the command line then only two x,y pairs are expected.
+For line segments connecting spheres the endpoints should be given as the centers
+of the spheres, this will allow reducing the spheres to points and producing
+bond diagrams as a result. If line endpoints do not end at the centers of spheres
+then the lines are drawn as defined. The r=number and c=number are the same as in the
+specification for a sphere. If the option -type is specified on the command line
+this indicates what that the {number} parameter indicates what color to use and
+also what radius to use, as defined from the command line arguments from -rn and 
+-cn parameters.
+
+.SH COMMANDS
+A blank line in the input stream indicates to clear the viewing window.
+
+@color number name - Define a color index to be a specific color, for example
+ '@color 23  aquamarine' would define what color to use when the c=23 parameter
+is encountered on input lines.
+
+@clear - resets the limits and scaling factors for an image. This is useful when 
+sending several frames of data, inserting an @clear command following a blank
+line will allow the next frame to determine its own scaling factors. Without
+an @clear command the limits from the first frame will be used. For example,
+if the first frame contained an image with all objects between 0 and 1 and the
+second frame contained an image where the objects fell between 2 and 3 then inserting  
+an @clear before the second frame would resset the view area to be from 2 to 3. 
+Without the @clear the view
+area would remain from 0 to 1. In effect the second frame would not be visible because
+the view is from 0 to 1 and the data is displayed from 2 to 3. The image would
+have to be scaled using the scale button to adjust the view to see the objects.
+The command line arguments -xmin, -xmax, etc.
+can be used to set a constant view area even if frames of data have different
+limits. 
+
+.SH DEFAULTS
+The default colors are the following:
+ 0 - blue
+ 1 - red
+ 2 - firebrick
+ 3 - navy
+ 4 - yellow
+ 5 - green 
+ 6 - brown
+ 7 - gray
+ 8 - cyan
+ 9 - violet
+ 10 - white
+ 11 - khaki
+ 12 - 99 - Not defined (white).
+
+Different colors can be defined by specifing '-cn name' on the command
+line or by using the '@color n name' line in the input.
+On a monochrome system all colors other then black will map to white.
+
+.LP
+-xmax, -xmin - From input data, using the endpoints of any lines and the boundaries
+of any spheres. 
+.LP
+-ymax, -ymin - From input data, using the endpoints of any lines and the boundaries
+of any spheres.
+.LP
+-zmax, -zmin - From input data, using the endpoints of any lines and the boundaries
+of any spheres.
+.LP
+-radius - If the radius is not given in the input file or specified using the -rn command
+line parameters then the spheres will default to a size 1 pixel.
+.LP
+-cshade - Use 10 colors to fade from the outside of the sphere to a white center.
+.LP
+-lshade - Use 1 color to shade lines from the outer edges to the center.
+.LP 
+-update - (Not enabled)
+.LP
+-2D - (Not enabled, default is 3D coordinates)
+.LP
+-type - (Not enabled) 
+
+.SH EXAMPLE
+.sp 1
+   cat Guanine.dat | PlotM
+.sp 1
+Where the Guanine.dat file contains 16 points specified as x-y-z triples,
+the radius of the spheres 'r=0.5' and several colors depending on the
+atom type.
+The lines are defined with two endpoints each, all being color 7 (gray)
+and the same radius. 
+ 
+ -5.21 -2.60 0.07 r=0.5  c=1
+ 1.54 -6.63 -0.75 r=0.5  c=1
+ 4.52 -5.06 -0.79 r=0.5  c=1
+ 0.44 7.32 0.69 r=0.5  c=1
+ 4.35 4.32 0.154 r=0.5  c=1
+ -4.82 -0.79 0.23 r=0.5  c=2
+ -2.32 -0.71 0.07 r=0.5  c=3
+ 1.45 -2.79 -0.36 r=0.5  c=3
+ 1.64 1.34 0.027 r=0.5  c=3
+ -0.99 1.53 0.214 r=0.5  c=3
+ 0.35 5.27 0.50 r=0.5  c=3
+ -1.11 -2.88 -0.21 r=0.5  c=4
+ 2.61 -5.04 -0.66 r=0.5  c=4
+ 2.99 -0.75 -0.26 r=0.5  c=4
+ -1.77 4.01 0.51 r=0.5  c=4
+ 2.49 3.78 0.21 r=0.5  c=4
+ -5.21 -2.60 0.07 -4.82 -0.79 0.23 r=0.100000 c=7
+ 1.54 -6.63 -0.75 2.61 -5.04 -0.66 r=0.100000 c=7
+ 4.52 -5.06 -0.79 2.61 -5.04 -0.66 r=0.100000 c=7
+ 0.44 7.32 0.69 0.35 5.27 0.50 r=0.100000 c=7
+ 4.35 4.32 0.154 2.49 3.78 0.21 r=0.100000 c=7
+ -4.82 -0.79 0.23 -2.32 -0.71 0.07 r=0.100000 c=7
+ -2.32 -0.71 0.07 -0.99 1.53 0.214 r=0.100000 c=7
+ -2.32 -0.71 0.07 -1.11 -2.88 -0.21 r=0.100000 c=7
+ 1.45 -2.79 -0.36 -1.11 -2.88 -0.21 r=0.100000 c=7
+ 1.45 -2.79 -0.36 2.61 -5.04 -0.66 r=0.100000 c=7
+ 1.45 -2.79 -0.36 2.99 -0.75 -0.26 r=0.100000 c=7
+ 1.64 1.34 0.027 -0.99 1.53 0.214 r=0.100000 c=7
+ 1.64 1.34 0.027 2.99 -0.75 -0.26 r=0.100000 c=7
+ 1.64 1.34 0.027 2.49 3.78 0.21 r=0.100000 c=7
+ -0.99 1.53 0.214 -1.77 4.01 0.51 r=0.100000 c=7
+ 0.35 5.27 0.50 -1.77 4.01 0.51 r=0.100000 c=7
+ 0.35 5.27 0.50 2.49 3.78 0.21 r=0.100000 c=7
+
+
+An example using 2D coordinates and atom types:
+
+ PlotM -2D -type -r0 0.23 -r1 0.50 -r2 0.67 -c0 green -c1 gray -c2 yellow
+
+The input file would look like the following:
+ 1 1 0
+ 2 2 1
+ 3 3 2
+ 4 5 1
+ 7 3 0
+
+This would draw 5 spheres at locations (1,1) (2,2) (3,3) (4,5) (7,3) using the
+radii and color from the command line. If all the spheres where to be the same
+size and the default colors used the following command could be used.
+
+ PlotM -2D -type -radius 0.50
+
+
+.SH "SEE ALSO"
+bonds, rotate, PlotAtoms, RotateStream
+
+.SH BUGS
+.LP
+1.There is no hidden line removal, the objects are drawn from
+most negative Z forward. Lines are drawn at the time
+when both endpoints
+are greater then any Z values of objects already drawn.
+.LP
+2.When spheres intersect the resulting surfaces are not drawn correctly.
+.LP
+3.If the window is resized the sliders reset indicating that the whole
+image is in view even though it may not be.
+
+.SH AUTHOR
+Jim Frankenberger
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+PlotM was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+
+
+
+
+
+
+
+
+
+

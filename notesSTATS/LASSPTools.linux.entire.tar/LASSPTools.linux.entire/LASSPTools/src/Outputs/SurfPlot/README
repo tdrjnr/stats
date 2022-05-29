@@ -1,0 +1,17 @@
+Type RunDemo to run the demo.
+
+SurfPlot reads a matrix of z values (a sampled surface) from standard input
+or from a file and extrapolates the x and y values, printing them out to 
+standard out so that a surface plot a la Mathematica can be produced by 
+piping to the appropriate programs.  To do that:
+
+	SurfPlot -f filename | RotateStream | 3D-2D | polydraw
+	
+A binary mode is also available.  See the PlotIt script for usage.
+
+SurfPlot -h[elp] brings up help.  There is also a man page for it.
+
+In the future, the user will be able to change viewpoint while plotting.
+
+==============================================================================
+bug reports, comments, flames to dchin@helios.tn.cornell.edu

@@ -1,0 +1,51 @@
+.hy 0
+.TH BLEND 1 "11 September 1992"
+.ad
+
+.SH NAME
+blend - interpolates a smooth curve through data points.
+
+.SH SYNOPSIS
+
+blend [-t | -h | -i] 
+
+
+.SH DESCRIPTION
+Blend interpolates a smooth curve through data points from standard
+input using the technique of parabolic blending (see Rogers and Adams
+'Elements of Mathematics for Computer Graphics'). The interpolated 
+points (lagging behind by one interval) are written to standard 
+output. A constant number of points are inserted between each set of
+of input values. The first and last intervals are interpolated
+by parabolas.
+
+.SH USAGE
+To use blend data may be input via a pipe, redirected from a file
+or typed in.
+
+.SH OPTIONS
+.LP
+-h : Display help information
+.LP
+-t : Data points are expected to be represented as triples, the 
+default is doubles.
+.LP 
+-i
+.I number
+: Specifies the number of data points that are to be inserted 
+between each input set of data points. 
+
+.SH EXAMPLE
+blend <
+.I datafile
+
+
+.SH AUTHOR
+.sp 1
+Steve Townsend
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+blend was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

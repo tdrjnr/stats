@@ -1,0 +1,78 @@
+.hy 0
+.TH ARBSLAB 1 "17 April 1991"
+.ad
+
+.SH NAME
+arbslab - an enhanced version of slab 
+
+.SH SYNOPSIS
+
+cat 
+.I datafile 
+|
+.B arbslab min max [-rotate] [-project]
+
+
+.SH DESCRIPTION
+arbslab is a simple filter for passing slices of data.  It allows one to use
+a slider to change the size of the slab being looked at. In addition, the points
+can be output with  2D coordinates (-project) or with 3D coordinates. Any z value
+falling between min and max will be output.
+
+.SH USAGE
+To use arbslab, you simply pipe your data with triples (and perhaps extra
+material) on lines through arbslab (with options), and the filter will remove the
+items whose z coordinate is not within the correct range.  The slider can
+be manipulated to change the slab size.  In addition the -rotate option can be used
+to rotate the data points before taking the slab, when using -rotate the original
+x,y values are output. The output is sent to stdout, 
+so that it may be piped to other programs.  
+
+.SH OPTIONS
+min
+: sets the range of the lower bound of the slab.
+.LP
+max 
+: sets the range of the upper bound of the slab.
+.LP
+Note that both of these options are required.
+.LP
+-project
+: removes the z coordinate before output.
+.LP
+-rotate
+: Adds three extra sliders for rotating the points in the x,y and z directions,
+the z values of the rotated points are then compared against the valid slab
+range.
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile 
+| arbslab 0 10 |
+.I plotting_package
+.sp 1
+will send data from the file
+.I datafile
+through arbslab to 
+.I plotting_package
+, where plotting_package is some program that you specify.
+
+.SH "SEE ALSO"
+3D-2D, sortit, rotate, slab, thin, translate, PlotAtoms
+
+.SH BUGS
+1.  Doesn't compile under Linux.
+
+
+.SH AUTHOR
+Jennifer Hodgdon
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+arbslab was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+
+
+
+
+

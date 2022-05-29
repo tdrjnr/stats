@@ -1,0 +1,101 @@
+.hy 0
+.TH ROTATESTREAM 1 "20 April 1992"
+.ad
+
+.SH NAME
+RotateStream - a data filter
+
+.SH SYNOPSIS
+
+cat 
+.I datafile 
+|
+.B RotateStream
+[
+.I -options
+]
+
+.SH DESCRIPTION
+RotateStream is a filter for rotating triples of data.  
+
+.SH USAGE
+To use RotateStream, you simply pipe your data with triples (and perhaps extra
+material) on lines through RotateStream, and the filter will 
+rotate each numerical triple, using a rotation matrix that it reads from an
+analog input program or a file.
+The output is sent to stdout, 
+so that it may be piped to
+other programs.  Note that any line may contain more than one triple,
+in which case RotateStream rotates each triple.
+
+.SH OPTIONS
+-binary : uses the polydraw binary mode for input and output.
+.LP
+-file_in
+.I datafile
+: reads the triples from 
+.I datafile
+instead of stdin.
+.LP
+-help : displays a help message and quits.
+.LP
+-initial
+.I alpha beta gamma
+: uses the euler angles
+.I alpha beta gamma
+to set the initial rotation matrix.
+.LP
+-light : does simulated lighting of polygons for polydraw.  It uses the right
+hand rule to determine the outward normal of each polygon starting with the 
+first triple and proceeding counter clockwise around the polygon.  Each polygon
+is brightened or dimmed by a factor of the z(third) component of its outward
+normal.
+.LP
+-popen "PROGRAM" : read the rotation matrices from PROGRAM.
+.LP
+-project : remove the z coordinate from the output.
+.LP
+-quit_eof : quit at EOF in the input data.
+.LP
+-remove_comments : remove lines that begin with text.
+.LP
+-rotate_file FILE : read the rotation matrices from FILE.
+.LP
+-remove_text : remove all text from the input data.
+.LP
+-slider : read the rotation matrices from slider.
+.LP
+-sort [ a ][ x | y | z ] : sorts the output.
+.LP
+-wait_eof : do not quit until EOF in the input data.
+.LP
+-x | -axis | -movieaxis : the movieaxis mode.
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile 
+| RotateStream |
+.I plotting_package
+.sp 1
+will send data from the file
+.I datafile
+through RotateStream to 
+.I plotting_package
+, where plotting_package is some program that you specify.
+
+.SH "SEE ALSO"
+sortit, 3D-2D, Euler, thin, translate, slab, PlotAtoms, polydraw
+
+.SH BUGS
+.sp 1
+
+.SH AUTHOR
+Eric Lochstet
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+RotateStream was developed at Cornell University as part of the Cornell-IBM
+Joint Study on Computing for Scientific Research
+
+

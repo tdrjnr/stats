@@ -1,0 +1,34 @@
+BEGIN_DEF = ***************************
+CFLAGS = -c -O -K -Q 
+CFLAGS_SUN = -c -O -DSUN -D_NO_PROTO -DSTRINGS_ALIGNED -DNO_REGEX -DNO_ISDIR -DUSE_RECOMP -DUSE_GETWD -DUNDERSCOREFORTRAN
+
+XM_LIBS = -lXm -lXt -lX11
+BINDIR = ../bin
+END_DEF = ****************************
+
+SRCS = \
+	quit.c \
+	rotate.c \
+	tracker.c 	
+
+OBJS = \
+	quit.o \
+	rotate.o \
+	tracker.o
+
+all: rotate
+
+.c.o:
+	$(CC) $(CFLAGS) $(SRCS) $(EXTRA)
+
+rotate: $(OBJS)
+	$(CC) -o rotate $(OBJS) $(XM_LIBS) -lm 
+
+clean::
+	rm -f *.o rotate
+
+install::
+	cp -p rotate $(BINDIR)
+	chmod 775 $(BINDIR)/rotate
+
+	

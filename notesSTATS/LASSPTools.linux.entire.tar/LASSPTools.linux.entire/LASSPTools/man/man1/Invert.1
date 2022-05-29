@@ -1,0 +1,131 @@
+.hy 0
+.TH INVERT 1 "22 January 1992"
+.ad
+
+.SH NAME
+Invert - a program for calculating determinants and/or inverses
+
+.SH SYNOPSIS
+
+.B Invert 
+[ 
+.I -options 
+]
+
+.SH DESCRIPTION
+Invert is a linear algebra program for calculating inverses. Invert accepts 
+matrices from standard input and writes the inverses to standard output. 
+Invert uses the double precision Linpack routines to perform its calculations.
+
+.SH USAGE
+To use Invert you need a file containing matrices or you can also
+type matrices into Invert directly. Invert will
+continue to process matrices until it reads and EOF, end of file, character.
+Each row of the matrix can be punctuated with newlines, braces, { },
+or brackets, [ ] but the punctuation must be consistent throughout the matrix.
+The beginning and ending punctuation of each matrix must be consistent with
+that of its rows. The rows and matrices that end with a newline do not have
+any beginning punctuation. Invert can also read matrices in binary
+form, which is much faster. For more information about the binary mode,
+see the math_io documentation. Invert accepts complex numbers in 
+several formats: (a,b), a+bi, or a+bI, where 'a' is the real part and 'b'
+is the imaginary part. 
+.sp1
+Invert will also estimate the reciprocal condition of the matrix,
+if it is called with the -condition option. Invert will print the
+reciprocal condition to standard output if no output file is specified with
+the -file_condition option. For more information about the reciprocal
+condition, see the 
+.I
+Linpack Users' Guide
+by Dongarra et al.
+
+.SH OPTIONS
+-real : The matrix elements are real numbers; the default mode. 
+.LP
+-complex : The matrix elements are complex numbers. 
+.LP
+-general : Uses routines that work with all matrices, the default mode.
+.LP
+-symmetric : Uses routines optimized for symmetric matrices, real or complex.
+.LP
+-hermitian : Uses routines optimized for hermitian matrices, complex only.
+.LP
+-upper_triangular : Uses routines optimized for upper triangular matrices.
+.LP
+-lower_triangular : Uses routines optimized for lower triangular matrices.
+.LP
+-binary_in : Inputs the matrices in binary form.
+.LP
+-binary_out : Outputs the inverses in binary form.
+.LP
+-file_in 
+.I file 
+: Specifies the
+.I file 
+matrices are read from.
+.LP
+-file_out 
+.I file 
+: Specifies the 
+the default output 
+.I file.
+.LP
+-file_inverse 
+.I file 
+: Specifies the 
+.I file 
+the inverses are written to.
+.LP
+-file_condition 
+.I file 
+: Specifies the 
+.I file 
+the conditions are written to.
+.LP
+The output files can also be 'stderr' to output to standard error.
+.LP
+-condition : Estimates the reciprocal conditions of the matrices.
+.LP
+-timing : Prints timing information to standard error.
+.LP
+? , -? , -h , -help : Print help information to standard error.
+
+.SH DEFAULTS
+The default mode for Invert is to read a real matrix from
+standard input and write its determinant and inverse to standard output, in
+that order.
+
+.SH EXAMPLE
+.sp 1
+   Invert -file_in data -hermitian -file_out results
+.sp 1
+will read hermitian matrices from the file data, and write their inverses to
+the file results. (The -complex flag is unnecessary for hermitian matrices.) 
+
+.SH "SEE ALSO"
+DI, Det, MSolve, MMult
+
+.SH BUGS
+1 - Does not support the Mathematica arrow notation to denote an exponent.
+.br
+2 - Does not support the Fortran 'd' notation.
+
+
+.SH AUTHOR
+Eric Lochstet
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Invert was developed at Cornell University as part of the
+Cornell-IBM Joint Study on Computing for Scientific Research
+
+
+
+
+
+
+
+
+
+

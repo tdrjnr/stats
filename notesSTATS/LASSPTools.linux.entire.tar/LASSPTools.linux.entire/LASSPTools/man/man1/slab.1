@@ -1,0 +1,77 @@
+.hy 0
+.TH SLAB 1 "17 April 1991"
+.ad
+
+.SH NAME
+slab - a simple data filter
+
+.SH SYNOPSIS
+
+cat 
+.I datafile 
+|
+.B slab -min 
+.I num1 num2 
+.B -max 
+.I num3 num4 
+
+.SH DESCRIPTION
+slab is a simple filter for passing slices of data.  It allows one to use
+a slider to change the size of the slab being looked at.  
+
+.SH USAGE
+To use slab, you simply pipe your data with triples (and perhaps extra
+material) on lines through slab (with options), and the filter will remove the
+items whose z coordinate is not within the correct range.  The slider can
+be manipulated to change the slab size.  The output is sent to stdout, 
+so that it may be piped to other programs.  
+
+.SH OPTIONS
+-min
+.I num1 num2
+: sets the range of the lower bound of the slab to be between 
+.I num1 
+and 
+.I num2
+.LP
+-max 
+.I num1 num2
+: sets the range of the upper bound of the slab to be between 
+.I num1
+and 
+.I num2
+.LP
+Note that both of these options are required.
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile 
+| slab -min 0 10 -max 15 20 |
+.I plotting_package
+.sp 1
+will send data from the file
+.I datafile
+through slab to 
+.I plotting_package
+, where plotting_package is some program that you specify.
+
+.SH "SEE ALSO"
+3D-2D, sortit, rotate, Euler, thin, translate, PlotAtoms
+
+.SH BUGS
+1. slab should probably allow you to choose which coordinate
+(x, y, or z) to use for the slab.
+
+.SH AUTHOR
+Bruce Roberts
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+slab was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+
+
+
+
+

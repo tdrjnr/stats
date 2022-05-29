@@ -1,0 +1,3 @@
+Rick Cochran and I worked hard to get this working on Linux under X11R6
+Motif 2.0.  It seems to work now, but only when compiled with optimization:
+without, it segmentation faults.  Hmm...

@@ -1,0 +1,2 @@
+#!/bin/bash
+echo 'Burst Times' >> Lord-ATM-SW1-MelvilleGate-mon-fri-0800am-1800pm-24Mbps-stats; sed = data | sed 'N; s/^/     /; s/ *\(.\{6,\}\)\n/\1   /' | egrep -e '61[0-9]   ' -e '73[0-9]   '  >> Lord-ATM-SW1-MelvilleGate-mon-fri-0800am-1800pm-24Mbps-stats

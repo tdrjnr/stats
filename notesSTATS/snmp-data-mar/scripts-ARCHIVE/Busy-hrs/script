@@ -1,0 +1,17 @@
+#!/usr/bin/perl -w
+open GRAPHIN, '>', 'data-in'
+          or die "Can't open data-in: $!\n";
+      open GRAPHOUT, '>', data-out'
+          or die "Can't open data-out: $!\n";
+      while (<>)    # You can pass the input file name on the command line
+      {
+          my @f = split /\s/;    # Like awk: split at white space
+
+          print GRAPHIN  $f[0], ' ', $f[3], "\n";
+          print GRAPHOUT $f[0], ' ', $f[4], "\n";
+      }
+      close GRAPHIN;            # Could live without these
+      close GRAPHOUT;
+      system './graph';         # Execute your graph program
+
+exit(0);

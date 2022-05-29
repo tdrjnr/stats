@@ -1,0 +1,111 @@
+.hy 0
+.TH EIGEN 1 "8 August 1991"
+.ad
+
+.SH NAME
+Eigen - a program for calculating eigenvalues and/or eigenvectors
+
+.SH SYNOPSIS
+
+.B Eigen 
+[ 
+.I -options 
+]
+
+.SH DESCRIPTION
+Eigen is a program for calculating eigenvalues, eigenvectors, or both. Eigen
+accepts matrices from standard input and writes the eigenvalues and
+eigenvectors to standard output. Eigen uses the double precision Eispack
+routines to perform its calculations.
+
+.SH USAGE
+To use Eigen you need a file containing matrices or you can also type matrices
+into Eigen directly. Eigen will continue to process matrices until it reads
+and EOF, end of file, character. Each row of the matrix can be punctuated with
+newlines, braces, { }, or brackets, [ ] but the punctuation must be consistent
+throughout the matrix. The beginning and ending punctuation of each matrix must
+be consistent with that of its rows. The rows and matrices that end with a
+newline do not have any beginning punctuation. DetermiantInverse can also read
+matrices in binary form, which is much faster. For more information about the
+binary mode, see the math_io documentation. Eigen accepts complex
+numbers in several formats: (a,b), a+bi, or a+bI, where 'a' is the real part
+and 'b' is the imaginary part. 
+
+.SH OPTIONS
+-real : Uses the routines for real matrices; the default mode. 
+.LP
+-complex : Uses the routines for complex matrices.
+.LP
+-symmetric : Uses routines optimized for real symmetric matrices.
+.LP
+-hermitian : Uses routines optimized for complex hermitian matrices.
+.LP
+-binary_in : Inputs the matrices in binary form.
+.LP
+-file_in 
+.I file 
+: Specifies the
+.I file 
+the matrices are read from.
+.LP
+-file_out 
+.I file 
+: Specifies the 
+default output 
+.I file.
+.LP
+-file_values 
+.I file
+: Specifies the 
+.I file 
+the eigenvalues are written to.
+.LP
+-file_vectors 
+.I file 
+: Specifies the 
+.I file 
+the eigenvectors are written to.
+.LP
+The output files can also be 'stderr' to output to standard error.
+.LP
+-values : Calculates the eigenvalues.
+.LP
+-vectors : Calculates the eigenvalues.
+.LP
+-timing : Prints timing information to standard error.
+.LP
+? , -? , -h , -help : Print help information to standard error.
+
+.SH DEFAULTS
+The default mode for Eigen is to read a real matrix from standard input
+and write its eigenvalues and eigenvectors to standard output, in that order.
+
+.SH EXAMPLE
+.sp 1
+   Eigen -file_in data -hermitian -file_out results -values
+.sp 1
+will read hermitian matrices from the file data, and write their eigenvalues to
+the file results.
+
+.SH BUGS
+1 - Does not support the Mathematica arrow notation to denote an exponent.
+.br
+2 - Does not support the Fortran 'd' notation.
+
+.SH AUTHOR
+Eric Lochstet
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Eigen was developed at Cornell University as part of the
+Cornell-IBM Joint Study on Computing for Scientific Research
+
+
+
+
+
+
+
+
+
+

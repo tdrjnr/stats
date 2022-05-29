@@ -1,0 +1,31 @@
+#!/usr/bin/perl -w
+#This script extracts the packet size of every line of a dumpfile (and writes it to a file).
+
+$NUM = 140;
+$file = "~root/script/dumpmore$NUM";
+
+#unzip the zipped dumpfiles
+$zipFile = "$file.gz";
+`gunzip $zipFile`;
+
+$dumpFile = "$file" || die("error 1");;
+$dump = "tcpdump -tt -e -r $dumpFile |" || die("error 2");
+$packetSizes = "./output/packetSizes$NUM";
+
+#create FILEHANDLE for $dumpFile and open $dumpFile
+open(DUMP, "$dump") || die(error3);
+#create FILEHANDLE for $packetSizes and open $packetSizes
+open(PACKETSIZES, ">$packetSizes"); # write enabled
+
+while($firstLine = <DUMP>) {
+@array = split(/ /, $firstLine);
+$result = $array[6];
+chop($result);
+print PACKETSIZES "$result\n";
+}
+
+#close files
+close(PACKETSIZES);
+close(DUMP);
+#zip the unzipped dumpfiles
+'gzip $file';

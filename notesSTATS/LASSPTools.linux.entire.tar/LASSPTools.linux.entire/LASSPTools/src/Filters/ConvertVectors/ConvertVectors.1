@@ -1,0 +1,71 @@
+.hy 0
+.TH CONVERTVECTORS 1 "October 24 1991"
+.ad
+
+.SH NAME
+ConvertVectors - a routine for converting vectors from one format to another
+
+.SH SYNOPSIS
+
+.B ConvertVectors
+<
+.I vector_file
+
+.SH DESCRIPTION
+ConvertVectors uses the various get_vector and put_vector routines to
+convert ascii to and from binary, and files to and from pipes
+
+.SH OPTIONS
+
+-binary_in gives binary double precision format for input  
+    (starting with binary integer for columns)
+
+-binary_out gives binary double precision format for output
+    (starting with binary integer)
+
+-ascii_in (default) gives ascii input, no size information
+	(columns determined by format: either one vector
+	 per line or parentheses, brackets, or braces)
+
+-ascii_out (default) gives ascii output, one vector per line
+
+-Mathematica_out gives ascii output in Mathematica format
+
+-HTML_out gives ascii output in HTML Table format
+
+-file_in filename reads vector from file
+
+-file_out filename writes vector to file
+
+.SH DEFAULTS
+
+Default is any ascii in, simple ascii out.
+
+.SH EXAMPLE
+
+if Mathematica.vectors is a file with {1,2,3},{4,5,6,7},{8}
+
+.nf
+ConvertVectors < Mathematica.vectors
+
+1 2 3
+4 5 6 7
+8
+.fi
+
+.SH "SEE ALSO"
+ComplexDoubleVectors,
+ComplexFloatVectors, DI, Eigen, MMult, MSolve
+
+.SH BUGS
+1 - Does not support the Mathematica arrow notation to denote an exponent.
+.br
+2 - Does not support the Fortran 'd' notation.
+
+.SH AUTHOR
+J. Ken Burton
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+ConvertVectors was developed at Cornell University as part of the 
+Cornell-IBM Joint Study on Computing for Scientific Research

@@ -1,0 +1,92 @@
+Version 3.2.7
+-- Fixed inconsistencies between inter's and axis's line styles, finally.
+
+Version 3.2.6
+-- Now using getopt() to parse arguments.
+-- Added -e option.
+-- Added "option duplicate".
+-- Changed "include" to "include file", and added "include next".
+-- Added "histogram baseline" and made default NOT to draw baseline.
+
+Version 3.2.5
+-- Fixed possible segmentation faults when appending files of different lengths.
+-- Put startup message in code, rather than in a separate file, so it can't
+   get lost when people transfer the executable.
+
+Version 3.2.4
+
+-- Added "append" commands, -a option, and fixed a few core dumps when
+   bad column numbers were given.
+-- Fixed default column numbers in data modification routines when ncols=1.
+-- Got rid of lines for empty bins in logarithmic histograms.
+-- Added "forget" command to discard data. Useful when reading many large files.
+-- Added "histogram auto".
+-- Added "filter tbird".
+-- Fixed bug in 2nd invocation of "hist weight".
+
+Version 3.2.3
+
+-- Avoided core dump when using applyfunc() on nonexistent columns.
+-- histogram understands x,*,$, and works in moviemode.
+
+Version 3.2.2
+
+-- Added "option moviemode". When moviemode is on, the screen is cleared and
+   axes redrawn for each curve.
+
+Version 3.2.1:
+
+-- New command line options, allowing for different ways of reading the first
+   input file.
+      -i --- DON'T ignore axis commands in input.
+      -f --- specify a filter to read input.
+
+-- Fixed a bug in transmission of axis commands.
+
+Version 3.2 and earlier:
+
+ -- New commands "filter set", "filter clear", "filter show" to let you
+    preprocess data files. Ie, if you have data files that you would like
+    to run through another program, instead of doing
+           otherprogram < data.file > temp.file
+           inter temp.file | axis ...
+    you can do
+           inter | axis ...
+           inter >> filter set otherprogram
+           inter >> file data.file
+    and you never have to create a temp.file. As usual, this may be only
+    useful to me, but that's why I add features, mostly.
+
+-- The long help file (what you get when you just type "help") is run
+   through "more", so you don't have to read the whole thing (you can
+   use "q" to quit from "more"). At some point I'll make the help file
+   complete, describing all the commands.
+
+-- Some bugs were fixed that could cause inter to bomb sometimes.
+
+-- Labels can be enclosed in quotation marks ("), which will be stripped
+   off before the labels are used. This allows labels to begin with
+   spaces, which was not possible before, and give you some more control
+   over where they appear.
+
+-- New command "repeat" reexecutes the previous command line. If you
+   invoke inter with a long list of files and want to do the same thing
+   to each of them, you can type, for example,
+      inter >> option (shift 1; scale 3; adjust *) p *; next
+      inter >> repeat
+      inter >> repeat
+      etc.
+
+-- New command "option invert" to compute (data)^{-1}
+
+-- New commands "option range [x or y] [max or min]" to set the range
+   of data points to be included. This is different from the setting the
+   limits on the plot. Points outside the range are not sent to axis.
+   For example, if you want to take the log of an x data set that isn't
+   positive everywhere, you can use "option range x min 0" to exclude
+   all but the positive x values. The ranges do not include their endpoints.
+
+-- You can specify columns in the input file as "x", "*" (all but x),
+   or "$" (last column). For example, you can type "plot *" to plot all
+   the data. This feature doesn't work in every command, but it works
+   where it's most useful.

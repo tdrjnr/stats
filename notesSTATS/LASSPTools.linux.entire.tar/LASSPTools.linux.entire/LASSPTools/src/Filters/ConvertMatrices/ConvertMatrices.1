@@ -1,0 +1,73 @@
+.hy 0
+.TH CONVERTMATRICES 1 "October 24 1991"
+.ad
+
+.SH NAME
+ConvertMatrices - a routine for converting matrices from one format to another
+
+.SH SYNOPSIS
+
+.B ConvertMatrices
+<
+.I matrix_file
+
+.SH DESCRIPTION
+ConvertMatrices uses the various get_matrix and put_matrix routines to
+convert ascii to and from binary, and files to and from pipes
+
+.SH OPTIONS
+
+-binary_in gives binary double precision format for input  
+	(starting with two binary integers for rows and columns)
+
+-binary_out gives binary double precision format for output
+	(starting with two binary integers)
+
+-ascii_in (default) gives ascii input, no size information
+	(rows and columns determined by format: either one row
+	 per line or parentheses, brackets, or braces)
+
+-ascii_out (default) gives ascii output, one row per line
+	blank line terminating matrix
+
+-Mathematica_out gives ascii output in Mathematica format
+
+-HTML_out gives ascii output in HTML Table format
+
+-file_in filename reads matrix from file
+
+-file_out filename writes matrix to file
+
+.SH DEFAULTS
+
+Default is any ascii in, simple ascii out.
+
+.SH EXAMPLE
+
+if Mathematica.matrix is a file with {{1,2,3},{3,2,1}},
+
+.nf
+ConvertMatrices < Mathematica.matrix
+
+1 2 3
+3 2 1
+.fi
+
+.SH "SEE ALSO"
+ComplexDoubleMatrices, 
+ComplexFloatMatrices,  
+DI, Eigen, MMult, MSolve
+
+.SH BUGS
+1 - Does not support the Mathematica arrow notation to denote an exponent.
+.PP
+2 - Does not support the Fortran 'd' notation.
+
+.SH AUTHOR
+J. Ken Burton
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+ConvertMatrices was developed at Cornell University as part of the 
+Cornell-IBM Joint Study on Computing for Scientific Research
+

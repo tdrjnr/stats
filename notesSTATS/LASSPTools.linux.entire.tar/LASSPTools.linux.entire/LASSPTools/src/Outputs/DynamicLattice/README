@@ -1,0 +1,32 @@
+DynamicLattice (v. 3.0)
+-----------------------
+
+"DynamicLattice" is an X-windows graphics program to represent 
+and animate sites on a two-dimensional square (or rectangular) lattice 
+based on their value.  Input is read through standard input (stdin),
+and an X-window is opened and animation begun.  Values at lattice
+sites can be represented by shaded color or grayscale cells, arrows of
+variable length and direction, or bonds of variable length and direction.
+Sites can be input and updated one at a time, or the entire lattice
+can be updated at each step.  
+
+See the man page (DynamicLattice.man) and the online help via
+"DynamicLattice -help" for more details.
+
+lattice2ps (v. 3.0)
+-----------------------
+
+"lattice2ps" converts lattice fields of the type animated
+by DynamicLattice to (static) Postscript images, in either grayscale
+or color.  
+
+See the man page (lattice2ps.man) and the online help via
+"lattice2ps -help" for more details.
+
+Author
+------
+Please send comments, suggestions, bug reports, and whizzy data sets
+demonstrating the usefulness of DynamicLattice to:
+	
+	Chris Myers
+	myers@tc.cornell.edu

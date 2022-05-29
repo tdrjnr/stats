@@ -1,0 +1,55 @@
+PING 10.156.23.2: (10.156.23.2): 1442 data bytes
+1450 bytes from 10.156.23.2: icmp_seq=0 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=1 ttl=251 time=20 ms
+1450 bytes from 10.156.23.2: icmp_seq=2 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=3 ttl=251 time=26 ms
+1450 bytes from 10.156.23.2: icmp_seq=4 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=5 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=6 ttl=251 time=98 ms
+1450 bytes from 10.156.23.2: icmp_seq=7 ttl=251 time=24 ms
+1450 bytes from 10.156.23.2: icmp_seq=8 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=9 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=10 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=11 ttl=251 time=14 ms
+1450 bytes from 10.156.23.2: icmp_seq=12 ttl=251 time=14 ms
+1450 bytes from 10.156.23.2: icmp_seq=13 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=14 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=15 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=16 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=17 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=18 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=19 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=20 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=21 ttl=251 time=14 ms
+1450 bytes from 10.156.23.2: icmp_seq=22 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=23 ttl=251 time=26 ms
+1450 bytes from 10.156.23.2: icmp_seq=24 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=25 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=26 ttl=251 time=17 ms
+1450 bytes from 10.156.23.2: icmp_seq=27 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=28 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=29 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=30 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=31 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=32 ttl=251 time=19 ms
+1450 bytes from 10.156.23.2: icmp_seq=33 ttl=251 time=14 ms
+1450 bytes from 10.156.23.2: icmp_seq=34 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=35 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=36 ttl=251 time=15 ms
+1450 bytes from 10.156.23.2: icmp_seq=37 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=38 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=39 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=40 ttl=251 time=14 ms
+1450 bytes from 10.156.23.2: icmp_seq=41 ttl=251 time=14 ms
+1450 bytes from 10.156.23.2: icmp_seq=42 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=43 ttl=251 time=14 ms
+1450 bytes from 10.156.23.2: icmp_seq=44 ttl=251 time=15 ms
+1450 bytes from 10.156.23.2: icmp_seq=45 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=46 ttl=251 time=182 ms
+1450 bytes from 10.156.23.2: icmp_seq=47 ttl=251 time=13 ms
+1450 bytes from 10.156.23.2: icmp_seq=48 ttl=251 time=12 ms
+1450 bytes from 10.156.23.2: icmp_seq=49 ttl=251 time=14 ms
+
+----10.156.23.2 PING Statistics----
+50 packets transmitted, 50 packets received, 0% packet loss
+round-trip min/avg/max = 12/19/182 ms

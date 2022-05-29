@@ -1,0 +1,123 @@
+.hy 0
+.TH POLY2PS 1 "14 May 1991"
+.ad
+
+.SH NAME
+poly2ps - convert input for polydraw program to postscript (See "polydraw")
+
+
+.SH SYNOPSIS
+.B poly2ps
+< 
+.I datafile
+>
+.I file.ps
+
+.SH DESCRIPTION
+Poly2ps is filter to produce a postscript file which draws and shades polygons.
+It is designed to read the same input file (ASCII format only) that polydraw
+reads.  The default is to convert the specified RGB colors to grayscales.
+This conversion is hard to make general and is thus presently quite
+stupid.  It will probably need modification unless your color scheme is quite
+simple (e.g., you draw only red, green, and blue polygons).  Alternatively, 
+color postscript output can be created by using the -color option.
+
+.SH USAGE
+To use poly2ps, you need a data file with multiple x-y pairs on each line followed
+by a color specifications which begins with an arbitrary string and is followed
+by three integers representing the red, green and blue components of the color.  
+For example a line in the file might read-
+
+0.5 0.5 -0.5 0.5 -0.5 -0.5 0.5 -0.5 rgb 65535 0 0
+
+This line produces a completely red square.  Note that the format is the same
+as that used for polydraw.  The options list has also been made as compatible
+with polydraw as is possible.  (If you include options, such as
+-buffer, which are supported only by polydraw, you will get a warning message
+telling you that the option is not supported by poly2ps and has been ignored.)
+
+.SH OPTIONS
+.TP
+.B \-tr trx try
+translates postscript origin to (trx,try) in inches
+.TP
+.B \-g gmin gmax
+sets range of grayscales from gmin to gmax (default = 0.2->0.9 (dark->light))
+.TP
+.B  \-x xmin xmax
+sets the range of x values from xmin to xmax (default = -1. to 1.)
+.TP
+.B  \-y ymin ymax
+sets the range of y values from ymin to ymax (default = -1. to 1.)
+.TP
+.B  \-xmin xmin 
+alternate way to set xmin (compatible with polydraw)
+.TP
+.B  \-xmax xmax 
+alternate way to set xmax (compatible with polydraw)
+.TP
+.B  \-ymin ymin 
+alternate way to set ymin (compatible with polydraw)
+.TP
+.B  \-ymax ymax 
+alternate way to set ymax (compatible with polydraw)
+.TP
+.B \-size size
+scales largest axis to size inches (default = 7.0)
+.TP
+.B \-framewidth framewidth
+sets width of frame around each polygon, a number > 0 (default = 1)
+.TP
+.B  \-color
+shades sites with the specified colors, rather than converting to grayscales
+.TP
+.B  \-noframe
+omits the black frame around each polygon
+.TP
+.B  \-nofill
+does not fill polygons
+.TP
+.B  \-lines
+treats input as lines, not polygons
+.TP
+.B  \-joel
+produce more compact postscript for a special case (Joel's tiling model)
+.TP
+.B \-h, -help
+gives the help message.
+
+.SH EXAMPLES
+poly2ps -xmin -500 -xmax 500 -ymin -500 -ymax 500 <still_12 >still_12.ps
+
+poly2ps -x -500 500 -y -500 500 -color -size 4 <still_12 | gs
+   
+cat still_12 | poly2ps -x -500 500 -y -500 500 -noframe | lpr
+
+.SH FILES
+binary executable:	poly2ps 	
+.nf
+source code:	poly2ps.c
+
+sample data file:	still_12
+.fi
+
+.SH "SEE ALSO"
+polydraw, matrix2ps
+
+.SH BUGS
+.nf
+1. The biggest bug is the conversion of rgb colors to grayscales.  
+   The way chosen here is 
+   about the most naive possible and will only be successful in a 
+   few situations.
+2. Sometimes, due to the lack of resolution of the printer, some of 
+   the polygon frames will be omitted in printing.  This can be 
+   corrected by setting framewidth to a larger value.
+
+.SH AUTHOR
+Joel Shore (with pieces plagiarized from Stephen Townsend and Chris Myers)
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Poly2ps was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research

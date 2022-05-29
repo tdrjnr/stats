@@ -1,0 +1,79 @@
+From bwr Sun Mar 10 14:40:01 1991
+To: jet
+
+                    EISPACK subroutines
+
+Subroutine   Matrix form                  Capability
+
+BAKVEC       sign-symmetric               back transformation
+BALANC       general                      scaling
+BALBAK       general                      back scaling
+BANDR        symmetric band               reduction
+BANDV        symmetric band               some eigenvectors
+BISECT       symmetric tridiagonal        some eigenvalues
+BQR          symmetric band               some eigenvalues
+CBABK2       complex                      back scaling
+CBAL         complex                      scaling
+CG           complex general              find eigenvalues/eigenvectors
+CH           complex Hermitian            find eigenvalues/eigenvectors
+CINVIT       complex Hessenberg           some eigenvectors
+COMBAK       complex                      back transformation
+COMHES       complex                      reduction
+COMLR        complex Hessenberg           all eigenvalues
+COMLR2       complex Hessenberg           all eigenvalues and vectors
+COMQR        complex Hessenberg           all eigenvalues
+COMQR2       complex Hessenberg           all eigenvalues and vectors
+CORTB        complex                      back transformation
+CORTH        complex                      reduction
+ELMBAK       real                         back transformation
+ELMHES       real                         reduction
+ELTRAN       real                         reduction
+FIGI         sign-symmetric               reduction
+FIGI2        sign-symmetric               reduction
+HQR          real Hessenberg              all eigenvalues
+HQR2         real Hessenberg              all eigenvalues and vectors
+HTRIB3       Hermitian packed             back transformation
+HTRIBK       Hermitian                    back transformation
+HTRID3       Hermitian packed             reduction
+HTRIDI       Hermitian                    reduction
+IMTQL1       symmetric tridiagonal        all eigenvalues
+IMTQL2       symmetric tridiagonal        all eigenvalues and vectors
+IMTQLV       symmetric tridiagonal        all eigenvalues
+INVIT        real Hessenberg              some eigenvectors
+MINFIT       real                         least squares
+ORTBAK       real                         back transformation
+ORTHES       real                         reduction
+ORTRAN       real                         reduction
+QZHES        generalized                  reduction
+QZIT         generalized Hessenberg       further reduction
+QZVAL        generalized Hessenberg       all eigenvalues
+QZVEC        generalized Hessenberg       all eigenvectors
+RATQR        symmetric tridiagonal        some eigenvalues
+REBAK        symmetric generalized        back transformation
+REBAKB       symmetric generalized        back transformation
+REDUC        symmetric generalized        reduction
+REDUC2       symmetric generalized        reduction
+RG           general                      find eigenvalues/eigenvectors
+RGG          generalized                  find eigenvalues/eigenvectors
+RS           symmetric                    find eigenvalues/eigenvectors
+RSB          band symmetric               find eigenvalues/eigenvectors
+RSG          generalized symmetric        find eigenvalues/eigenvectors
+RSGAB        generalized symmetric        find eigenvalues/eigenvectors
+RSGBA        generalized symmetric        find eigenvalues/eigenvectors
+RSM          symmetric                    find eigenvalues/eigenvectors
+RSP          packed symmetric             find eigenvalues/eigenvectors
+RST          tridiagonal symmetric        find eigenvalues/eigenvectors
+RT           sign-symmetric tridiagonal   find eigenvalues/eigenvectors
+SVD          real                         singular value decomposition
+TINVIT       symmetric tridiagonal        some eigenvectors
+TQL1         symmetric tridiagonal        all eigenvalues
+TQL2         symmetric tridiagonal        all eigenvalues and vectors
+TQLRAT       symmetric tridiagonal        all eigenvalues
+TRBAK1       symmetric                    back transformation
+TRBAK3       packed symmetric             back transformation
+TRED1        symmetric                    reduction
+TRED2        symmetric                    reduction
+TRED3        packed symmetric             reduction
+TRIDIB       symmetric tridiagonal        some eigenvalues
+TSTURM       symmetric tridiagonal        some eigenvalues and vectors
+

@@ -1,0 +1,38 @@
+BEGIN_DEF = IBM RS6000 Makefile
+CFLAGS = -c -O -K -Q 
+CFLAGS_SUN = -c -O -DSUN -D_NO_PROTO -DSTRINGS_ALIGNED -DNO_REGEX -DNO_ISDIR -DUSE_RECOMP -DUSE_GETWD -DUNDERSCOREFORTRAN
+BINDIR = ../bin
+LALIBS = -L../line_io
+INCDIR = -I../line_io
+END_DEF = ****************************
+
+SRCS = \
+	3D-2D.c \
+	parse_argument.c 
+
+OBJS = \
+	3D-2D.o \
+	parse_argument.o  
+
+LINE_OBJS = ../line_io/line_io.o
+ 
+all: line_io 3D-2D
+
+line_io: $(LINE_OBJS)
+	cd ../line_io; make CFLAGS="$(CFLAGS)"  ARFLAGS=$(ARFLAGS);  
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCDIR) $(SRCS) $(EXTRA)
+
+3D-2D: $(OBJS)
+	$(CC) -o 3D-2D $(OBJS) $(LALIBS) -lline_io -lm;
+
+clean::
+	rm -f *.o 3D-2D
+
+install::
+	cp -p 3D-2D $(BINDIR)
+	chmod 775 $(BINDIR)/3D-2D
+
+
+	

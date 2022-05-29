@@ -1,0 +1,67 @@
+.hy 0
+.TH HIST 1 "6 January 1993"
+.SH NAME
+hist \- make a histogram
+.SH SYNOPSIS
+.B hist
+[ option ] ...
+.SH DESCRIPTION
+.I Hist
+reads a list of numbers from the standard input and produces 
+on the standard output a file
+suitable for input to 
+.I axis
+or
+.I graph.
+or
+.I xmgr
+The following options are recognized,
+each as a separate argument.
+.TP
+.B  \-s
+Next argument is the \fBs\fPize for each bin. (default = 1/10 of range of data)
+.TP
+.B  \-n
+Next argument is the \fBn\fPumber of bins. (default = 10 )
+.TP
+.B  \-x
+Next 2 arguments are range for \fBx\fP axis. (default = range of data)
+.TP
+.B  \-log
+Sorts data into logarithmic bins.
+.TP
+.B  \-sep
+Recognize a blank line as the start of a new set of data that is
+to be processed. The default is to ingore blank lines and make one
+histogram for all of the data.
+.TP
+.B  \-N norm
+Normalizes counts (norm = 0: scale counts by number of values,
+norm = 1: scale counts by to data*binsize, norm=2: leave counts alone(de
+fault)
+.TP
+.B  \-g 
+Turns on bar graphics (this is the default)
+.TP
+.B  \-ng 
+Turns off bar graphics, printing (bin,count) pairs.
+.TP
+.B  \-pos
+Outputs only bins with positive bin counts.
+.TP
+.B  \-h 
+Display a summary of the command line options.
+
+.SH "SEE ALSO"
+graph(1), axis(local), plot(1), gigi(local), vplt(local), hp(local)
+.SH BUGS
+Simultaneously specifying -s, -n and -x is usually inconsistent, and
+may produce strange results.
+
+.SH AUTHORS
+Jim Frankenberger, based on code originally written by Chris Myers
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+hist was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research

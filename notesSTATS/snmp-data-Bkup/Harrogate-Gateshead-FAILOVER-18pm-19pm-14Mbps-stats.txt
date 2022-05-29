@@ -1,0 +1,88 @@
+-------------------------IN-Bound Statistics------------------------
+  Total of 232 values 
+    Minimum  = 803.462000 (position = 151)  = 5.739014 %
+    Maximum  = 5908.960000 (position = 174)  = 42.206857 %
+    Range    = 5105.498000 
+    Total = 494583.786000 
+    Mean     = 2131.826664  = 15.227333 %
+    Variance = 865827.839320 
+    Std Dev  = 930.498705 
+    CoV      = 0.436480 
+    95% value = 3992.824073  = 28.520172 %
+---------------------------------------------------------------
+-------------------------OUT-Bound Statistics------------------------
+  Total of 232 values 
+    Minimum  = 590.401000 (position = 77)  = 4.217150 %
+    Maximum  = 3301.480000 (position = 131)  = 23.582000 %
+    Range    = 2711.079000 
+    Total = 265102.082000 
+    Mean     = 1142.681388  = 8.162010 %
+    Variance = 351267.556986 
+    Std Dev  = 592.678291 
+    CoV      = 0.518673 
+    95% value = 2328.037971  = 16.628843 %
+---------------------------------------------------------------
+-------------------------IN-Bound Statistics PERCENTILES------------------------
+  Total of 232 values 
+    Median    = 2082.400000  = 14.874286 %
+    1% value = 833.388000  = 5.952771 %
+    2% value = 882.435000  = 6.303107 %
+    5% value = 1052.780000  = 7.519857 %
+    95% value = 3936.350000  = 28.116786 %
+    98% value = 4372.880000  = 31.234857 %
+    99% value = 4505.500000  = 32.182143 %
+---------------------------------------------------------------
+-------------------------OUT-Bound Statistics PERCENTILE------------------------
+  Total of 232 values 
+    Median    = 934.082500  = 6.672018 %
+    1% value = 598.211000  = 4.272936 %
+    2% value = 632.345000  = 4.516750 %
+    5% value = 687.720000  = 4.912286 %
+    95% value = 2837.700000  = 20.269286 %
+    98% value = 3132.700000  = 22.376429 %
+    99% value = 3190.550000  = 22.789643 %
+---------------------------------------------------------------
+  Filter out INBOUND Traffic for THRESHOLD = 70 perc and MAX_VALUE_THRESHOLD = 70 perc 
+  Filter out OUTBOUND Traffic for THRESHOLD = 70 perc and MAX_VALUE_THRESHOLD = 70 perc 
+------------------------------------------------ INBOUND Traffic ---------------------------
+  For 5 buckets Percentage of INBOUND data ABOVE or BELOW THRESHOLD 9800.000000 Kbits (for 232 samples) 
+      0.000 Kbits TO 9800.000 Kbits = 232 -- 100.000000 % of INBOUND Traffic 
+   9800.000 Kbits TO 19600.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+  19600.000 Kbits TO 29400.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+  29400.000 Kbits TO 39200.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+  39200.000 Kbits TO 49000.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+------------------------------------------------------------------------------------------
+------------------------------------------------ OUTBOUND Traffic ---------------------------
+  For 5 buckets Percentage of OUTBOUND data ABOVE or BELOW THRESHOLD 9800.000000 Kbits (for 232 samples) 
+      0.000 Kbits TO 9800.000 Kbits = 232 -- 100.000000 % of OUTBOUND Traffic 
+   9800.000 Kbits TO 19600.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+  19600.000 Kbits TO 29400.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+  29400.000 Kbits TO 39200.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+  39200.000 Kbits TO 49000.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+--------------------------------------------------------------------------------------------
+-----------------------------------------------INBOUND Traffic Distribution----------------------------
+  Percentage of INBOUND data distribution (for 10 samples) 
+      0.000 Kbits TO 1400.000 Kbits = 63 -- 27.155172 % of INBOUND Traffic 
+   1400.000 Kbits TO 2800.000 Kbits = 120 -- 51.724138 % of INBOUND Traffic 
+   2800.000 Kbits TO 4200.000 Kbits = 42 -- 18.103448 % of INBOUND Traffic 
+   4200.000 Kbits TO 5600.000 Kbits =  6 -- 2.586207 % of INBOUND Traffic 
+   5600.000 Kbits TO 7000.000 Kbits =  1 -- 0.431034 % of INBOUND Traffic 
+   7000.000 Kbits TO 8400.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+   8400.000 Kbits TO 9800.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+   9800.000 Kbits TO 11200.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+  11200.000 Kbits TO 12600.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+  12600.000 Kbits TO 14000.000 Kbits =  0 -- 0.000000 % of INBOUND Traffic 
+--------------------------------------------------------------------------------------
+-----------------------------------------------OUTBOUND Traffic Distribution----------------------------
+  Percentage of OUTBOUND data distribution (for 10 samples) 
+      0.000 Kbits TO 1400.000 Kbits = 195 -- 84.051724 % of OUTBOUND Traffic 
+   1400.000 Kbits TO 2800.000 Kbits = 25 -- 10.775862 % of OUTBOUND Traffic 
+   2800.000 Kbits TO 4200.000 Kbits = 12 -- 5.172414 % of OUTBOUND Traffic 
+   4200.000 Kbits TO 5600.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+   5600.000 Kbits TO 7000.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+   7000.000 Kbits TO 8400.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+   8400.000 Kbits TO 9800.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+   9800.000 Kbits TO 11200.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+  11200.000 Kbits TO 12600.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+  12600.000 Kbits TO 14000.000 Kbits =  0 -- 0.000000 % of OUTBOUND Traffic 
+-------------------------------------------------------------------------------------------

@@ -1,0 +1,51 @@
+.TH LASER l "14 September 1992"
+.ad
+ 
+.SH NAME
+laser - plot5 to PostScript
+
+.SH SYNOPSIS
+.B laser
+[ -T | -P | -t | -m | -f | -R ] filename
+
+.SH DESCRIPTION
+laser is a filter for converting plot5 commands into PostScript, and 
+sending these commands to a printer.
+
+.SH OPTIONS
+-T : Texmode for psfig.
+.LP
+-P : Printer that output is to appear on, default is PRINTER environment variable.
+.LP
+-t : line thickness - default is 0.
+.LP
+-h : Prints a list of options.
+.LP
+-m : Manual feed for printer.
+.LP
+-f : Make output go to standard output.
+.LP
+-R : No Landscape.
+
+.SH SEE ALSO
+plot5(l), lpr(1)
+
+.SH BUGS
+None
+
+.SH AUTHOR
+.sp 1
+Arthur Smith
+.sp 1
+Send bug reports to toolkeeper@msc.cornell.edu
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+BEGIN_DEF = ***************************
+CFLAGS = -c -O -K -Q 
+CFLAGS_SUN = -c -O -DSUN -D_NO_PROTO -DSTRINGS_ALIGNED -DNO_REGEX -DNO_ISDIR -DUSE_RECOMP -DUSE_GETWD -DUNDERSCOREFORTRAN
+# -lF77 -lI77 -lU77 for Sun
+FLIB=-lxlf
+FFLAGS= -c -O
+BINDIR=../bin
+LALIBS = -L../math_io -L../fftpack
+INCDIR = -I../math_io -I../fftpack
+END_DEF = ****************************
+
+SRCS = \
+	Fourier.c \
+	FourierIn.c \
+	FourierOut.c 
+
+OBJS = \
+	Fourier.o \
+	FourierIn.o \
+	FourierOut.o 
+
+all: math_io fftpack Fourier
+
+math_io::
+	cd ../math_io; make CFLAGS="$(CFLAGS)" ARFLAGS=$(ARFLAGS)
+
+fftpack::
+	cd ../fftpack; make FFLAGS="$(FFLAGS)" FC=$(FC) ARFLAGS=$(ARFLAGS)
+
+.c.o:
+	
+
+$(OBJS): $(SRCS) 
+	$(CC) $(CFLAGS) $(INCDIR) $*.c $(EXTRA)
+
+Fourier: $(OBJS)
+	$(CC) -o Fourier $(OBJS) $(LALIBS) -lmath_io -lfftpack -lm $(FLIB)
+
+clean::
+	rm -f *.o Fourier
+
+install::
+	cp -p Fourier $(BINDIR)
+	chmod 775 $(BINDIR)/Fourier
+	
+
+
+	

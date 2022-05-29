@@ -1,0 +1,21 @@
+The Linpack routines are all duplicated in the essl library. Thus, the essl
+
+versions, which were written in assembler, will run faster than the Linpack
+
+routines which were written in fortran. Unfortunately, the essl routines
+
+differ slightly from the Linpack routines in functionality. Also the names of
+
+the essl routines are not the same as the names of the Linpack routines. Thus
+
+extensive editing is required before a program, which was originally written to
+
+use Linpack, can successfully use the essl routines instead. Fortunately the 
+
+essl BLAS routines are fuctional equivalents for the fortran versions. As a
+
+result linking to the essl BLAS instead of the fortran compiled version results
+
+in an increase of speed. For examples of programs that use Linpack and the essl
+
+BLAS routines see DeterminantInverse and MatrixSolve.

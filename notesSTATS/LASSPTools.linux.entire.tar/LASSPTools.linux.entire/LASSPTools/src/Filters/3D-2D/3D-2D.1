@@ -1,0 +1,58 @@
+.hy 0
+.TH 3D-2D 1 "17 April 1991"
+.ad
+
+.SH NAME
+3D-2D - a simple data filter
+
+.SH SYNOPSIS
+
+cat 
+.I datafile 
+|
+.B 3D-2D
+
+.SH DESCRIPTION
+3D-2D is a simple filter for converting lines with triples on them to
+lines with pairs on them.  It also allows extra material which occurs
+at the end of line to be passed unmodified.
+
+.SH USAGE
+To use 3D-2D, you simply pipe your data with triples (and perhaps extra
+material) on lines through 3D-2D, and the filter will remove the
+z coordinate of each numerical triple.  The output is sent to stdout, 
+so that it may be piped to
+other programs.  Note that any line may contain more than one triple,
+in which case 3D-2D removes the z coordinate of each triple.
+
+.SH OPTIONS
+There aren't any.
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile 
+| 3D-2D |
+.I plotting_package
+.sp 1
+will send data from the file
+.I datafile
+through 3D-2D to 
+.I plotting_package
+, where plotting_package is some program that you specify.
+
+.SH "SEE ALSO"
+sortit, rotate, Euler, thin, translate, slab, PlotAtoms
+
+.SH BUGS
+1. 3D-2D should probably allow you to choose which coordinate
+(x, y, or z) to throw out.
+
+.SH AUTHOR
+Steve Townsend
+.sp1
+Send bug reports to bwr@helios.tn.cornell.edu
+.sp1
+3D-2D was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

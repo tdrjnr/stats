@@ -1,0 +1,62 @@
+.hy 0
+.TH ROTATE l "14 April 1992"
+.ad
+.SH NAME
+rotate -- an interactive input routine for rotation matrices
+.SH SYNOPSIS
+.nf
+rotate [-update] [-initial alpha beta gamma]
+.fi
+.SH DESCRIPTION
+Rotate is an interactive data entry device which puts up a rotation
+ball with axes, and allows the user to pick a rotation matrix.
+.SH USAGE
+To use rotate, first run the program.  Then drag the axes around.  Moving
+inside the circle acts as if you were rolling the ball (geodesic motion),
+moving outside rotates about the center.
+.sp1
+In the continuous update mode (-update), the matrices will be output
+as fast as the system can respond.  In the discrete update mode (default)
+the matrices are sent only when the button is released.
+.sp1
+The 'Reset' button draws the axes in their initial positions.
+.SH OPTIONS
+-update gives output only whenever the mouse is moved with the button down.
+.LP
+-initial sets the initial rotation matrix using alpha beta and gamma as the 
+the euler angles in radians. 
+.LP 
+rotate also recognizes all standard Xtoolkit options.
+.SH DEFAULTS
+The default mode updates discretely.
+.SH RESOURCES
+The following resources can be set in the .Xdefaults file:
+.sp1
+.nf
+	rotate.xColor: red
+	rotate.yColor: forest green
+	rotate.zColor: blue
+	rotate.circleColor: black
+.fi
+.SH EXAMPLE
+.sp 1
+    rotate | RotateFile | sortit | 3D-2D | PlotAtoms 
+.sp 1
+will pipe rotation matrices to RotateFile, which can then rotate a data
+file and pipe to further plotting programs.
+.SH FILES
+rotate -- the rotate binary
+.SH BUGS
+1. rotate should have a -binary option
+.LP
+.SH AUTHOR
+Maynard Handley
+.sp1
+revised by Eric Lochstet
+.sp1
+Reset added by Jim Frankenberger
+.sp1Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Rotate was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

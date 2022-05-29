@@ -1,0 +1,15 @@
+The software in these directories has been developed by the Cornell-IBM Joint
+Study on Computing for Scientific Research.  The programs are intended to 
+be generally useful and modifiable by users.  To this serve this end, we
+supply the source code to all of our tools.  The user may modify this code
+for his own purposes.  The code and executables may be redistibuted to other
+users.  Note that this redistribution may not be done for a fee (other than
+a material media charge, if necessary).  Ownership resides with the authors
+of the programs.
+
+
+All of these tools are provided as is, with no express or implied warranty.
+These tools should not be used for solving a problem whose incorrect 
+solution could result in injury or loss of property.  The Project assumes
+no responsibilty for any loss or damage if you do use the programs for 
+such purposes.

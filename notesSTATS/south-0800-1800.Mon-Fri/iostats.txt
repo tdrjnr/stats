@@ -1,0 +1,89 @@
+###### get_all_weeks_data #######
+Tue May 23 16:31:11 BST 2006
+Linux 2.6.9-5.EL (localhost.localdomain) 	23/05/06
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               3.16        35.20         9.67     263385      72386
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda              19.00         0.00       216.00          0        216
+
+###### get_all_weeks_data_in_out #######
+Tue May 23 16:31:13 BST 2006
+Linux 2.6.9-5.EL (localhost.localdomain) 	23/05/06
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               3.16        35.19         9.70     263385      72602
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               0.00         0.00         0.00          0          0
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               0.00         0.00         0.00          0          0
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               0.00         0.00         0.00          0          0
+
+###### function getdata_stats_1 #######
+Tue May 23 16:31:16 BST 2006
+Linux 2.6.9-5.EL (localhost.localdomain) 	23/05/06
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               3.16        35.17         9.70     263385      72602
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               7.07         0.00       153.54          0        152
+
+###### function getdata_stats_2 #######
+Tue May 23 16:31:18 BST 2006
+Linux 2.6.9-5.EL (localhost.localdomain) 	23/05/06
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               3.16        35.16         9.71     263385      72754
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               0.00         0.00         0.00          0          0
+
+###### function getdata_stats_3 #######
+Tue May 23 16:31:20 BST 2006
+Linux 2.6.9-5.EL (localhost.localdomain) 	23/05/06
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               3.16        35.16         9.71     263385      72754
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               0.00         0.00         0.00          0          0
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               0.00         0.00         0.00          0          0
+
+###### function get_graph_data #######
+Tue May 23 16:31:22 BST 2006
+Linux 2.6.9-5.EL (localhost.localdomain) 	23/05/06
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               3.16        35.15         9.71     263385      72754
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               6.93         0.00       273.27          0        276
+
+###### function plot_graph #######
+Tue May 23 16:31:23 BST 2006
+Linux 2.6.9-5.EL (localhost.localdomain) 	23/05/06
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               3.16        35.14         9.74     263385      73030
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               0.00         0.00         0.00          0          0
+
+###### function move_data #######
+Tue May 23 16:31:25 BST 2006
+Linux 2.6.9-5.EL (localhost.localdomain) 	23/05/06
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               3.15        35.13         9.74     263385      73030
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+hda               0.00         0.00         0.00          0          0
+

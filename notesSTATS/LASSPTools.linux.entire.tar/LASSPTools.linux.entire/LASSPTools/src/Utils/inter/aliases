@@ -1,0 +1,52 @@
+# This file contains aliases for often used plotting commands.
+# Incorporate them into your .cshrc if you like.
+# You can make new aliases based on these.
+#
+# ax [options] [files] Run inter and axis and plot to the screen.
+#                      The options are inter's options.
+# lastplot             Redraw the last plot.
+# pslast               Create a postscript version of the last plot.
+# lplast               Send a postscript version of the last plot to the printer.
+# modplot              Modify the last plot, if you know axis commands.
+# qax [files]          Quick ax -- run the files through axis, but not inter
+# fax file             Full ax -- plot all columns in the file.
+# lax file             Last ax -- plot the last column in the file.
+# ax3 file             Plot the third column in the file.
+# ax4 file             Plot the fourth column in the file.
+# lxax file            Plot the second column with logarithmic x axis.
+# lyax file            Plot the second column with logarithmic y axis.
+# lxyax file           Plot the second column with logarithmic axes.
+# max file             Plot all columns in movie mode, then plot them all
+#                            normally.
+# cax file             Shift all curves incrementally, and make a hidden
+#                            line plot.
+#
+# First, set some terminal dependent stuff.
+# This may need to be modified if you don't have either X or tektronix.
+if($term == iris-ansi || $term == iris-ansi-net ||$term == xterm) then
+   setenv PLOTFILTER 'xplot -L -sleep 200'
+   setenv AXISARGS ''
+else
+   setenv PLOTFILTER 'tek'
+   setenv AXISARGS '-r .2'
+endif
+
+# This file stores the most recent plot.
+setenv SAVEPLOT $HOME/.saveplot
+
+alias ax        "inter \!* | tee $SAVEPLOT | axis $AXISARGS | $PLOTFILTER"
+alias lastplot  "axis < $SAVEPLOT | $PLOTFILTER"
+alias modplot   "vi + $SAVEPLOT; lastplot"
+alias qax       "cat \!* | tee $SAVEPLOT | axis $AXISARGS | $PLOTFILTER"
+alias lyax      "ax -e 'log y; plot 2; done'"
+alias lxax      "ax -e 'log x; plot 2; done'"
+alias lxyax     "ax -e 'log xy; plot 2; done'"
+alias fax       "ax -e 'plot *; done'"
+alias max       "ax -e 'opt moviemode; plot *; opt moviemode; plot *; done'"
+alias lax       "ax -e 'plot "'$'"; quit'"
+# Note the trickiness required to get the '$' quoted correctly...
+alias cax       "ax -e 'option (shift_increment; adjust *) hid *; done'"
+alias ax3       "ax -e 'plot 3; done'"
+alias ax4       "ax -e 'plot 4; done'"
+alias pslast    "axis -r .2 < $SAVEPLOT | laser3 -f \!*"
+alias lplast    "axis -r .2 < $SAVEPLOT | laser3 \!*"

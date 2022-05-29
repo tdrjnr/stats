@@ -1,0 +1,63 @@
+#!/bin/bash
+echo '########## CHANGE Bandwidth ##########';
+
+OLD_BANDWIDTH='128'
+NEW_BANDWIDTH='256'
+OLD_THRESHOLD='89.6'
+NEW_THRESHOLD='179.2'
+OLD_DIST='12.8'
+NEW_DIST='25.6'
+TMP_FILE='tmp.txt'
+AVG_IN_1='avg-per-in.c'
+AVG_OUT_1='avg-per-out.c'
+AVG_IN_2='avg-per-in-2.c'
+AVG_OUT_2='avg-per-out-2.c'
+VALUES_IN='values-in.c'
+VALUES_OUT='values-out.c'
+HISTROGRAM_IN='histrogram-in.c'
+HISTROGRAM_OUT='histrogram-out.c'
+DISTRIBUTION_IN='distribution-in.c'
+DISTRIBUTION_OUT='distribution-out.c'
+
+TMP=$(sed '/KbitsPerSec/s/'$OLD_BANDWIDTH'/'$NEW_BANDWIDTH'/g' < $AVG_IN_1 > $TMP_FILE)
+mv -f $TMP_FILE $AVG_IN_1; chmod 755 $AVG_IN_1;
+
+TMP=$(sed '/KbitsPerSec/s/'$OLD_BANDWIDTH'/'$NEW_BANDWIDTH'/g' < $AVG_OUT_1 > $TMP_FILE)
+mv -f $TMP_FILE $AVG_OUT_1; chmod 755 $AVG_OUT_1;
+
+TMP=$(sed '/KbitsPerSec/s/'$OLD_BANDWIDTH'/'$NEW_BANDWIDTH'/g' < $AVG_IN_2 > $TMP_FILE)
+mv -f $TMP_FILE $AVG_IN_2; chmod 755 $AVG_IN_2;
+
+TMP=$(sed '/KbitsPerSec/s/'$OLD_BANDWIDTH'/'$NEW_BANDWIDTH'/g' < $AVG_OUT_2 > $TMP_FILE)
+mv -f $TMP_FILE $AVG_OUT_2; chmod 755 $AVG_OUT_2;
+
+echo '########## change THRESHOLDS ##########';
+TMP=$(sed '/KbitsPerSec/s/'$OLD_THRESHOLD'/'$NEW_THRESHOLD'/g' < $VALUES_IN > $TMP_FILE)
+mv -f $TMP_FILE $VALUES_IN; chmod 755 $VALUES_IN;
+
+TMP=$(sed '/KbitsPerSec/s/'$OLD_THRESHOLD'/'$NEW_THRESHOLD'/g' < $VALUES_OUT > $TMP_FILE)
+mv -f $TMP_FILE $VALUES_OUT; chmod 755 $VALUES_OUT;
+
+TMP=$(sed '/KbitsPerSec/s/'$OLD_THRESHOLD'/'$NEW_THRESHOLD'/g' < $HISTROGRAM_IN > $TMP_FILE)
+mv -f $TMP_FILE $HISTROGRAM_IN; chmod 755 $HISTROGRAM_IN;
+
+TMP=$(sed '/KbitsPerSec/s/'$OLD_THRESHOLD'/'$NEW_THRESHOLD'/g' < $HISTROGRAM_OUT > $TMP_FILE)
+mv -f $TMP_FILE $HISTROGRAM_OUT; chmod 755 $HISTROGRAM_OUT;
+
+echo '########## change DISTRIBUTION ##########';
+TMP=$(sed '/KbitsPerSec/s/'$OLD_DIST'/'$NEW_DIST'/g' < $DISTRIBUTION_IN > $TMP_FILE)
+mv -f $TMP_FILE $DISTRIBUTION_IN; chmod 755 $DISTRIBUTION_IN;
+
+TMP=$(sed '/KbitsPerSec/s/'$OLD_DIST'/'$NEW_DIST'/g' < $DISTRIBUTION_OUT > $TMP_FILE)
+mv -f $TMP_FILE $DISTRIBUTION_OUT; chmod 755 $DISTRIBUTION_OUT;
+
+echo '########## FINISHED changing values ##########'
+
+
+<< END_SCRIPT
+
+END_SCRIPT
+exit 0
+ 
+
+

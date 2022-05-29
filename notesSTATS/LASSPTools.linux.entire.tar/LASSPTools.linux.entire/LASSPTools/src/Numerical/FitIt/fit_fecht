@@ -1,0 +1,6 @@
+#!/bin/csh
+slider 5 -min -100 -100 -100 -100 -1\
+	-max 100 100 100 100 1 -initial 10 -10 10 -10 0.075\
+	-labels A B A_prime B_prime alpha | fit_it -f processed_data \
+	| movieaxis -r 0.02 -x .88 1.04 -y 1.5 12.25 -lt Fecht -lx "Temperature"\
+        -ly "Specific heat" | xplot -fg white

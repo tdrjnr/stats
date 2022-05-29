@@ -1,0 +1,32 @@
+BEGIN_DEF = Linux X86 Makefile
+CFLAGS = -c -O6 -DUNDERSCOREFORTRAN -DLINUX
+XM_LIBS=-lX11 -L/usr/X11R6/lib -lXm -lXt -lXext
+INCDIR = -I../../../include -I/usr/include/X11
+BINDIR=../../../bin
+END_DEF = ****************************
+
+SRCS = \
+	quit.c \
+	rotate.c \
+	tracker.c 	
+
+OBJS = \
+	quit.o \
+	rotate.o \
+	tracker.o
+
+all: rotate
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCDIR) $(SRCS) $(EXTRA)
+
+rotate: $(OBJS)
+	$(CC) -o rotate $(OBJS) $(XM_LIBS) -lm 
+
+clean::
+	rm -f *.o rotate
+
+install::
+	cp -p rotate $(BINDIR)
+	chmod 775 $(BINDIR)/rotate
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+#editcap -F libpcap -v create-reports-3.cap data-retrieval2.cap; tcptrace -xtraffic'-p80,1293 -B -P -R -i0.5' login3.cap; cat #traffic_stats.dat >> login-stats; tcptrace -xcollie data-retrieval2.cap;  >> login-stats;  xpl2gpl traffic_rtt.xpl; xpl2gpl #traffic_bytes.xpl; xpl2gpl traffic_packets.xpl; gedit *.gpl &	
+
+
+tcpdstat data-retrieval2.cap >> /home/seun/stats; tcpdstat data-retrieval2.cap | head -30 > text; vi text; awk '{ print $1,$2,#$3,$4 }' text | dm INPUT "x4/157*100"  < text >> /home/seun/stats; tcptrace -b data-retrieval2.cap | tail -6 >> /home/seun/stats; tcptrace -xtraffic'-p80,1293 -R -i0.5' data-retrieval2.cap; cat traffic_stats.dat >> /home/seun/stats; echo '#############################################################' >> /home/seun/stats;

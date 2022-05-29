@@ -1,0 +1,4 @@
+zcat Guanine.Z | PlotM 
+zcat mel2.Z | PlotM -2D -type -r1 0.02 -r2 0.02 -c0 green -c1 blue -c2 red 
+zcat C60.Z | PlotM
+zcat crystal.Z | PlotM

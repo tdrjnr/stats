@@ -1,0 +1,111 @@
+.hy 0
+.TH FIT_IT 1  "11 September 1992"
+.ad
+
+.SH NAME
+fit_it - least squares parameter fitting on data 
+.SH SYNOPSIS
+
+fit_it  -f filename [-options]     
+
+.SH DESCRIPTION
+fit_it does non-linear least squares parameter fitting on a data file
+specified on the command line. It uses the MINPACK routine lmdif1 which
+is an implementation of a variant of the Levenberg-Marquadt algorithm. The
+user is required to write a function which returns the prediction of the
+theory (which must be called "theory"), and link it to the rest of the code.
+Besides that the user must also change some lines of code in fit_it.c to
+deal with the number of parameters in a particular case.
+.sp 1
+fit_it weighs all points equally. Values are taken from stdin usually
+with the help of the slider program, the output is the predictions for the
+parameter values. 
+
+.SH USAGE
+The output of fit_it is meant to be piped to movieaxis and then to xplot
+for a graph. When fit_it encounters an end of file it does the fitting,
+plots the fitted curve and leaves it there. The line and point styles
+of the data plot and the theory plot can be specified on the command line.
+The values of the fitted parameters, the norm of the difference vector
+between data and fit and an info number are printed to stderr.
+
+.SH OPTIONS
+.LP
+-f filename : name of file containing data
+.LP
+-d 
+.I datastyle
+.TP
+Where datastyle can be one of the following:
+.RS 5
+.TP
+0 - point plot
+.TP
+1 - solid line
+.TP
+2 - dotted line
+.TP
+3 - short dashes
+.TP
+4 - long dashes
+.TP
+5 - dot-dash
+.RE
+.LP
+-dp
+.I pointstyle
+.TP
+Where pointstyle can be one of the following:
+.RS 5
+.TP
+pl - plus sign (default)
+.TP
+cr - cross
+.TP
+di - diamond
+.TP
+sq - square
+.TP
+oc - octagon .TP fd - fancy diamond
+.TP
+fs - fancy square
+.TP
+fx - fancy cross
+.TP
+fp - fancy plus
+.TP
+bu - burst
+.RE
+.LP
+-t
+.I datastyle
+- line style for theory plot
+.LP
+-tp 
+.I pointstyle
+- symbol to use if theory is point plotted
+.LP
+-h : displays help information
+
+.SH EXAMPLE
+.sp 1
+slider 5 -min -100 -100 -100 -100 -1 \
+-max 100 100 100 100 1 -initial 10 -10 10 -10 0.075\
+-labels A B A_prime B_prime alpha | fit_it -f processed_data \
+| movieaxis -x .88 1.04 -y 1.5 12.25 -lt Fecht -lx "Temperature"\
+-ly "Specific Heat" | xplot
+
+.SH "SEE ALSO"
+slider, xplot, movieaxis
+
+.SH BUGS
+None.
+.sp 1
+
+.SH AUTHOR
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+fit_it was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

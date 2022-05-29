@@ -1,0 +1,73 @@
+.hy 0
+.TH SLIDER l "22 January 1991"
+.ad
+.SH NAME
+slider - an interactive data entry program
+.SH SYNOPSIS
+.nf
+slider num_sliders [-min floats] [-max floats] [-labels text]
+	           [-accuracy int] [-update] [-help] [-initial floats]
+.fi
+.SH DESCRIPTION
+Slider is an interactive data entry device which puts up a number of slider
+widgets, and allows the user to set values within user specified ranges.
+.LP
+Slider will function on any X11R4 or X11R3 Window server.  It must, however,
+be compiled and run on a system which has the Motif widget sets.  When you
+start up Slider, it takes the first argument on its command line to be the
+number of sliders to be displayed.  It then scans the rest of the command
+line for user-defined minimum and maximum values, labels, and accuracy.
+.SH USAGE
+To use slider, first run the program.  Then set the output value, either by
+moving the sliders, or by typing text in the input windows.  Then, click the
+"send" button.  This will output the values to stdout.
+.sp1
+Alternatively, if you are running slider in the "continuous update" mode,
+the "Send" button need not be clicked.  The values will be output each time
+the sliders are moved.
+.SH OPTIONS
+-min sets the minimum values for the sliders.
+.LP
+-max sets the maximum values for the sliders.
+.LP
+-labels sets text labels for the sliders.
+.LP
+-accuracy determines how many decimal places slider retains
+.sp1
+.nf
+-update puts slider into a "continuous update" mode, which outputs 
+	the values of the sliders each time a value is changed.
+.fi
+.sp1
+-help displays a short message describing the use of slider.
+.sp1
+-initial sets the initial values for the sliders
+.sp1
+NOTE:  -min, -max, -labels, and -initial must take the same number of 
+arguments as there are sliders.
+.SH DEFAULTS
+If num_sliders is not specified, slider assumes num_sliders is 1.
+If no maximum values are specified, the maximum value is set to 100.
+If no minimum, -initial, or -labels,
+slider defaults to: 1 slider, minimum of 0, maximum of 100, initial value
+of 0 or your minimum, whichever is greater, and no labels.
+.SH EXAMPLE
+.sp 1
+    slider 3 -min 0 0 0 -max 3.14 6.28 10 -accuracy 3 -labels theta phi r
+.sp 1
+will put up three sliders in a window, with minimum values of 0, and with
+maximum values of 3.14, 6.28, and 10.  Then, slider will label these three
+sliders "theta," "phi," and "r," respectively, and keep three places of
+accuracy on each slider.
+.SH FILES
+slider  -  the slider binary
+.SH BUGS
+None.
+.SH AUTHOR
+Jeff Osterman
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+Slider was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

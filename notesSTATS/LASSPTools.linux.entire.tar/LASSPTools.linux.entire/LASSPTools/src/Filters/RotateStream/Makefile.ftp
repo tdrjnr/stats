@@ -1,0 +1,56 @@
+BEGIN_DEF = ***************************
+CFLAGS = -c -O -K -Q 
+CFLAGS_SUN = -c -O -DSUN -D_NO_PROTO -DSTRINGS_ALIGNED -DNO_REGEX -DNO_ISDIR -DUSE_RECOMP -DUSE_GETWD -DUNDERSCOREFORTRAN
+BINDIR = ../bin
+INCDIR = -I../line_io
+LALIBS = -L../line_io
+END_DEF = ****************************
+
+SRCS = \
+	RotateStream.c \
+	get_frame.c \
+	parse_argument.c \
+	rotate_aid.c \
+	rotate_echo.c \
+	rotate_frame.c 
+
+OBJS = \
+	RotateStream.o \
+	get_frame.o \
+	parse_argument.o \
+	rotate_aid.o \
+	rotate_echo.o \
+	rotate_frame.o 
+
+
+all: line_io rotate_echo rotate_aid RotateStream
+
+line_io: 
+	cd ../line_io; make CFLAGS="$(CFLAGS)" ARFLAGS=$(ARFLAGS);
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCDIR) $(SRCS) $(EXTRA)
+
+rotate_echo: $(OBJS)
+	$(CC) -o rotate_echo rotate_echo.o -lm 
+
+rotate_aid: $(OBJS)
+	$(CC) -o rotate_aid rotate_aid.o parse_argument.o -lm 
+
+RotateStream: $(OBJS)
+	$(CC) -o RotateStream RotateStream.o rotate_frame.o parse_argument.o get_frame.o $(LALIBS) -lline_io -lm 
+
+clean::
+	rm -f *.o rotate_aid rotate_echo RotateStream
+
+install::
+	cp -p rotate_aid $(BINDIR)
+	cp -p rotate_echo $(BINDIR)
+	cp -p RotateStream $(BINDIR)
+	chmod 775 $(BINDIR)/rotate_aid
+	chmod 775 $(BINDIR)/rotate_echo
+	chmod 775 $(BINDIR)/RotateStream
+	
+
+
+	

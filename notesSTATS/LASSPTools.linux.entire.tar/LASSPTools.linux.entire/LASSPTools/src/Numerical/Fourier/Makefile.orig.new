@@ -1,0 +1,34 @@
+BEGIN_DEF = IBM RS6000 Makefile
+# CFLAGS = -c -O -K -Q 
+CFLAGS = -g
+FLIB = -lxlf
+INCDIR=-I../../../include
+BINDIR = /afs/.msc.cornell.edu/@sys/usr/local/pub/tools/bin
+LALIBS=-L../../../lib
+END_DEF = ****************************
+
+SRCS = \
+	Fourier.c \
+	FourierIn.c \
+	FourierOut.c 
+
+OBJS = \
+	Fourier.o \
+	FourierIn.o \
+	FourierOut.o 
+
+all: Fourier
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(INCDIR) $(SRCS) $(EXTRA)
+
+Fourier: $(OBJS)
+	$(CC) -o Fourier $(CFLAGS) $(OBJS) $(LALIBS) -lfftpack -lmath_io -lm $(FLIB)
+
+clean::
+	rm -f *.o Fourier
+
+install::
+	cp -p Fourier $(BINDIR)
+	chmod 775 $(BINDIR)/Fourier
+	

@@ -1,0 +1,74 @@
+.hy 0
+.TH COMPLEXFLOATVECTORS 1 "14 September 1992"
+.ad
+
+.SH NAME
+ComplexFloatVectors - Converts floating point vectors to/from binary
+
+.SH SYNOPSIS
+ComplexFloatVectors [-options]  
+
+.SH DESCRIPTION
+ComplexFloatVectors uses the various get_complex_float_vector and
+put_complex_float_vector routines to convert ascii vectors to and from
+binary.
+
+.SH OPTIONS
+.LP
+.I -binary_in 
+: gives binary double precision format for input (starting with binary integer for columns.
+.LP
+.I -binary_out
+: gives binary double precision format for output (starting with binary 
+integer).
+.LP
+.I -ascii_in
+: (default) gives ascii input, no size information (columns determined by
+format: either one row per line or parentheses, brackets or braces)
+.LP
+.I -ascii_out 
+: (default) gives ascii output one row per line
+.LP
+.I -Mathematica_out 
+gives ascii output in Mathematica format
+.LP
+.I -HTML_out 
+gives ascii output in HTML Table format
+.LP
+.I -ordered_pair_out
+: gives ascii output in the form (a,b) with elements
+separated by commas
+.LP
+.I -simple_out
+: gives ascii output in the form a b with elements
+separated by spaces
+.LP
+.I -file_in filename
+: filename reads vectors from file
+.LP
+.I -file_out filename
+: filename writes vectors to file
+
+.SH EXAMPLE
+.sp 1
+ComplexFloatVectors -binary_out -file_in inputfile -file_out outputfile
+.sp 1
+Reads vector data from inputfile and writes data out in binary form.
+
+.SH "SEE ALSO"
+ConvertVectors, ComplexDoubleVectors
+
+.SH BUGS
+1 - Does not support the Mathematica arrow notation for an exponent.
+.PP
+2 - Does not support the Fortran 'd' notation.
+
+.SH AUTHOR
+J. Ken Burton
+
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp 1
+ComplexFloatVectors was developed at Cornell University as part 
+of the Cornell-IBM Joint Study on Computing for Scientific Research.
+

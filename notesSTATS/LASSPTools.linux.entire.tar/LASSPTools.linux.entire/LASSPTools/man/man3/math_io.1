@@ -1,0 +1,406 @@
+.hy 0
+.TH MATH_IO 3S "October 23 1991"
+.ad
+
+.SH NAME
+math_io \- standard matrix and vector input/output package
+
+.SH SYNOPSIS
+.B #include "math_io.h"
+
+.SH DESCRIPTION
+
+This is a set of routines, designed to be general support for 
+matrix and vector data structures.  At this point, the routines
+primarily create, read, write, and destroy matrices in various
+ways.  We support ascii and binary modes, and automatically resize
+the matrix to fit the input.
+
+The routines support various input and output modes.  The most
+common mode is to have one vector or row of a matrix per line,
+separated by spaces and ending in a carriage return.  A blank
+line ends a matrix.  On input, commas, tabs, colons, and 
+semicolons are supported as separators.  Also, if the 
+vector or matrix starts with an open curly or a square bracket,
+then the end character for vectors or rows is assumed to be the
+corresponding close bracket.  Complex numbers can be various
+versions of a + b I, (a,b), I b + a, ...; an attempt has been made
+to support any unambiguous input form.  On output, we provide 
+routines for the common form, Mathematica format (with
+curly brackets and commas), HTML format, and a general output format
+with several options.
+
+We also support binary input and output.  These provide a substantial
+increase in speed.
+
+
+.SH USAGE
+
+VECTORS:
+
+The data structure for vectors is pretty obvious, except that
+for now we store the allocated length as well as the data length.
+Thus, if V is type vector, then V.N is the length of the vector, and
+V.el[i] is an element of the vector.
+
+Since some routines automatically resize the vector to match, say,
+the length of the input line, we store the allocated length as
+V.data_reserved:
+
+   typedef struct { int N;
+                    /* Pointer to the elements */
+                    double   *el;
+                    int data_reserved; } Vector;
+
+Remember that the same vector will start with V.el[1] in a Fortran
+routine and V.el[0] in a C routine.
+
+MATRICES:
+
+The matrix data type supports both the C and Fortran conventions:
+In C, the preferred representation of a matrix is as a list of
+pointers to vectors: M.el[i][j]
+In Fortran, the representation is as a pointer to the first element
+of a block of data: pass M.data to a Fortran subroutine as Mat, and 
+Mat[i,j] will be fine.
+
+.nf
+typedef struct {int rows;
+                int cols;
+			    /* C-style pointer to the elements */
+                double   **el;
+			    /* Fortran-style pointer to the first element */
+                double   *data;
+                int data_reserved;
+                int pointers_reserved; } Matrix;
+.fi
+
+COMPLEX NUMBERS:
+
+All routines have versions for real double precision, complex single
+precision (float), and complex double precision.  Thus,
+
+.nf
+ComplexFloatMatrix CFM;
+ComplexDoubleVector CDV;
+.fi
+
+Clearly, this should
+be done in C++, where one routine name could be used for all versions
+(and the create_default routines could be automatically called on
+declaration.)
+
+The elements of complex matrices are of type ComplexFloat and ComplexDouble,
+and are found by CFM.el[i][j].real and CFM.el[i][j].imaginary.  CM.data and
+CV.el should be usable as Fortran complex arrays.
+
+Formats recognized include: a+bI; a+Ib; bI+a; Ib+a; a b; (a,b);
+(a,bI); and (a,Ib)  where 'I' can also be replaced by 'i', 'J', or 'j'.  
+In addition, a-cI (etc.) is interpreted as a+(-c)I, bI-d is
+interpreted as (-d)+bI, and an I (or i or J or j) without a
+coefficient is interpreted as 1I.  Moreover, a by itself is
+interpreted as a+0I while bI or Ib by itself is interpreted as 0+bI.
+
+
+NOTE: if the format of the entries is a+bI and the separator between
+elements is either a space or a tab, then MAKE SURE that both the
+real and imaginary parts are explicitly shown even when one of them
+is 0 (e.g. write 5+0I rather than just 5).  If this is not done then
+wherever you have an entry of the form *a* or *bI*, this routine
+will misinterpret the entry as the real or imaginary part of an entry
+of the form a b.  For example,   1+I 2-3.7I 12.2 2I-3   will be
+interpreted as     1+1I 2-3.7I 12.2+2I 1I-3.
+In many cases data in this form will generate an error message;
+however, in some unfortunate cases (e.g. the example above) this
+routine will think that it's doing the right thing and plug right
+along.
+   If the entries are separated by commas instead of spaces, then
+there is no need to write 'a' as 'a+0I' since the comma tells this
+routine that the end of the element as been reached.
+
+
+
+.SH WARNINGS: 
+
+(1) You must allocate these structures: declaring them is not
+enough!  Either use create_vector or create_default_vector, or
+initialize V.data_reserved = NULL.
+We automatically reallocate space if there isn't enough, but since
+the vector will be initialized to garbage when it is declared,
+sometimes the garbage will fool the routines, which will then
+write to garbage pointers.
+
+As an example,
+
+#include "math_io.h"
+   Vector V;
+   V = *create_default_vector();
+   get_vector(&V, stdin);
+
+is an approved usage.
+
+(2) Fortran matrix indices are the transpose of C indices
+so a Fortran program M.data[i,j] will be the C data 
+element M[j][i].  The C element M.data[i,j] doesn't
+exist, because C doesn't know the size of the matrix.
+
+(3) In C, one can manipulate rows by shifting pointers.
+This will not change M.data at all!  Fortran--style
+manipulations will change the C matrix.  The printing
+routines use the C conventions.
+
+
+
+
+.SH COMPILER OPTIONS:
+
+In mathematics and in Fortran, rows and columns of matrices start
+at 1: M[1,1], M[1,2], ... .  (Actually, in Fortran they are actually
+stored as M[1,1], M[2,1], ... I think.)
+In C, rows and columns conventionally start at zero:
+M[0,0], M[0,1], ... .  Some users (i.e. the authors of Numerical
+Recipes) prefer to stick with the math and Fortran conventions.  We
+support both, through the variables ROWSTART and COLSTART, defined
+to be the starting element of rows and columns.
+
+NOTICE: if you leave ROWSTART and COLSTART zero, and pass a matrix to
+a Fortran subroutine, the matrix will be perfectly OK: Fortran will
+read as M.data[i,j] what the C routine thinks is M.data[j-1][i-1].
+Inversion, determinants, and so forth are unchanged.  Right
+eigenvectors become left eigenvectors, of course.
+
+Define ROWSTART and COLSTART to be zero for C convention, and one for
+Fortran.  You'll have to recompile the
+library, of course, if you want to use this feature.
+
+
+.SH AVAILABLE ROUTINES:
+
+                               VECTORS
+
+.nf
+Vector *create_vector(int N);
+int     get_vector(Vector *B, FILE *in);
+int     get_binary_vector(Vector *B, FILE *in);
+int     get_binary_int_vector(Vector *B, FILE *in);
+void    put_vector(Vector V, FILE *out);
+void    put_binary_vector(Vector V, FILE *out);
+void    put_binary_int_vector(Vector V, FILE *out);
+void    put_Mathematica_vector(Vector V, FILE *out);
+void    put_HTML_vector(Vector V, FILE *out);
+Vector *create_default_vector();
+.fi
+
+                          COMPLEX SINGLE VECTORS  
+
+.nf
+ComplexFloatVector     *create_complex_float_vector(int N);
+int     get_complex_float_vector(ComplexFloatVector *B, FILE *in);
+int     get_complex_float_binary_vector(ComplexFloatVector *B, FILE *in);
+void    put_complex_float_vector(ComplexFloatVector V, FILE *out);
+void    put_complex_float_binary_vector(ComplexFloatVector V, FILE *out);
+void    put_complex_float_Mathematica_vector(ComplexFloatVector V,
+                                                        FILE *out);
+void    free_complex_float_vector(ComplexFloatVector* B);
+
+void    put_formatted_complex_float_vector(ComplexFloatVector V, 
+		FILE *out, char separator, char begin_char, char end_char, 
+		char imaginary_char, char complex_sep, char complex_begin, 
+		char complex_end);
+void    put_complex_float_ordered_pair_vector(ComplexFloatVector V,
+                                                    FILE *out);
+void    put_complex_float_simple_vector(ComplexFloatVector V, FILE *out);
+.fi
+
+                          COMPLEX DOUBLE VECTORS
+
+.nf
+ComplexDoubleVector     *create_complex_double_vector(int N);
+int     get_complex_double_vector(ComplexDoubleVector *B, FILE *in);
+int     get_complex_double_binary_vector(ComplexDoubleVector *B, 
+											FILE *in);
+void    put_complex_double_vector(ComplexDoubleVector V, FILE *out);
+void    put_complex_double_binary_vector(ComplexDoubleVector V, 
+											FILE *out);
+void    put_complex_double_Mathematica_vector(ComplexDoubleVector V,
+											FILE *out);
+void    put_complex_double_HTML_vector(ComplexDoubleVector V,
+											FILE *out);
+void    free_complex_double_vector(ComplexDoubleVector* B);
+
+void    put_formatted_complex_double_vector(ComplexDoubleVector V, 
+		FILE *out, char separator, char begin_char, char end_char, 
+		char imaginary_char, char complex_sep, char complex_begin, 
+		char complex_end);
+void    put_complex_double_ordered_pair_vector(ComplexDoubleVector V,
+											FILE *out);
+void    put_complex_double_simple_vector(ComplexDoubleVector V, 
+											FILE *out);
+.fi
+
+                               MATRICES
+
+.nf
+Matrix *create_matrix(int rows, int cols);
+void    free_matrix(Matrix* A);
+int     get_matrix(Matrix *A, FILE *in);
+int     get_binary_matrix(Matrix *A, FILE *in);
+int     get_binary_int_matrix(Matrix *A, FILE *in);
+void    put_matrix(Matrix A, FILE *out);
+void    put_binary_matrix(Matrix A, FILE *out);
+void    put_binary_int_matrix(Matrix A, FILE *out);
+void    put_Mathematica_matrix(Matrix A, FILE *out);
+void    put_HTML_matrix(Matrix A, FILE *out);
+void    put_formatted_matrix(Matrix A, FILE *out,
+                           char separator, char beg_char, char end_char);
+void    check_symmetric(Matrix A);
+Matrix *create_default_matrix();
+.fi
+
+                          COMPLEX SINGLE MATRICES
+
+.nf
+ComplexFloatMatrix     *create_complex_float_matrix(int rows, int cols);
+int     get_complex_float_matrix(ComplexFloatMatrix *A, FILE *in);
+int     get_complex_float_binary_matrix(ComplexFloatMatrix *M, FILE *in);
+void    put_complex_float_matrix(ComplexFloatMatrix M, FILE *out);
+void    put_complex_float_binary_matrix(ComplexFloatMatrix M, FILE *out);
+void    put_formatted_complex_float_matrix(ComplexFloatMatrix M, 
+		FILE *out, char separator, char begin_char, char end_char, 
+		char imaginary_char, char complex_sep, char complex_begin, 
+		char complex_end);
+void    put_complex_float_ordered_pair_matrix(ComplexFloatMatrix M,
+											FILE *out);
+void    put_complex_float_simple_matrix(ComplexFloatMatrix M, FILE *out);
+void    free_complex_float_matrix(ComplexFloatMatrix *A);
+ComplexFloatMatrix     *create_default_complex_float_matrix();
+.fi
+
+                          COMPLEX DOUBLE MATRICES
+
+.nf
+ComplexDoubleMatrix     *create_complex_double_matrix(int rows, int cols);
+int     get_complex_double_matrix(ComplexDoubleMatrix *A, FILE *in);
+int     get_complex_double_binary_matrix(ComplexDoubleMatrix *M, 
+											FILE *in);
+void    put_complex_double_matrix(ComplexDoubleMatrix M, FILE *out);
+void    put_complex_double_binary_matrix(ComplexDoubleMatrix M, 
+											FILE *out);
+void    put_formatted_complex_double_matrix(ComplexDoubleMatrix M, 
+		FILE *out, char separator, char begin_char, char end_char, 
+		char imaginary_char, char complex_sep, char complex_begin, 
+		char complex_end);
+void    put_complex_double_HTML_matrix(ComplexDoubleMatrix M,
+											FILE *out);
+void    put_complex_double_Mathematica_matrix(ComplexDoubleMatrix M,
+											FILE *out);
+void    put_complex_double_ordered_pair_matrix(ComplexDoubleMatrix M,
+											FILE *out);
+void    put_complex_double_simple_matrix(ComplexDoubleMatrix M, 
+											FILE *out);
+void    free_complex_double_matrix(ComplexDoubleMatrix *A);
+ComplexDoubleMatrix     *create_default_complex_double_matrix();
+.fi
+
+.SH EXAMPLE
+
+A good example of the use of these routines is given in ConvertMatrices.
+A schematic usage might be
+
+.nf
+(schematic.c)
+
+#include <stdio.h>
+#include "math_io.h"
+main()
+{
+   Matrix M;
+   M = *create_default_matrix();
+   while(get_matrix(&M, stdin) != EOF)
+   {
+       put_matrix(M, stdout);
+   }
+}
+
+cc -o schematic math_io.c schematic.c -lm
+
+schematic
+
+1 2 3
+3 2 1
+
+(returns)
+1 2 3
+3 2 1
+.fi
+
+.SH EFFICIENCY:
+
+The binary routines have been tinkered with to make them fast.  They use
+fwrite and fread.
+
+fwrite is buffered, so it can be much faster than write, which calls
+a system routine for each row.  It's also ANSI, so will be more
+portable.  The error checking routines are probably not necessary
+and haven't been thoroughly debugged, because fwrite so far has not
+failed us.
+
+I passed large, binary files through several pipes, using the
+fread and fwrite routines, and compared them with routines written
+with read and write.  Rough averages follow:
+
+                  fwrite                        write
+               CPU     Elapsed               CPU     Elapsed
+
+Varied        0.42       9.0                 0.31     13.4 
+
+Long, Thin    0.62       7.4                 0.62     39.8
+
+Fat           0.28       5.7                 0.17      8.6
+
+Although write is a bit faster on CPU time, the system calls kill
+it.  A comparison of routines differing only in the read command
+showed no important difference for varied matrices, and the
+fread command was a lot easier to use.
+
+
+
+
+.SH FILES
+
+library: 			libmath_io.a
+.nf
+header file:		math_io.h
+
+source code: 		math_io.c
+
+sample data files:	(Not Supplied Yet)
+.fi
+
+.SH "SEE ALSO"
+ConvertMatrices, ConvertVectors, ComplexDoubleMatrices, ComplexDoubleVectors,
+ComplexFloatMatrices, ComplexFloatVectors, matrix2X (not yet),
+DeterminantInverse, Eigen, MatrixMult, MatrixSolve, RotateStream (not yet),
+Fourier, ...
+
+.SH BUGS
+
+1.  On declaration, storage should be initialized to zero.  (This is a problem
+with C.)  Indeed, we ought to all write in an object--oriented language
+so that we don't need separate routine names for each type of vector and
+matrix.
+
+2.  There ought to be routines for resizing, transposing, etc.  Also,
+matrices should free their allocated space when they shrink.
+
+3.  We should support the FORTRAN d convention for doubles.  That is,
+3.0d+3 is a common form found in input files.
+
+
+.SH AUTHOR
+J. Ken Burton
+.sp1
+Send bug reports to jkburt@helios.tn.cornell.edu
+.sp1
+math_io was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research

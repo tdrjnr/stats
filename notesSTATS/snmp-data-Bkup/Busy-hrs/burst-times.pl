@@ -1,0 +1,2 @@
+#!/bin/bash
+echo 'Burst Times' >> CCambridge-VPN-mon-fri-08am-17pm-512KB-stats; sed = graph-data | sed 'N; s/^/     /; s/ *\(.\{6,\}\)\n/\1   /' | egrep -e '132[8-9]   ' -e '133[0-4]   ' -e '185[6-9]   ' -e '186[0-9]   ' -e '187[0-6]   ' -e '190[1-4]   ' -e '191[8-9]   ' -e '192[0-9]   ' >> CCambridge-VPN-mon-fri-08am-17pm-512KB-stats

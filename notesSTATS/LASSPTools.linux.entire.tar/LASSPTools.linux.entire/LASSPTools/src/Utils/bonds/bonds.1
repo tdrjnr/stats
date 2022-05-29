@@ -1,0 +1,131 @@
+.hy 0
+.TH BONDS 1 "2 April 1993"
+.ad
+
+.SH NAME
+bonds - connect points in 3D with lines
+
+.SH SYNOPSIS
+
+.B cat input | bonds max thickness
+
+.SH DESCRIPTION
+bonds is a program which takes a file of points in x-y-z and sends to standard
+out a new file which contains the original points and the endpoints of lines 
+in x-y-z between points that are at most 'max' distance apart.
+
+.SH USAGE
+To use bonds, you need a data file with x-y-z triples on separate lines.  
+When a blank line is seen in the input stream each point is compared to 
+all other points, two points having distance in 3D space less then max are
+then connected.
+Lines in the input stream that begin with '@' are copied to standard output
+but are not interpreted as having points to connect. Lines that begin with
+a tab '\t' are considered points but are not included when determining lines
+to be drawn. If there is input after the x-y-z coordinates then it is ignored
+and copied to standard output.
+
+.SH OPTIONS
+max - The maximum distance that two points can be away from each other
+and still be connected with a line.
+.sp 1
+thickness - The width of the lines that will used, this should be the same units
+as the coordinates for the points, it is a relative value that is intended to
+be scaled when the picture is drawn.
+
+.SH DEFAULTS
+The bonds program assumes a maximum distance of 1 and a line width of 1.
+
+.SH EXAMPLE
+.sp 1
+   cat Guanine.input | bonds 3 .1 | viewer
+.sp 1
+Where the Guanine.input file contains 16 points specified as x-y-z triples
+the radius of the sphere 'r=0.5' and the color 'c=1'. Information after the
+x-y-z coordinates is ignored and copied to standard output. The first line 
+contains a line that is not processed and copied to the output.
+
+ @clear
+ -5.21 -2.60 0.07 r=0.5  c=1
+ 1.54 -6.63 -0.75 r=0.5  c=1
+ 4.52 -5.06 -0.79 r=0.5  c=1
+ 0.44 7.32 0.69 r=0.5  c=1
+ 4.35 4.32 0.154 r=0.5  c=1
+ -4.82 -0.79 0.23 r=0.5  c=2
+ -2.32 -0.71 0.07 r=0.5  c=3
+ 1.45 -2.79 -0.36 r=0.5  c=3
+ 1.64 1.34 0.027 r=0.5  c=3
+ -0.99 1.53 0.214 r=0.5  c=3
+ 0.35 5.27 0.50 r=0.5  c=3
+ -1.11 -2.88 -0.21 r=0.5  c=4
+ 2.61 -5.04 -0.66 r=0.5  c=4
+ 2.99 -0.75 -0.26 r=0.5  c=4
+ -1.77 4.01 0.51 r=0.5  c=4
+ 2.49 3.78 0.21 r=0.5  c=4
+
+The Output from bonds is the following, the original 16 points are written
+out and then lines are written with the 2 endpoints, the radius
+and the color specified on one output line. 
+ 
+ @clear
+ -5.21 -2.60 0.07 r=0.5  c=1
+ 1.54 -6.63 -0.75 r=0.5  c=1
+ 4.52 -5.06 -0.79 r=0.5  c=1
+ 0.44 7.32 0.69 r=0.5  c=1
+ 4.35 4.32 0.154 r=0.5  c=1
+ -4.82 -0.79 0.23 r=0.5  c=2
+ -2.32 -0.71 0.07 r=0.5  c=3
+ 1.45 -2.79 -0.36 r=0.5  c=3
+ 1.64 1.34 0.027 r=0.5  c=3
+ -0.99 1.53 0.214 r=0.5  c=3
+ 0.35 5.27 0.50 r=0.5  c=3
+ -1.11 -2.88 -0.21 r=0.5  c=4
+ 2.61 -5.04 -0.66 r=0.5  c=4
+ 2.99 -0.75 -0.26 r=0.5  c=4
+ -1.77 4.01 0.51 r=0.5  c=4
+ 2.49 3.78 0.21 r=0.5  c=4
+ -5.21 -2.60 0.07 -4.82 -0.79 0.23 r=0.100000 c=7
+ 1.54 -6.63 -0.75 2.61 -5.04 -0.66 r=0.100000 c=7
+ 4.52 -5.06 -0.79 2.61 -5.04 -0.66 r=0.100000 c=7
+ 0.44 7.32 0.69 0.35 5.27 0.50 r=0.100000 c=7
+ 4.35 4.32 0.154 2.49 3.78 0.21 r=0.100000 c=7
+ -4.82 -0.79 0.23 -2.32 -0.71 0.07 r=0.100000 c=7
+ -2.32 -0.71 0.07 -0.99 1.53 0.214 r=0.100000 c=7
+ -2.32 -0.71 0.07 -1.11 -2.88 -0.21 r=0.100000 c=7
+ 1.45 -2.79 -0.36 -1.11 -2.88 -0.21 r=0.100000 c=7
+ 1.45 -2.79 -0.36 2.61 -5.04 -0.66 r=0.100000 c=7
+ 1.45 -2.79 -0.36 2.99 -0.75 -0.26 r=0.100000 c=7
+ 1.64 1.34 0.027 -0.99 1.53 0.214 r=0.100000 c=7
+ 1.64 1.34 0.027 2.99 -0.75 -0.26 r=0.100000 c=7
+ 1.64 1.34 0.027 2.49 3.78 0.21 r=0.100000 c=7
+ -0.99 1.53 0.214 -1.77 4.01 0.51 r=0.100000 c=7
+ 0.35 5.27 0.50 -1.77 4.01 0.51 r=0.100000 c=7
+ 0.35 5.27 0.50 2.49 3.78 0.21 r=0.100000 c=7
+
+
+.SH "SEE ALSO"
+PlotM, rotate 
+
+.SH BUGS
+.nf
+1. The color is currently fixed to whatever maps to 7, this
+should probably be able to be set from an input parameter.
+.fi
+
+.SH AUTHOR
+Jim Frankenberger
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+bonds was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+
+
+
+
+
+
+
+
+
+

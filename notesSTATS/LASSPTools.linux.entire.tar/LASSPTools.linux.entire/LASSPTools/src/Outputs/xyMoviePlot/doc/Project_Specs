@@ -1,0 +1,86 @@
+xyMoviePlot
+
+ComS 418 (Computer Graphics) Project
+for the Department of Material Science (Physics)
+Written By, Michael G. Reed and Robert Pless
+Copyright 1992, Cornell University
+
+
+Data Stream Notation
+
+X,Y {c}				Point
+X,Y R {c}			Circle
+X1,Y1 X2,Y2 {c}		 	Line segment
+X1,Y1 X2,Y2 RADIUS {c}		Ellipse
+X1,Y1 X2,Y2, .... , Xn,Yn {c}	Polygon
+	 			End of frame
+f <color>			ForeGround color switch
+b <color>			BackGround color switch
+s hmin,hmax,vmin,vmax		Change scale (beginning of frame only [bofo])
+a				Turn on automatic calculation of scales (bofo)
+t <string>			Change title
+h <string>			Change horizontal annotation
+v <string>			Change vertical annotation
+q				Forced quit
+d <string>			Dump current screen to file ('-' == stdout)
+r <string>			Start record of data to file ('-' == stdout)
+
+
+Command Line Arguments
+
+-foreground | -fg	 Foreground color (color to draw with)
+-background | -bg	 Background color (color to splash screen with)
+-backgroundscreen | -bs	 Background pixmap for display over
+-hminimum | -hmin	 Minimum value for the horizontal scale
+-hmaximum | -hmax	 Maximum value for the horizontal scale
+-vminimum | -vmin	 Minimum value for the vertical scale
+-vmaximum | -vmax	 Maximum value for the vertical scale
+-hscale | -hs		 Scale system to be used for horizontal axis (linear|logx)
+-vscale | -vs		 Scale system to be used for vertical axis (linear|logx)
+-automatic | -auto	 Automatically recalculate the scales based new data
+-title | -t		 Window title
+-horizontal | -hor	 Horizontal annotation
+-vertical | -ver	 Vertical annotation
+-binary | -bin | -b	 Accept all data as binary values
+-record | -rec		 Record all data to a file
+-geometry | -geom | -g	 Window geometry
+
+
+Resource Structure
+
+Top Level
+	.geometry	<geometry>
+	.background	<color>
+	.screen		<string>
+	.binary		<boolean>
+	.record		<string>
+	.autocalc	<boolean>
+	.Grid		.
+
+.Grid
+	.Horizontal	.
+	.Vertical	.
+	.Title		.
+
+.Horizontal/.Vertical/.Title
+	.foreground	<color>
+	.background	<color>
+	.fontlist	<font>
+	.text		<string>
+	.position	<left|center|right>
+	.min		<value>
+	.max		<value>
+	.scale		<linear|logx>
+	.LineType	.
+
+.LineType
+	.foreground	<color>
+	.lines		<boolean>
+	.type		<solid|dashed>
+
+
+Notations
+	logx	'x' can be any value [1...Inf] or [e] for natural logs.
+	bofo	Beginning of Frame ONLY.
+	{c}	Color to be rendered in (overrides 'c' option).
+

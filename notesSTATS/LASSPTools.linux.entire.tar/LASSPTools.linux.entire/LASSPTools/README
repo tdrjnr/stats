@@ -1,0 +1,498 @@
+
+
+                           LASSPTools
+
+	            Graphical and Numerical
+                      Enhancements to Unix
+
+        Developed at Cornell University Laboratory of Atomic and Solid
+        State Physics (LASSP) in a Joint Study with IBM, with support by
+        the Materials Science Center and Corning Glassworks.
+
+                Project Organizer: James P. Sethna
+
+        Comments, suggestions, bug reports to toolkeeper@msc.cornell.edu
+
+
+LASSPTools is a collection of Unix utilities for numerical analysis and
+graphics. Some programs in the distribution are publically available
+from other sources and were not developed at Cornell. Some programs in the
+distribution use numerical routines which were not developed at Cornell. 
+
+LASSPTools was made possible by a Cornell---IBM joint study, and is
+available free by ``anonymous FTP''.  The graphics routines require
+X-windows, some currently require color and Motif. The software is written
+in C, some of the numerical libraries are written in Fortran. All routines
+come with source and manual pages, compiled code is available
+for the IBM RS6000 and the Sparcstation.
+
+All of these tools are provided as is, with no express or implied warranty.
+These tools should not be used for solving a problem whose incorrect
+solution could result in injury or loss of property.  The Project assumes
+no responsibilty for any loss or damage if you do use the programs for
+such purposes.
+
+The LASSPTools distribution can be found on the anonymous ftp server
+        lassp-ftp.msc.cornell.edu
+in the /pub directory. 
+
+Files and Directories
+--------------------
+
+   LASSPTools.demos.tar.Z - Demo scripts, data files for demonstrating the
+      capabilities of some programs (1101297 bytes)
+   
+   LASSPTools.doc.tar.Z - manual pages (96196 bytes)
+
+   LASSPTools.rs6000.tar.Z - Binary executables for IBM RS6000 (2283217 bytes)
+
+   LASSPTools.sparc.tar.Z - Binary executables for Sun Sparc (2945977 bytes)
+   
+   LASSPTools/src - compressed tar files containing the source code 
+	and an nroff formatted man page for each of the programs.
+	A toplevel Makefile for all the tools is also found here.
+   
+   LASSPTools/bin_rs6000 - Directory containing individual binaries for
+        the IBM RS6000.
+
+   LASSPTools/bin_sparc - Directory containing individual binaries for the
+        Sun Sparc.
+
+   LASSPTools/demos - Directory containing individual demo scripts for 
+	several programs.
+           
+   We have tried to make the ftp directory setup accomodate users who want
+executable binaries and also users who want to build the programs from
+the source code. As a result it is possible to obtain individual programs
+or the whole distribution in source or as binaries.  
+
+Obtaining and Installing IBM RS6000 Binaries
+--------------------------------------------
+  If you have an IBM RS6000 running Aix 3.2 you can get all the program
+executables by getting the file LASSPTools.rs6000.tar.Z using the
+following steps:
+
+     1. Create a directory where you want the binaries to be installed
+	on your machine.
+     2. Use the following ftp commands:
+            binary
+	    get LASSPTools.rs6000.tar.Z
+     3. Uncompress the file using the command:
+              'uncompress LASSPTools.rs6000.tar.Z'
+     4. Untar the file using the command 'tar -xvf LASSPTools.rs6000.tar'
+ 
+Obtaining and Installing Sun Binaries 
+-------------------------------------
+  If you have an Sun Sprac you can get all the program
+executables by getting the file LASSPTools.sparc.tar.Z using the
+following steps:
+
+     1. Create a directory where you want the binaries to be installed
+	on your machine.
+     2. Use the following ftp commands:
+            binary
+	    get LASSPTools.sparc.tar.Z
+     3. Uncompress the file using the command:
+            'uncompress LASSPTools.sparc.tar.Z'
+     4. Untar the file using the command 'tar -xvf LASSPTools.sparc.tar'
+
+Obtaining and Installing the Documentation
+------------------------------------------
+The documentation is in the form of nroff formatted manual pages. To view
+an individual manual page the command 'nroff -man program.1 | more'
+can be used. The manual pages can be obtained by doing the following:
+
+     1. Create a directory where you want the man pages to be installed.
+     2. Use the following ftp commands:
+            binary
+            get LASSPTools.doc.tar.Z
+     3. Uncompress the file using the command 'uncompress LASSPTools.doc.tar.Z'
+     4. Untar the file using the command 'tar -xvf LASSPTools.doc.tar'
+
+Obtaining and Installing the Demos
+----------------------------------
+     1. Create a directory where you want the demos to be installed.
+     2. Use the following ftp commands:
+            binary
+            get LASSPTools.demos.tar.Z
+     3. Uncompress the file using the command:
+            'uncompress LASSPTools.demos.tar.Z'
+     4. Untar the file using the command 'tar -xvf LASSPTools.doc.tar'
+
+Some of the demos make use of more then one program, you can check which
+programs are required to run a particular demo by looking at the script file
+generally called RunDemo in each of the demo directories.
+
+Obtaining and Installing LASSPTools Source for an Individual Program
+--------------------------------------------------------------------
+   Each program comes with a Makefile that has options set for an IBM RS/6000.
+To build an individual program from the source
+code the following steps should be followed: (PlotAtoms is used as an example)
+     1. Create a toplevel directory where you want the program source to
+	reside. The tar files will create a subdirectory for the program 
+	source and a subdirectory for each set of library source files that
+	it uses.
+     2. Create a subdirectory called bin where the compiled program executables
+	can be put.
+     3. Use the following ftp commands to get the source:
+            binary
+	    cd LASSPTools/src
+            get PlotAtoms.tar.Z
+     4. Uncompress the file using the command 'uncompress PlotAtoms.tar.Z'
+     5. Untar the file using the command 'tar -xvf PlotAtoms.tar'
+     6. Edit the program Makefile and make any changes as indicated in the
+	Makefile. If you are on Sun then comment out the CFLAGS line
+	and rename the CFLAGS_SUN to CFLAGS, and make any other changes
+	indicated by the comments.
+     7. Type 'make' , 'make install' and 'make clean'
+  
+Obtaining and Installing ALL the Source Code 
+--------------------------------------------
+To make building all (or many) of the LASSPTools programs easier a
+toplevel Makefile is included. The toplevel Makefile can also be used
+to configure the individual program Makefiles for a particular machine.
+The Makefile.tar.Z file contains the following files:
+        Makefile - a toplevel makefile to build all the tools.
+	defs.ibm - makefile definitions that work for an IBM RS6000.
+	defs.sun - makefile definitions that work for a Sun Sparc
+	up_make.c - A C program that can be used to update the makefiles
+	     for the tools. It basically replaces the macro definitions
+	     with a new set of definitions.
+If you can not get up_make.c to compile, you can set the flags in the
+toplevel makefile, which will in turn get passed to the subdirectories
+when a program is built. The individual makefiles are still set for an
+IBM RS6000 - the definitions are being overridden when the toplevel
+makefile is used.
+To build all (or many) of the programs the following steps should be
+followed: 
+     1. Create a directory where you want the tools installed.
+     2. Create a bin subdirectory below this directory.
+     3. Use the following ftp commands:
+	   binary
+           cd LASSPTest
+	   mget *.Z
+     4. Uncompress all the files using the command 'uncompress *.Z'
+     5. Untar all the files, this can be done from the shell as follows:
+	> sh
+	> for i in *.tar
+	> do
+	>   tar -xvf $i
+	> done
+     6. Edit the toplevel Makefile to check that the definitions
+	are correct for your environment following the steps in the
+	Makefile. In addition check the defs.sun and defs.ibm to be
+	sure that the Makefile macros are correct for your environment.
+     7. Type 'make' (to not update the individual Makefiles) 
+	             ----  OR  ----
+        Type 'make world' (to update all the Makefiles)
+     8. Type 'make install' - This will move all the binaries to the
+	./bin directory.
+     9. Type 'make clean' - This will delete the individual program 
+	exectables and object files from the source directory.
+
+
+Add the directory LASSPDIR/bin to your PATH and LASSPDIR/man
+to your MANPATH environment variables, where LASSPDIR is the directory where
+the tools are installed. The demo programs can be run by executing the scripts
+found in subdirectories below the demos directory.
+
+An overview of the tools can be read on the World-Wide-Web at 
+	http://www.lassp.cornell.edu/LASSPTools/LASSPTools.html
+After installation, you can get information on the tools also via the
+manual page
+	'man tips-tools'
+
+On the IBM RS6000 the environment variable LIBPATH should be set so that
+the binaries can find the shared libraries.
+
+Overview of the Programs
+------------------------
+
+The programs preform various functions and roughly can be grouped into
+the following categories:
+
+   Data Filtering Programs - Select various numbers from input streams,
+                             perform rotations.
+
+   Numerical Processing - Matrix manipulation routines, Fourier transforms, 
+                          linear algebra.
+
+   Data Display Programs - Graphing, polygon drawing and coloring, circle and
+                           sphere drawing.
+
+   Input Processing Programs - Slider bars, graph point selection.
+
+   Miscellaneous Utilities - Printing. 
+
+
+The programs typically are used together in pipelines to generate, 
+manipulate and display data. For example, raw data may be run through
+a numerical transformation, a section selected via a filtering program
+and the results sent to a program to display the results graphically.
+
+
+Input Processing Programs -
+-------------------------
+rotate -
+   Rotate is an interactive data entry device which puts up a rotation
+   ball with axes, and allows the user to pick a rotation matrix.
+
+slider -
+   Slider is an interactive data entry device which puts up a number of slider
+   widgets, and allows the user to set values within user specified ranges.
+
+XYinput -
+   XYinput is an interactive data entry device which opens a coordinates plane
+   with an accompanying options menu.  It allows the user to specify coordinate
+   positions by clicking on the 2D plane and pipe them to stdout.
+
+Data Filtering Programs -
+-----------------------
+3D-2D -
+   3D-2D is a simple filter for converting lines with triples on them to
+   lines with pairs on them.  It also allows extra material which occurs
+   at the end of line to be passed unmodified.
+
+ConvertFrames -
+   ConvertFrames uses the various line_io routines to convert frames of ascii
+   triples to and from binary.
+
+ComplexDoubleMatrices -
+   Converts ASCII matrices to and from binary, Double version.
+
+ComplexFloatMatrices -
+   Convert ASCII matrices to and from binary, Floating point version.
+
+ConvertMatrices -
+   ConvertMatrices uses the various get_matrix and put_matrix routines to
+   convert ascii to and from binary, and files to and from pipes.
+
+ComplexDoubleVectors - 
+   Convert ASCII vectors to and from binary. Double version.
+
+ComplexFloatVectors -
+   Convert ASCII vectors to and from binary. Floating point version.
+
+ConvertVectors -
+   ConvertVectors uses the various get_vector and put_vector routines to
+   convert ascii to and from binary, and files to and from pipes. Integer
+   version.
+
+RotateFile -
+   RotateFile is a simple filter for rotating triples of data.  It can input
+   the triples only from a file.
+
+RotateStream -
+   RotateStream is a simple filter for rotating triples of data.  It can input
+   the triples from a file, pipe or terminal session.
+
+blend -
+   Inserts a smooth curve through data points.
+
+histogram -
+   Histogram reads a list of numbers from the standard input and produces 
+   on the standard output a file suitable for input to axis or graph to make
+   a histogram.
+
+rotate_echo -
+   A simple program that helps RotateStream do non-blocking I/O.
+
+rotate_aid -
+   A simple program that helps RotateStream do non-blocking I/O.
+
+slab -
+   slab is a simple filter for passing slices of data.  It allows one to use
+   a slider to change the size of the slab being looked at.
+
+sortit -
+   Sortit is a simple filter which takes blocks of input separated by blank
+   lines and sorts each block in terms of the value of the third column of the
+   input, in increasing order.
+
+thin -
+   Thin is a simple filter that reduces the amount of data going down a
+   pipeline.
+
+translate -
+   Translate is a simple filter for translating data sets.  It take triples
+   on lines and adds specified amounts to each coordinate.  It also allows
+   extra material which occurs at the end of line to be passed unmodified.
+
+Numerical Processing Programs -
+-----------------------------
+DI -
+   DI is a linear algebra program for calculating determinants and inverses, or
+   both.  DI accepts matrices from standard input and writes the determinants
+   and inverses to standard output.  DI uses the double precision LINPACK
+   and BLAS routines to perform its calculations. 
+
+Det -
+   Det is a linear algebra program for calculating determinants.  Det accepts
+   matrices from standard input and writes the determinants and inverses to
+   standard output.  Det uses the double precision LINPACK and BLAS routines 
+   to perform its calculations.
+
+Eigen -
+   Eigen is a program for calculating eigenvalues, eigenvectors, or both. 
+   Eigen accepts matrices from standard input and writes the eigenvalues and
+   eigenvectors to standard output.  Eigen uses the double precision EISPACK
+   routines to perform its calculations.
+
+Fourier -
+   Fourier is a program for calculating fourier transforms or inverse fourier
+   transforms.  Fourier accepts data from standard input and writes the results
+   to standard output.  Fourier uses the double precision FFTPACK routines to
+   perform its calculations.  Fourier does not need any form of zero padding.
+
+Invert -
+   Invert is a linear algebra program for calculating inverses.  Invert accepts
+   matrices from standard input and writes the inverses to standard output.
+   Invert uses the double precision LINPACK and BLAS routines to perform its
+   calculations.
+
+MMult -
+   MMult is a program for multiplying two matrices A and B in the order AB.
+   MMult accepts matrices from standard input and writes the product to
+   standard output.  The matrix A must number of columns as the matrix B 
+   has rows. MMult uses the BLAS routines to perform its calculations.
+
+MSolve -
+   MSolve is a program for solving linear equations of the form Ax = B,
+   where A and B are known and x is unknown.  MSolve accepts matrices from
+   standard input and writes the solution to standard output.  The matrix A
+   must be invertable but B can be any matrix that has the same number of
+   rows as the matrix A has columns.  MSolve uses the double precision
+   LINPACK and BLAS routines to perform its calculations.
+
+fit_it -
+   Fit_it does non-linear least squares parameter fitting on a data file 
+   specified on the command line.  fit_it uses the MINPACK routines to
+   perform its calculations.
+
+Random -
+   Random generates various random distributions where the core random
+   number generator can be selected when running the program. In addition,
+   the output can be formatted as vectors or matrices. Random uses the
+   RANLIB package from statlib.
+
+Data Display Programs -
+---------------------
+DynamicLattice -
+   DynamicLattice is an X-windows graphics program to represent sites
+   on a two-dimensional square (or rectangular) lattice based on their value.
+   This program is "dynamic" in that sites are typically read individually from
+   the standard input stream (stdin) and plotted one at a time.  There are
+   three modes of representation:  shading, arrows and bonds.  The default
+   mode is shading, whereby sites are filled with a colored cell whose color
+   represents the value of the plotted field at that site.  In the arrow mode,
+   an arrow is plotted at the specified site where its angle represents the
+   value of the field at that site.  In the bond mode, a specified bond is
+   drawn from a site to a neighboring site.  In both the arrow and bond modes,
+   the symbol can also be colored to represent another quantity.  If such
+   information is not given, all arrows/bonds are colored the same.
+
+PlotAtoms -
+   PlotAtoms is an X-Windows plotting package which accepts x-y pairs from
+   standard input and plots these pairs in the form of spheres.  It can also
+   produce multiple pictures in the form of a movie.
+
+PlotM -
+   PlotM is an X/Motif program that plots spheres and lines to produce 
+   molecular ball and stick diagrams. In addition, the structure may be
+   interactively scaled and rotated.
+
+SurfPlot -
+   SurfPlot3d is a simple program to produce surface plots a la Mathematica.
+
+circledraw -
+   Circledraw is an X Window System plotting package which reads a series of
+   circle specifications from standard input and draws them in color in a 
+   window. Circles can be drawn continuously into the window with optional 
+   clearing of window when specified, or the circles can be plotted off-screen
+   and sent to the screen one-frame-at-a-time as in an animation.
+
+matrix2X -
+   Matrix2X reads a set of matrices from the standard input and produces a
+   density plot in an X window.  The matrices are rows of numbers separated by
+   newlines and matrices separated by blank lines (double newlines).  The plot
+   consists of a series of rectangles mimicking the shape of the input matrix
+   which are colored according to the list of colors specified in various
+   possible ways.
+
+meter -
+   Meter is a simple analog style output device.  Its level is controlled by
+   the numbers it reads from stdin and its default range is from 0 to 100.
+
+polydraw -
+   Polydraw is an X Window System plotting package which reads a series of
+   polygon specifications from standard input and draws them in color in a 
+   window. Polygons can be drawn continuously into the window with optional
+   clearing of window when specified, or the polygons can be plotted 
+   off-screen and sent to the screen one frame at a time as in an animation.
+
+polydraw3D -
+   Polydraw3D is an X Window System like polydraw but reads in one frame 
+   polygons in 3D coordinates and can rotate and do a simulated perspective 
+   of that frame.
+
+xplot -
+   The xplot program brings up a window for viewing plot(5) output, for example
+   from the axis program.  The program works interactively, continuing to
+   accept input from stdin and plotting as it goes, until it reaches
+   an end of file, at which point it waits around for a mouse button
+   press to kill the window. xplot was not developed under the Cornell-IBM
+   joint study.
+
+Utility Programs -
+----------------
+lattice2ps -
+   Lattice2ps is a filter to produce a PostScript file which shades elements
+   on a two-dimensional square lattice based on their value.  The default 
+   produces gray-scale shading from white to black based on the range of
+   values input, although a restricted range can be specified. Color
+   PostScript output can also be generated.
+
+poly2ps -
+   Poly2ps is filter to produce a PostScript file which draws and shades
+   polygons. It is designed to read the same input file (ASCII format only) 
+   that polydraw reads.  The default is to convert the specified RGB 
+   colors to grayscales. This conversion is hard to make general. 
+   It will probably need modification unless your color scheme is quite
+   simple (e.g., you draw only red, green, and blue polygons). 
+   Alternatively, color postscript output can be created.
+
+axis -
+   Axis with no options takes pairs of numbers from the standard input as
+   abscissas and ordinates of a graph.  Successive points are connected by
+   straight lines.  The graph is encoded on the standard output for display by
+   the plot(1) filters (for example hpgl or tek10).  If the coordinates of a
+   point are followed by a nonnumeric string, that string is printed as a label
+   beginning on the point. axis was not developed under the Cornell-IBM
+   joint study.
+
+movieaxis -
+   See axis.  This variant allows multiple, movie style, plots to be generated.
+
+branch -
+   Branch is a simple datastream splitter.  It takes input from stdin and
+   splits it into two output streams.  One output stream is sent to the first
+   command and the other to the second command.  Note that both commands my
+   have pipes in them.
+
+bonds -
+   Bonds is a program that connects points in 3D space that are less
+   then a specified distance apart.
+
+pre_gr -
+   pre_gr is a program that simplifies the task of doing animations
+   with raw data being sent to the xmgr program by inserting drawing
+   commands in between frames of data.
+
+inter -
+   Inter frees the user from the constrained input file format required by
+   axis, and replaces axis's cryptic commands with real words.  The user
+   types commands, or inter reads them from commandfile.  If you don't want
+   to remember or learn the appropriate commands, inter0 asks questions
+   instead of waiting for instructions. inter was not developed under the
+   Cornell-IBM joint study.
+

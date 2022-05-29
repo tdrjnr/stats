@@ -1,0 +1,62 @@
+.hy 0
+.TH SORTIT 1 "17 April 1991"
+.ad
+
+.SH NAME
+.B sortit 
+- a simple data filter
+
+.SH SYNOPSIS
+
+cat 
+.I datafile 
+|
+.B sortit
+
+.SH DESCRIPTION
+.B sortit 
+is a simple filter which takes blocks of input separated by blank lines 
+and sorts each block in terms of the value of the third column of the
+input, in increasing order.
+
+.SH USAGE
+To use sortit, you simply pipe your data with triples (and perhaps extra
+material) on lines through sortit, and the filter will sort each
+block of data separated by blank lines.  The output is sent to stdout, 
+so that it may be piped to
+other programs.  
+
+.SH OPTIONS
+There aren't any.
+
+.SH EXAMPLE
+.sp 1
+cat 
+.I datafile 
+| sortit |
+.I plotting_package
+.sp 1
+will send data from the file
+.I datafile
+through sortit to 
+.I plotting_package
+, where plotting_package is some program that you specify.
+
+.SH "SEE ALSO"
+3D-2D, RotateStream , Euler, thin, translate, slab, PlotAtoms
+
+.SH BUGS
+.nf
+1. sortit should allow you to specify which column to sort on.
+2. sortit should have increasing or decreasing order options.
+3. Only 5000 elements can be specified in each frame.
+.fi
+
+.SH AUTHOR
+Bruce W. Roberts
+.sp1
+Send bug reports to toolkeeper@msc.cornell.edu
+.sp1
+sortit was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research
+

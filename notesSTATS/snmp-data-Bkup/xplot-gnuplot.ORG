@@ -1,0 +1,3 @@
+#!/bin/bash
+#editcap -F libpcap -v create-reports-3.cap createreports3.cap; 
+tcptrace -xtraffic'-p80,1293 -B -P -R -i0.5' login3.cap; cat traffic_stats.dat >> login-stats; xpl2gpl traffic_rtt.xpl; xpl2gpl traffic_bytes.xpl; xpl2gpl traffic_packets.xpl; gedit *.gpl &	

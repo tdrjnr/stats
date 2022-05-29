@@ -1,0 +1,129 @@
+.hy 0
+.TH XYinput 1 "18 July 1991"
+.ad
+
+.SH PURPOSE
+Pipe out 2D coordinate positions
+
+.SH SYNTAX
+XYinput	[-rec [-xmax
+.I number
+] [-xmin 
+.I number ] ]
+.RS
+           [-ymax 
+.I number
+] [-ymin 
+.I number ] ]
+.RS
+| [-polar [-rmax
+.I number
+] 
+.nf
+  [-deg |-rad |-radtimepi] ]
+| [-sphere [-deg | -rad | -radtimepi] ]
+[-axis | -grid | -tick | -plain]
+[-point | -square | -circle | -cross | -nodisp]
+[-help]
+.fi
+
+.SH DESCRIPTION
+XYinput is an interactive data entry device which opens a coordinates plane 
+with an accompanying options menu. It allows the user to specify coordinate
+positions by clicking on the 2D plane and pipe them to stdout.
+
+.SH OPTIONS
+Options can be set by command line flags or by interactive options menu.
+
+.SH Flags
+-rec 		Choose rectangular coordinates
+.LP
+-polar		Choose polar coordinates
+.LP
+-sphere		Choose spherical coordinates
+.LP
+-xmax
+.I number
+	Set absolute x-coordinate max to
+.I number
+.LP
+-xmin
+.I number
+	Set absolute x-coordinate min to
+.I number
+.LP
+-ymax
+.I number
+	Set absolute y-coordinate max to
+.I number
+.LP
+-ymin
+.I number
+	Set absolute y-coordinate min to
+.I number
+.LP
+-rmax
+.I number
+	Set absolute r-coordinate max to
+.I number
+.LP
+-deg			Express angular values in terms of degrees
+.LP
+-rad			Express angular values in terms of radians
+.LP
+-radtimepi	Express angular values in terms of pi radians
+.LP
+-axis		Display x-y axes
+.LP
+-grid		Display x-y axes and grid lines
+.LP
+-tick		Display x-y axes and tick marks
+.LP
+-plain		Plain coordinates plane
+.LP
+-point		Mark points at user specified positions
+.LP
+-square		Mark squares at user specified positions
+.LP
+-circle		Mark circles at user specified positions
+.LP
+-cross		Mark crosses at user specified positions
+.LP
+-nodisp		Suppress markings
+.LP
+-help		Invoke help pop-up window 
+
+.SH MOUSE	
+XYinput requires the use of the mouse to click on the coordinates plane. Each 
+of the three buttons has a unique function.
+.nf
+left button 	pipes out coordinates values cooresponding to
+			the position at which this button is pressed 
+
+center button	pipes out coordinates values corresponding to
+			the position at which this button is released
+
+right button	pipes out coordinates values continuously as 
+			long as this button is being held down
+.fi
+
+.SH DEFAULTS
+If no options are specified, XYinput will operate on the following defaults:
+.sp1
+.nf
+	rectangular coordinates  
+	x ranges from -1.000000 to 1.000000
+	y ranges from -1.000000 to 1.000000
+	axis and tick marks display
+	point markings
+.fi
+
+.SH AUTHORS
+Christopher Chan  &  Jet Ho
+.LP
+XYinput was developed at Cornell University as part of the Cornell-IBM Joint
+Study on Computing for Scientific Research 
+
+
+
+

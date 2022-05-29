@@ -1,0 +1,42 @@
+BEGIN_DEF = ***************************
+CFLAGS = -c -O -K -Q 
+CFLAGS_SUN = -c -O -DSUN -D_NO_PROTO -DSTRINGS_ALIGNED -DNO_REGEX -DNO_ISDIR -DUSE_RECOMP -DUSE_GETWD -DUNDERSCOREFORTRAN
+XM_LIBS = -lXm -lXt -lX11
+BINDIR = ../bin
+END_DEF = ****************************
+
+SRCS = \
+	Dial.c \
+	grab.c \
+	help.c \
+	keys.c \
+	meter.c \
+	parse_argument.c
+
+OBJS = \
+	Dial.o \
+	grab.o \
+	help.o \
+	keys.o \
+	meter.o \
+	parse_argument.o
+
+all: meter
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCDIR) $(SRCS) $(EXTRA)
+
+meter: $(OBJS)
+	$(CC) -o meter $(OBJS) $(XM_LIBS) -lm 
+
+clean::
+	rm -f *.o meter
+
+install::
+	cp -p meter $(BINDIR)
+	chmod 775 $(BINDIR)/meter
+
+	
+
+
+	

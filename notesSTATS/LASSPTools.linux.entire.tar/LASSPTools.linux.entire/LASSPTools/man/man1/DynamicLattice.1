@@ -1,0 +1,524 @@
+.TH DynamicLattice 
+.SH NAME
+DynamicLattice - X windows animation on a 2-D square lattice
+.SH SYNOPSIS
+.B DynamicLattice -nx NX -ny NY 
+[ option ] ... 
+.br
+.B DynamicLattice -help
+.SH DESCRIPTION
+.I DynamicLattice
+is an X-windows graphics program to represent the value of a field
+on a two-dimensional square or rectangular lattice and to animate 
+changes in that field with time.
+DynamicLattice reads from the standard input stream (stdin) and 
+updates the image in an X window.  Inputs are either 
+numeric (indicating site and value information), character strings
+(indicating commands to be executed within DynamicLattice), or a combination
+of both.  (See below for more details.)
+There are three update modes and three representation modes; the
+update modes reflect how often field information is redrawn, while the
+representation mode dictates how the field is represented.
+The default representation mode is to shade a specified lattice cell
+with a color (or a grayscale, on a monochrome display) 
+based on the value of the field at that site.  Other representation modes
+include arrows or bonds (of variable orientation and length).
+In arrow/bond mode, an arrow/bond can be colored (in addition to being
+directed) to represent a secondary field.
+The default update mode is the "nobuffer" mode in which a single site
+is updated on the screen as it is read from the input stream.
+In "buffer" mode, information from many sites can be read from the
+stream, but the screen itself is not updated until the "draw" command
+appears in the input stream.  In "matrix" update mode, the entire MxN
+matrix of values is read in the input stream (where the matrix is specified
+in the standard LASSPTools format -- see below) and then drawn on the
+screen.  A general discussion of usage of the program, as well as several
+examples how the program might be used, are included below.
+
+.SH COMMAND LINE OPTIONS
+
+.INote:
+The size of the lattice MUST be input via the -nx and -ny options (i.e.,
+they are not "optional").  See option list below.
+
+The following options are recognized,
+each as a separate argument.
+.TP
+.B  \-nx NX
+specifies the number of sites NX in the x direction
+.TP
+.B  \-ny NY
+specifies the number of sites NY in the y direction
+.TP
+.B  \-z zmin zmax
+sets the range of z values from zmin to zmax.  The default is: zmin=0, zmax=1,
+except in -matrix mode where zmin and zmax are equal to the low and high
+values in the current matrix, respectively.
+The currently defined z range is shown in the text window at the bottom.
+.TP
+.B  \-1
+set unit offset for coordinate indices (default: start indices at 0)
+.TP
+.B  \-a
+sets representation mode to arrows
+.TP
+.B  \-b
+sets representation mode to bonds
+.TP
+.B  \-bin
+input matrix in binary mode (only valid in "matrix" update mode)
+.TP
+.B \-buffer
+set update mode to buffer (screen updated when "#draw" detected in stream)
+.TP
+.B \-cmap FILENAME
+override default colormap with colormap specified in FILENAME
+.TP
+.B \-geometry str
+sets window position by standard X geometry string (size is ignored, see -pix)
+.TP
+.B \-gray
+use gray scale bitmaps rather than colors to shade (default on monochrome)
+.TP
+.B \-grid
+draw a grid of lines between cells
+.TP
+.B \-initpause n
+inserts a pause of n seconds before reading of data stream begins
+.TP
+.B \-matrix
+set update mode to matrix (screen updated when entire matrix read in)
+.TP
+.B \-nobuffer
+sets update mode to nobuffer (line-at-a-time updating; default mode)
+.TP
+.B \-nofrills
+runs quickly in -matrix mode with no command strings allowed
+.TP
+.B \-norange
+turns off text display of z range
+.TP
+.B \-pix pixels
+allocates specified number of pixels per linear edge of cell
+.TP
+.B \-printcolor
+specifies printed postscript is to be in color (see lattice2ps())
+.TP
+.B \-textcolor
+draws text in specified colormap entry
+.TP
+.B \-vert
+lays out colormap vertically at right
+.TP
+.B \-h, -help, -usage
+Gives the help message.
+
+.SH "USAGE"
+
+.B General:
+
+DynamicLattice, after initializing the graphics, reads a line at a
+time from standard input (stdin) and acts accordingly.  Depending on
+the currently defined update mode, the currently defined representation mode,
+and the contents of the current line, one of a number of actions will be
+taken.  If site and value information is read in from the current line,
+then that information will be encoded graphically in a manner specified
+by the current representation mode (shading, arrows, or bonds).  If
+a command (in the form of an unquoted character string, preceded by 
+a pound sign #) is detected
+on the current line, then it is executed.
+If an end-of-file is detected in the input stream, animation stops
+and DynamicLattice waits for a button press in the graphics window to
+shut down the entire program.
+
+.SH SITE AND VALUE INFORMATION
+
+.B Representation modes:
+
+.B Shading (default representation mode):
+
+In both the buffer and nobuffer update modes, site and value information
+is passed in the following manner:
+
+i j z
+
+where
+
+i = x lattice coordinate (integer, default range: [0, NX-1]) 
+.br
+j = y lattice coordinate (integer, default range: [0, NY-1])
+.br
+z = value at site i,j (real, default range: [0.,1.])
+
+The cells at the specified lattice site (i,j)
+is shaded (either by color or grayscale) based on
+where the value z lies in the currently defined z range [zmin, zmax].
+If z < zmin, the site (i,j) is shaded by the lowest color in the
+colormap, whereas if z > zmin, the site is shaded by the highest color.
+An input line reading 
+
+i j erase
+
+(where erase is passed as an unquoted character string)
+will erase (reset to background color) site (i,j).
+On 8-plane color displays, the default action is to color based on a 
+128 level colormap which proceeds from blue (zmin) to red (zmax) 
+smoothly through white.   On monochrome displays, the default is to shade
+via 16 levels of 4x4 grayscale bitmaps, ranging from white pixel density
+of 1/16 to 16/16.  (A 4x4 ordered dither is used.)  
+Alternate colormaps or graymaps, which the user must construct,
+can be specified via the -cmap command line option.  
+The background color (default: black) is
+not a member of the set of foreground colors used to represent values.
+Erasing a site by the manner described above amounts to drawing it with
+the background color.
+
+.B Arrow representation mode:
+
+In both the buffer and nobuffer update modes, site and value information
+is passed in one of the following manners:
+
+i j d
+.br
+i j d l
+.br
+i j d l c
+.br
+
+where 
+
+d = arrow or bond direction (real, clockwise in units of 2*Pi)
+.br
+l = length of arrow or bond (real, default: 1., but scaled by -z option)
+.br
+c = color of arrow or bond (integer entry in colormap, default: white=64)
+
+An arrow can be erased by inputting:
+
+i j erase
+
+.B Bond representation mode:
+
+Inputs are exactly of the same form as for arrow representation mode:
+
+i j d 
+.br
+i j d l
+.br
+i j d l c
+.br
+
+Unlike in arrow mode, however, a particular bond direction must be
+specified during erasure, since multiple bonds can be drawn from a 
+specified site:
+
+i j d erase
+
+.B Update modes:
+
+.B Nobuffer mode (default update mode):
+
+In the nobuffer mode, a site is updated on the screen when information
+regarding that site is detected in the input stream.  This is best
+used when one or a few contiguous sites are updated at once, but not
+if a large portion of the lattice is updated at every pass.
+
+.B Buffer mode:
+
+In the buffer mode, site and value information is input as described
+above, but drawing to the screen does not take place until the
+unquoted character string
+
+#draw
+
+appears in the input stream.  (Drawing is done to a pixmap which is
+then copied to the window when the draw command is issued.)
+This mode is intended primarily in two circumstances.
+In one case, buffer mode is used 
+to speed graphics and eliminate unsightly scrolling effects when 
+a large fraction of the lattice (but not the whole lattice) 
+is updated at each pass.  In the other case, the entire
+lattice is updated in arrow or bond mode but
+secondary (or tertiary) information,
+in the form of variable lengths (or colors), is also desired.
+(In this case, "matrix" mode cannot be used because of the extra
+information which needs to be passed.)
+
+.B Matrix mode:
+
+If the entire lattice is to be updated, and only a single field is
+to be represented (i.e., no arrows or bonds with extra information in
+lengths or colors), then the matrix can be efficiently passed using
+the standard matrix format adopted by LASSPTools (either in
+ascii or in binary with fwrite()).  In the ascii matrix format,
+rows of the matrix are separated by carriage returns and the
+end of the matrix is delineated by a blank line, such as in the
+the following stream of evolving 5x4 matrices:
+
+1 2 3 4 5 
+.br
+6 7 8 9 10
+.br
+11 12 13 14 15
+.br
+16 17 18 19 20
+.br
+
+2 3 4 5 6
+.br
+7 8 9 10 11
+.br
+12 13 14 15 16
+.br
+17 18 19 20 21
+.br
+
+etc.
+
+In binary mode, information is passed via fwrite(), specifying
+first, the number of rows and columns and, then, the locations in
+memory to be written.  For example (in C),
+
+fwrite((char *) &nrows, (int)sizeof(int), 1, stdout);
+.br
+fwrite((char *) &ncols, (int)sizeof(int), 1, stdout);
+.br
+for (i = 0; i < nrows; i++)
+.br
+{
+.br
+   fwrite((char *) mat[i], (int) sizeof(double), ncols, stdout);
+.br
+}
+.br
+fflush(stdout);
+
+will fwrite an nrows x ncols matrix of doubles called m to stdout.
+(In this case, both the -matrix and -bin flags would be set on DynamicLattice.
+The LASSPTools math_io routines currently will only accept doubles;
+integer values may not be sent in binary mode.)
+
+.SH COMMANDS IN THE INPUT STREAM
+
+In addition to specifying site and value information to be drawn,
+there are a number of commands, all passed to stdin as unquoted
+character strings, preceded by pound signs (#), 
+which are executed by DynamicLattice.  Any
+string not recognized is ignored.  The recognized commands and their
+actions are:
+
+#draw         (draw buffered graphics in buffer update mode)
+.br
+.br
+#buffer       (switch to buffer update mode from current mode)
+.br
+.br
+#nobuffer     (switch to nobuffer update mode from current mode)
+.br
+.br
+#matrix       (switch to matrix update mode from current mode)
+.br
+.br
+#z zmin zmax  (reset z range; zmin and zmax real)
+.br
+.br
+#erase        (erase the entire graphics window, i.e., set to background)
+.br
+.br
+#string abcde (print character string abcde in text window at bottom)
+.br
+.br
+#print        (open a pipe to lattice2ps and make postscript version
+	      of current state of lattice; read man page for lattice2ps)
+
+.SH OVERRIDING THE DEFAULT COLORMAP
+
+To use a colormap other than the default map, the user must construct
+a file containing the appropriate information, which is described below.
+The file is then specified on the commmand line with the -cmap option.
+Some other colormaps (files with suffix .map) are included in 
+the distribution, demonstrating the correct format.  
+The format for the colormap is as follows:
+
+background color: <color name or hex rgb code>
+.br
+border color: <color name or hex rgb code>
+.br
+number of levels: <number of levels in the defined colormap>
+.br
+<color name or hex rgb code>
+.br
+<color name or hex rgb code>
+.br
+<color name or hex rgb code>
+.br
+...
+.br
+<color name or hex rgb code>
+.br
+
+where the number of (foreground) 
+colors specified is the number of levels as explicitly
+stated on the third line of the file.  The phrase 
+<color name or hex rgb code> refers to standard Xlib color definition,
+either as a character string
+listed in the default Xlib color table (should be listed in something
+like /usr/lib/X11/rgb.txt) or as a hexidecimal representation of values
+of red-green-blue in the range 0 to 255 (preceded by a pound sign, i.e.,
+as #rrggbb).  
+In the latter case, for example, pure red (255 0 0) would be represented
+as
+
+#ff0000
+
+whereas a medium-intensity gray (136 136 136) would be
+
+#888888
+
+Various non-standard X utilities, such as xcoloredit, can be used to
+generate a palette of colors with a graphical interface, with 
+output in the desired form #rrggbb.
+
+.SH EXAMPLES
+
+.B All examples listed below consist of a command line call to 
+DynamicLattice (with appropriate options set), an input stream fragment,
+and a brief commentary on the subsequent action.  All the examples can
+be run from the terminal (i.e., the command line can be typed in 
+and the stream input one line at a time to animate).
+
+.B Unbuffered cell shading
+
+DynamicLattice -nx 10 -ny 10 
+
+0 0 0.
+.br
+1 1 .1
+.br
+2 2 .2            
+.br
+3 3 .3
+.br
+1 1 erase
+.br
+2 2 .8
+.br
+1 1 .7
+.br
+
+Simply color the specified sites with the default z range [0.,1.] as they
+are detected in the input stream.
+
+.B Buffered cell shading
+
+DynamicLattice -nx 10 -ny 10 -buffer -z -1 1
+
+0 0 0.
+.br
+1 1 .1
+.br
+2 2 .2
+.br
+3 3 .3
+.br
+#draw             (draw stored site information on screen)
+.br
+4 4 .4
+.br
+5 5 .5
+.br
+6 6 .6
+.br
+7 7 .7
+.br
+#draw
+.br
+#z -2 2	         (reset z range to [-2,2])
+.br
+
+.B Unbuffered arrow mode with variable length arrows
+
+DynamicLattice -nx 10 -ny 10
+
+0 0 .0 1.
+.br
+1 1 .1 .9
+.br
+2 2 .2 .8
+.br
+3 3 .3 .7
+.br
+4 4 .4 .6
+.br
+
+.B Matrix update mode with cell shading
+
+DynamicLattice -nx 4 -ny 4 -matrix
+
+0 1 2 3
+.br
+1 2 3 4
+.br
+2 3 4 5
+.br
+3 4 5 6
+.br
+
+.SH CHANGES IN VERSION 3.0
+
+Version 3.0 represents a substantial upgrade from the previous public
+release, version 2.2.  Here are some of the highlights:
+
+(1) Implementation of grayscale bitmaps for use on monochrome displays.
+
+(2) Implementation of matrix update mode, using the LASSPTools matrix
+format and math_io input routines.  (Note that DynamicLattice -matrix
+will now accept input in the same manner as the related program,
+matrix2X, although colormap choices and options differ.)  Binary
+input is therefore now accepted in matrix mode, and speeds data
+transfer considerably.
+
+(3) Expanded set of stream commands, such as: "#z zmin zmax" which allows
+the z range to be changed within the life of the program; "#print"
+which pipes the current state of the lattice to lattice2ps for postscript
+hardcopy; and the "#buffer/#nobuffer/#matrix" commands which allow the
+user to toggle among various update modes.
+
+(4) A minimal text window has been added, which can show the
+currently defined z range, and can show a character string input
+to the data stream with the "#string" command.
+
+(4) Slight revision in the format of colormap overrides, and in the
+actual names of certain command line options.
+
+.SH BUGS
+
+The author, Chris Myers, encourages users to report bugs.  
+He can be reached via email (through 8/1/93) at myers@sbitp.ucsb.edu 
+or (after 8/1/93) at myers@tc.cornell.edu.
+Suggestions for added features and/or protocols
+are also encouraged. Known bugs include:
+
+(1) Resizing the entire window to be larger
+only resizes the space surrounding the graphics and text windows,
+while resizing to a smaller window results in a loss of information.
+The -geometry flag will only relax position information;
+use the -pix option on startup to specify cell size.
+
+(2) Grayscale graphics suffers if the cell size is smaller than the
+bitmap pixel size, 4x4 pixels.  On very large lattices, however, this
+may be inevitable.
+
+(3) Windows which are short horizontally will chop text in the
+text window.  Putting the colorbar on the side with the "-vert" option
+makes this a little better.
+
+(4) Arrows of sufficiently short length cease to look like arrows; they
+lose their heads and become line segments.
+
+.SH "SEE ALSO"
+matrix2X(), lattice2ps()
+
+
+
+

@@ -1,0 +1,6 @@
+#!/bin/bash
+disk='df -k'
+
+used=$($disk | grep 'Used')
+
+echo $used | awk '{ print $1 }'

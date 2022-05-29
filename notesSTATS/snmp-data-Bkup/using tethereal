@@ -1,0 +1,18 @@
+using tethereal
+
+TO READ A SAVED capture FILE with tethereal
+tethereal -z io,phs -r capture-file | more
+
+TO CONVERT from NAssociates sniffer to TCPDUMP
+editcap -F libpcap -v <sniffer file> <filename.cap>
+
+FORMAT tcpdump output and get stats
+editcap -F libpcap -v logon-app-2.cap logon-2.cap; tcpdump -r logon-2.cap | grep P | sed 's/(/ /g' | sed 's/)/ /g' | awk '{ print $7 }' | ./a.out
+
+TO show FRAMES and BYTES TRANSTERRED between 1 sec interval
+tethereal -r app-idle.cap -z io,stat,1 | more
+
+TO show FRAMES and BYTES TRANSTERRED between rtt tims
+1)ping to the dst host to get rtt time e.g 50ms
+2)tethereal -r app-idle.cap -z 'io,stat,0.050' | more
+3)tethereal -r app-idle.cap -z 'io,stat,0.050,AVG(frame.pkt_len)frame.pkt_len' | more

@@ -1,0 +1,4 @@
+Based on the program from Douglas A. Young "The X Window System Programming 
+and Applications with Xt - OSF/Motif Edition" pages 344-363. Modifications
+by Jim Frankenberger and Bruce Roberts.
+meter doesn't compile under Linux.

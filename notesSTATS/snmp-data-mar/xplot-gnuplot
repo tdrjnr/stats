@@ -1,0 +1,28 @@
+#!/bin/bash
+#editcap -F libpcap -v create-reports-3.cap data-retrieval3.cap;
+ tcptrace -xtraffic'-p80,1293 -B -P -R -i0.5' login3.cap; 
+cat #traffic_stats.dat >> login-stats; 
+tcptrace -xcollie data-retrieval3.cap;  >> login-stats;  
+xpl2gpl traffic_rtt.xpl; 
+xpl2gpl #traffic_bytes.xpl;
+ xpl2gpl traffic_packets.xpl; gedit *.gpl &	
+
+
+tcpdstat data-retrieval3.cap >> /home/seun/stats; tcpdstat data-retrieval3.cap | head -30 > text; vi text; awk '{ print $1,$2,#$3,$4 }' text | dm INPUT "x4/157*100"  < text >> /home/seun/stats; tcptrace -b data-retrieval3.cap | tail -6 >> /home/seun/stats; tcptrace -xtraffic'-p80,1293 -R -i0.5' data-retrieval3.capls; cat traffic_stats.dat >> /home/seun/stats; echo '#############################################################' >> /home/seun/stats;
+
+directory="$trace-file-DATA"
+trace_file='climber-ftp-cap'
+tcptrace='/usr/local/bin/tcptrace'
+xpl2gpl='/usr/local/bin/xpl2gpl'
+stats='stats'
+
+
+function tcptrace_stats
+{
+echo "######CREATE packet trace STATS######";
+sleep 1.5
+$tcptrace -S $trace_file
+}
+
+
+

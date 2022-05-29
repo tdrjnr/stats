@@ -1,0 +1,29 @@
+#!/usr/bin/perl -w
+use Chart::Graph::Gnuplot qw(gnuplot);
+
+    my %cols = (
+                3 => "Bandwidth Utilization IN",
+                4 => "Bandwidth Utilization OUT"
+                );
+    gnuplot({
+             "title" => "Lombard Rotheram to Melville Gate 4MB PVC Util% In/Out 1050am-1140am at 06/01/2004",
+             "x-axis label" => "duration between 1050am-1140am at 06/01/2004",
+             "y-axis label" => "KBits Utilization Mon-Fri",
+             "output type" => "png",
+             "output file" => "rotherham-melvillegate-6-7-01-2004-test.png",
+             # Setting date/time specific options.
+             "xdata" => "time",
+	     "timefmt" => "%H:%M:%S",
+             "format" => ["x", "%H:%M:%S"],
+             # Set output range - note quoting of date string
+             "xrange" => "[\"07:00:00\":\"12:00:00\"]",
+             "extra_opts" => join("\n", "set grid"),
+            },
+
+            map {  
+                [{"title" => $cols{$_},
+                  "style" => "linespoints",
+                  "type" => "file",
+                  using => "2:$_" },
+                 "data"] } (sort keys %cols));
+
